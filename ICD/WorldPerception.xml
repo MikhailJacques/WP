@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.1.0/rti_dds_profiles.xsd" version="6.1.0">
+    <types>
+      <module name="dds_msgs">
+        <enum name="EnumMission">
+          <enumerator name="None" value="0" defaultLiteral="true"/>
+          <enumerator name="AirBuild" value="1"/>
+          <enumerator name="AirDiff" value="2"/>
+          <enumerator name="GroundBuild" value="3"/>
+          <enumerator name="GroundDiff" value="4"/>
+        </enum>
+        <enum name="EnumPlatform">
+          <enumerator name="None" value="0" defaultLiteral="true"/>
+          <enumerator name="Drone" value="1"/>
+          <enumerator name="UGV" value="2"/>
+        </enum>
+        <enum name="EnumScan">
+          <enumerator name="None" value="0" defaultLiteral="true"/>
+          <enumerator name="Rectangular" value="1"/>
+          <enumerator name="LocalSquare" value="2"/>
+        </enum>
+        <enum name="EnumJpegGenerationSts">
+          <enumerator name="None" value="0" defaultLiteral="true"/>
+          <enumerator name="Waiting" value="1"/>
+          <enumerator name="Generating" value="2"/>
+          <enumerator name="Fail" value="3"/>
+        </enum>
+        <enum name="EnumLasFileTransmissionSts">
+          <enumerator name="None" value="0" defaultLiteral="true"/>
+          <enumerator name="Finished" value="1"/>
+          <enumerator name="Verified" value="2"/>
+          <enumerator name="Error1" value="3"/>
+          <enumerator name="Error2" value="4"/>
+        </enum>
+        <enum name="EnumCalculation">
+          <enumerator name="None" value="0" defaultLiteral="true"/>
+          <enumerator name="NewModel" value="1"/>
+          <enumerator name="DiffAnalysis" value="2"/>
+        </enum>
+        <struct name="GeoPoint" nested="true">
+          <member name="Lat" type="float64"/>
+          <member name="Lon" type="float64"/>
+          <member name="Alt" type="float64"/>
+        </struct>
+        <struct name="LocalScan" nested="true">
+          <member name="SquareCenter" type="nonBasic" nonBasicTypeName="dds_msgs::GeoPoint"/>
+          <member name="SquareSide" type="uint16" default="0" min="0" max="5000"/>
+        </struct>
+        <struct name="BaseMsg">
+          <member name="MsgId" type="uint8" default="0" key="true"/>
+          <member name="MsgCount" type="uint32" default="0"/>
+          <member name="MissionId" type="uint16" default="0" key="true"/>
+        </struct>
+        <struct name="MissionPlanMsg" baseType="dds_msgs::BaseMsg">
+          <member name="MissionName" type="string" stringMaxLength="256"/>
+          <member name="MissionType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumMission"/>
+          <member name="StationId" type="uint8" default="0"/>
+          <member name="PlatformType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumPlatform"/>
+          <member name="PlatformId" type="uint8" default="0"/>
+          <member name="ScanType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumScan"/>
+          <member name="ScanArea" type="nonBasic" nonBasicTypeName="dds_msgs::GeoPoint" arrayDimensions="3"/>
+          <member name="ScanAreaGroundAvgAlt" type="int16" default="0" min="-432" max="3000"/>
+          <member name="FlightAltAboveGroundAvgAlt" type="uint16" default="0" min="0" max="1500"/>
+          <member name="TakeoffAltAboveSeaLevel" type="int16" default="0" min="-432" max="3000"/>
+          <member name="FlightSpeed" type="uint8" default="0" min="0" max="40"/>
+          <member name="CameraHorizontalFOV" type="uint8" default="0" min="0" max="180"/>
+          <member name="CameraVerticalFOV" type="uint8" default="0" min="0" max="180"/>
+          <member name="CameraHorizontalResolution" type="uint16" default="0" min="0" max="15000"/>
+          <member name="CameraVerticalResolution" type="uint16" default="0" min="0" max="15000"/>
+          <member name="OverlapInFlightDirection" type="uint8" default="0" min="0" max="100"/>
+          <member name="OverlapInLateralDirection" type="uint8" default="0" min="0" max="100"/>
+          <member name="GimbalPitchAngle" type="int16" default="0" min="-9000" max="9000"/>
+          <member name="SquareCenter" type="nonBasic" nonBasicTypeName="dds_msgs::GeoPoint"/>
+          <member name="SquareSide" type="uint16" default="0" min="0" max="5000"/>
+          <member name="GeoPathJpegFiles" type="string" stringMaxLength="256" optional="true"/>
+          <member name="GeoPathCurrModel" type="string" stringMaxLength="256"/>
+          <member name="GeoPathRefModel" type="string" stringMaxLength="256" optional="true"/>
+          <member name="GeoPathDiffModel" type="string" stringMaxLength="256" optional="true"/>
+          <member name="CloudUrlCurrModel" type="string" stringMaxLength="256"/>
+          <member name="CloudUrlRefModel" type="string" stringMaxLength="256" optional="true"/>
+          <member name="CloudUrlDiffModel" type="string" stringMaxLength="256" optional="true"/>
+        </struct>
+        <struct name="GetDroneScanRouteMsg" baseType="dds_msgs::BaseMsg">
+          <member name="ScanType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumScan"/>
+          <member name="ScanArea" type="nonBasic" nonBasicTypeName="dds_msgs::GeoPoint" sequenceMaxLength="3"/>
+          <member name="ScanAreaGroundAvgAlt" type="int16" default="0" min="-432" max="3000"/>
+          <member name="FlightAltAboveGroundAvgAlt" type="int16" default="0" min="0" max="1500"/>
+          <member name="TakeoffAltAboveSeaLevel" type="int16" default="0" min="-432" max="3000"/>
+          <member name="FlightSpeed" type="uint8" default="0" min="0" max="40"/>
+          <member name="CameraHorizontalFOV" type="uint8" default="0" min="0" max="180"/>
+          <member name="CameraVerticalFOV" type="uint8" default="0" min="0" max="180"/>
+          <member name="CameraHorizontalResolution" type="uint16" default="0" min="0" max="15000"/>
+          <member name="CameraVerticalResolution" type="uint16" default="0" min="0" max="15000"/>
+          <member name="OverlapInFlightDirection" type="uint8" default="0" min="0" max="100"/>
+          <member name="OverlapInLateralDirection" type="uint8" default="0" min="0" max="100"/>
+          <member name="GimbalPitchAngle" type="int16" default="0" min="-9000" max="9000"/>
+          <member name="SquareCenter" type="nonBasic" nonBasicTypeName="dds_msgs::GeoPoint"/>
+          <member name="SquareSide" type="uint16" default="0" min="0" max="5000"/>
+        </struct>
+        <struct name="DroneScanRouteMsg" baseType="dds_msgs::BaseMsg">
+          <member name="Waypoints" type="nonBasic" nonBasicTypeName="dds_msgs::GeoPoint" sequenceMaxLength="-1"/>
+          <member name="ScanAreaLength" type="uint16" default="0" min="0" max="20000"/>
+          <member name="ScanAreaWidth" type="uint16" default="0" min="0" max="20000"/>
+          <member name="ModelGroundResolution" type="uint8" default="0" min="0" max="100"/>
+          <member name="TimePeriodBetweenFrames" type="uint16" default="0" min="0" max="3000"/>
+          <member name="ShortLegLength" type="uint16" default="0" min="0" max="20000"/>
+          <member name="NumOfFramesPerLongLeg" type="uint16" default="0" min="0" max="3000"/>
+          <member name="TotalNumOfFrames" type="uint16" default="0" min="0" max="20000"/>
+        </struct>
+        <struct name="PlatformLocationMsg" baseType="dds_msgs::BaseMsg">
+          <member name="PlatformType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumPlatform"/>
+          <member name="PlatformId" type="uint8" default="0"/>
+          <member name="PlatformSpeed" type="uint8" default="0" min="0" max="200"/>
+          <member name="PlatformHeading" type="float64" default="0" min="-3.1415926" max="3.1415926"/>
+          <member name="PlatformLocation" type="nonBasic" nonBasicTypeName="dds_msgs::GeoPoint"/>
+          <member name="Timestamp" type="uint64" default="0"/>
+        </struct>
+        <struct name="StartJpegGenerationMsg" baseType="dds_msgs::BaseMsg">
+          <member name="PlatformType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumPlatform"/>
+          <member name="PlatformId" type="uint8" default="0"/>
+          <member name="GeoPathJpegFiles" type="string" stringMaxLength="256"/>
+        </struct>
+        <struct name="StopJpegGeneration" baseType="dds_msgs::BaseMsg">
+          <member name="PlatformType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumPlatform"/>
+          <member name="PlatformId" type="uint8" default="0"/>
+        </struct>
+        <struct name="ReportJpegGenerationLivenessMsg" baseType="dds_msgs::BaseMsg">
+          <member name="PlatformType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumPlatform"/>
+          <member name="PlatformId" type="uint8" default="0"/>
+          <member name="NumOfJpegFiles" type="uint16" default="0"/>
+          <member name="Status" type="nonBasic" nonBasicTypeName="dds_msgs::EnumJpegGenerationSts"/>
+          <member name="ErrorCode" type="uint8" default="0"/>
+        </struct>
+        <struct name="LasFileTransmissionStsMsg" baseType="dds_msgs::BaseMsg">
+          <member name="Status" type="nonBasic" nonBasicTypeName="dds_msgs::EnumLasFileTransmissionSts"/>
+        </struct>
+        <struct name="SingleUrlMsg" baseType="dds_msgs::BaseMsg">
+          <member name="CloudUrl" type="string" stringMaxLength="256"/>
+        </struct>
+        <struct name="DoubleUrlMsg" baseType="dds_msgs::BaseMsg">
+          <member name="GeoPath" type="string" stringMaxLength="256"/>
+          <member name="CloudUrl" type="string" stringMaxLength="256"/>
+        </struct>
+      </module>
+    </types>
+
+    <qos_library name="WorldPerceptionQoS">
+      <!--User.BestEffort-->
+      <qos_profile name="User.BestEffort" base_name="BuiltinQosLibExp::Generic.BestEffort">
+      </qos_profile>
+      <!--User.BestEffort.KeepLast-->
+      <qos_profile name="User.BestEffort.KeepLast" base_name="BuiltinQosLibExp::Generic.BestEffort">
+        <datareader_qos>
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </datareader_qos>
+        <datawriter_qos>
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <history>
+            <kind>KEEP_LAST_HISTORY_QOS</kind>
+            <depth>1</depth>
+          </history>
+        </datawriter_qos>
+      </qos_profile>
+      <!--User.KeepLastReliable-->
+      <qos_profile name="User.KeepLastReliable" base_name="BuiltinQosLibExp::Generic.KeepLastReliable">
+      </qos_profile>
+      <!--User.BestEffort.Unbounded-->
+      <qos_profile name="User.BestEffort.Unbounded" base_name="BuiltinQosLibExp::Generic.BestEffort">
+        <datareader_qos>
+          <!-- This property is needed when using -unboundedSupport command-line option
+ 			    in order to configure the memory allocation policy for the buffers that are 
+ 			    used to keep the serialized keys for the instances -->
+          <property>
+            <value>
+              <element>
+                <name>dds.data_reader.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                <value>4096</value>
+              </element>
+            </value>
+          </property>
+        </datareader_qos>
+        <datawriter_qos>
+          <!-- This property is needed when using -unboundedSupport command-line option
+                 in order to configure the memory allocation policy for the buffers that are
+                 used to serialize the samples -->
+          <property>
+            <value>
+              <element>
+                <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                <value>4096</value>
+              </element>
+            </value>
+          </property>
+        </datawriter_qos>
+      </qos_profile>
+      <!--User.KeepLastReliable.Transient-->
+      <qos_profile name="User.KeepLastReliable.Transient" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.Transient">
+      </qos_profile>
+      <!--User.KeepLastReliable.Transient.Unbounded-->
+      <qos_profile name="User.KeepLastReliable.Transient.Unbounded" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.Transient">
+        <datareader_qos>
+          <!-- This property is needed when using -unboundedSupport command-line option
+ 			    in order to configure the memory allocation policy for the buffers that are 
+ 			    used to keep the serialized keys for the instances -->
+          <property>
+            <value>
+              <element>
+                <name>dds.data_reader.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                <value>4096</value>
+              </element>
+            </value>
+          </property>
+        </datareader_qos>
+        <datawriter_qos>
+          <!-- This property is needed when using -unboundedSupport command-line option
+                 in order to configure the memory allocation policy for the buffers that are
+                 used to serialize the samples -->
+          <property>
+            <value>
+              <element>
+                <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                <value>4096</value>
+              </element>
+            </value>
+          </property>
+        </datawriter_qos>
+      </qos_profile>
+      <!--User.KeepLastReliable.LargeData.FastFlow-->
+      <qos_profile name="User.KeepLastReliable.LargeData.FastFlow" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow">
+      </qos_profile>
+      <!--User.KeepLastReliable.LargeData.FastFlow.Transient-->
+      <qos_profile name="User.KeepLastReliable.LargeData.FastFlow.Transient" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow">
+        <datareader_qos>
+          <durability>
+            <kind>TRANSIENT_DURABILITY_QOS</kind>
+          </durability>
+        </datareader_qos>
+        <datawriter_qos>
+          <durability>
+            <!-- Transient durability requires the use of the
+				     Persistence Service -->
+            <kind>TRANSIENT_DURABILITY_QOS</kind>
+          </durability>
+          <durability_service>
+            <!-- The DurabilityServiceQosPolicy is used to
+					     configure how the persistence service manages its
+					     memory and local cache. When using Transient durability, the
+					     persistence service maintains an in-memory cache of
+					     stored data. These values, therefore, represent memory
+					     usage.  -->
+            <history_kind>KEEP_LAST_HISTORY_QOS</history_kind>
+            <history_depth>1</history_depth>
+            <max_samples>LENGTH_UNLIMITED</max_samples>
+            <max_instances>LENGTH_UNLIMITED</max_instances>
+            <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+          </durability_service>
+        </datawriter_qos>
+      </qos_profile>
+      <!--User.KeepLastReliable.LargeData.FastFlow.Unbounded-->
+      <qos_profile name="User.KeepLastReliable.LargeData.FastFlow.Unbounded" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow">
+        <datareader_qos>
+          <!-- This property is needed when using -unboundedSupport command-line option
+ 			    in order to configure the memory allocation policy for the buffers that are 
+ 			    used to keep the serialized keys for the instances -->
+          <property>
+            <value>
+              <element>
+                <name>dds.data_reader.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                <value>4096</value>
+              </element>
+            </value>
+          </property>
+        </datareader_qos>
+        <datawriter_qos>
+          <!-- This property is needed when using -unboundedSupport command-line option
+                 in order to configure the memory allocation policy for the buffers that are
+                 used to serialize the samples -->
+          <property>
+            <value>
+              <element>
+                <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                <value>4096</value>
+              </element>
+            </value>
+          </property>
+        </datawriter_qos>
+      </qos_profile>
+      <!--User.KeepLastReliable.LargeData.FastFlow.Transient.Unbounded-->
+      <qos_profile name="User.KeepLastReliable.LargeData.FastFlow.Transient.Unbounded" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow">
+        <datareader_qos>
+          <durability>
+            <kind>TRANSIENT_DURABILITY_QOS</kind>
+          </durability>
+          <!-- This property is needed when using -unboundedSupport command-line option
+ 			    in order to configure the memory allocation policy for the buffers that are 
+ 			    used to keep the serialized keys for the instances -->
+          <property>
+            <value>
+              <element>
+                <name>dds.data_reader.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                <value>4096</value>
+              </element>
+            </value>
+          </property>
+        </datareader_qos>
+        <datawriter_qos>
+          <durability>
+            <!-- Transient durability requires the use of the
+				   Persistence Service -->
+            <kind>TRANSIENT_DURABILITY_QOS</kind>
+          </durability>
+          <durability_service>
+            <!-- The DurabilityServiceQosPolicy is used to
+					   configure how the persistence service manages its
+					   memory and local cache. When using Transient durability, the
+					   persistence service maintains an in-memory cache of
+					   stored data. These values, therefore, represent memory
+					   usage.  -->
+            <history_kind>KEEP_LAST_HISTORY_QOS</history_kind>
+            <history_depth>1</history_depth>
+            <max_samples>LENGTH_UNLIMITED</max_samples>
+            <max_instances>LENGTH_UNLIMITED</max_instances>
+            <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+          </durability_service>
+          <!-- This property is needed when using -unboundedSupport command-line option
+                 in order to configure the memory allocation policy for the buffers that are
+                 used to serialize the samples -->
+          <property>
+            <value>
+              <element>
+                <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                <value>4096</value>
+              </element>
+            </value>
+          </property>
+        </datawriter_qos>
+      </qos_profile>
+      <!--User.Participant.LargeData-->
+      <qos_profile name="User.Participant.LargeData" base_name="BuiltinQosLibExp::Generic.Participant.LargeData" is_default_qos="true">
+      </qos_profile>
+      <qos_profile name="MissionPlanMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="GetDroneScanRouteMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="DroneScanRouteMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable.LargeData.FastFlow.Unbounded">
+      </qos_profile>
+      <qos_profile name="PlatformLocationMsg" base_name="WorldPerceptionQoS::User.BestEffort">
+      </qos_profile>
+      <qos_profile name="StartJpegGenerationMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="ReportJpegGenerationLivenessMsg" base_name="WorldPerceptionQoS::User.BestEffort">
+      </qos_profile>
+      <qos_profile name="StopJpegGenerationMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="LasFileTransmissionStsMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="EndMissionMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="UploadCurrModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="UploadDiffModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="LasFileCurrModelRxMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="LasFileDiffModelRxMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="VisualCurrModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="VisualDiffModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+      <qos_profile name="RequestRefModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+      </qos_profile>
+    </qos_library>
+
+</dds>

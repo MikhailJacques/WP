@@ -1,0 +1,5 @@
+{
+  "domain_id": 66,
+  "communicator_name": "WorldPerception",
+  "qos_default_library_name": "WorldPerceptionQoS"
+}
