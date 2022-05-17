@@ -97,12 +97,14 @@ module dds_msgs {
 
   struct MissionPlanMsg : dds_msgs::BaseMsg {
     string<256> MissionName;
+    @default(0)
     dds_msgs::EnumMission MissionType;
     @default(0)
     uint8 StationId;
     dds_msgs::EnumPlatform PlatformType;
     @default(0)
-    uint8 PlatformId;
+    uint16 PlatformId;
+    @default(0)
     dds_msgs::EnumScan ScanType;
     dds_msgs::GeoPoint ScanArea[3];
     @default(0)
@@ -157,6 +159,7 @@ module dds_msgs {
   };
 
   struct GetDroneScanRouteMsg : dds_msgs::BaseMsg {
+    @default(0)
     dds_msgs::EnumScan ScanType;
     sequence<dds_msgs::GeoPoint, 3> ScanArea;
     @default(0)
@@ -198,34 +201,10 @@ module dds_msgs {
     uint16 SquareSide;
   };
 
-  struct DroneScanRouteMsg : dds_msgs::BaseMsg {
-    sequence<dds_msgs::GeoPoint> Waypoints;
-    @default(0)
-    @range(min=0, max=20000)
-    uint16 ScanAreaLength;
-    @default(0)
-    @range(min=0, max=20000)
-    uint16 ScanAreaWidth;
-    @default(0)
-    @range(min=0, max=100)
-    uint8 ModelGroundResolution;
-    @default(0)
-    @range(min=0, max=3000)
-    uint16 TimePeriodBetweenFrames;
-    @default(0)
-    @range(min=0, max=20000)
-    uint16 ShortLegLength;
-    @default(0)
-    @range(min=0, max=3000)
-    uint16 NumOfFramesPerLongLeg;
-    @default(0)
-    @range(min=0, max=20000)
-    uint16 TotalNumOfFrames;
-  };
-
   struct PlatformLocationMsg : dds_msgs::BaseMsg {
     dds_msgs::EnumPlatform PlatformType;
     @default(0)
+    @range(min=0, max=255)
     uint8 PlatformId;
     @default(0)
     @range(min=0, max=200)
@@ -240,29 +219,20 @@ module dds_msgs {
 
   struct StartJpegGenerationMsg : dds_msgs::BaseMsg {
     dds_msgs::EnumPlatform PlatformType;
-    @default(0)
-    uint8 PlatformId;
     string<256> GeoPathJpegFiles;
-  };
-  
-  struct StopJpegGenerationMsg : dds_msgs::BaseMsg {
-    dds_msgs::EnumPlatform PlatformType;
-    @default(0)
-    uint8 PlatformId;
   };
 
   struct ReportJpegGenerationLivenessMsg : dds_msgs::BaseMsg {
-    dds_msgs::EnumPlatform PlatformType;
-    @default(0)
-    uint8 PlatformId;
     @default(0)
     uint16 NumOfJpegFiles;
+    @default(0)
     dds_msgs::EnumJpegGenerationSts Status;
     @default(0)
-    uint8 ErrorCode;
+    octet ErrorCode;
   };
 
   struct LasFileTransmissionStsMsg : dds_msgs::BaseMsg {
+    @default(0)
     dds_msgs::EnumLasFileTransmissionSts Status;
   };
 
@@ -273,6 +243,31 @@ module dds_msgs {
   struct DoubleUrlMsg : dds_msgs::BaseMsg {
     string<256> GeoPath;
     string<256> CloudUrl;
+  };
+
+  struct DroneScanRouteMsg : dds_msgs::BaseMsg {
+      sequence<dds_msgs::GeoPoint> Waypoints;
+      @default(0)
+          @range(min = 0, max = 20000)
+          uint16 ScanAreaLength;
+      @default(0)
+          @range(min = 0, max = 20000)
+          uint16 ScanAreaWidth;
+      @default(0)
+          @range(min = 0, max = 100)
+          uint8 ModelGroundResolution;
+      @default(0)
+          @range(min = 0, max = 3000)
+          uint16 TimePeriodBetweenFrames;
+      @default(0)
+          @range(min = 0, max = 20000)
+          uint16 ShortLegLength;
+      @default(0)
+          @range(min = 0, max = 3000)
+          uint16 NumOfFramesPerLongLeg;
+      @default(0)
+          @range(min = 0, max = 20000)
+          uint16 TotalNumOfFrames;
   };
 
 };

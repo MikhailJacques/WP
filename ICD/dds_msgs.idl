@@ -274,6 +274,5 @@ module dds_msgs {
     string<256> GeoPath;
     string<256> CloudUrl;
   };
-
 };
 
