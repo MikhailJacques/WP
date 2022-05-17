@@ -6,7 +6,7 @@
 #include "tcp_server.h"
 
 string GetUserInput(void);
-void Rx_Msg_Handler(TCP_Server* server, SOCKET client_socket, string msg);
+void Rx_Msg_Handler(TCP_Server* server, SOCKET client_socket, std::string msg);
 
 int main()
 {
@@ -20,15 +20,34 @@ int main()
 	return 0;
 }
 
-void Rx_Msg_Handler(TCP_Server* server, SOCKET client_socket, string msg)
+void Rx_Msg_Handler(TCP_Server* server, SOCKET client_socket, std::string msg)
 {
 	Json::Value root;
 	Json::Reader reader;
-	
-	// Read information from message in JSON format and store it in root
-	bool parse_flag = reader.parse(msg, root);
 
-	cout << msg << endl;
+//    // Extract payload length
+//    char payload_len[3];
+//    memset(payload_len, 0, 3);
+//    strncpy(payload_len, msg, 2);
+//    unsigned short len = atoi(payload_len);
+
+//    // Extract payload
+//    char payload[MSG_BUFF_LEN];
+//    memset(payload, 0, MSG_BUFF_LEN);
+//    strncpy(payload, &msg[2], (num_of_rx_bytes - 2));
+
+//    if (len != (num_of_rx_bytes - 2))
+//    {
+//        cout << "TCP SERVER: Wrong message length!";
+//        return;
+//    }
+
+//    std::string msg_str(payload);
+
+    cout << "TCP SERVER: Message received: \n" << msg << endl;
+
+	// Read information from message in JSON format and store it in root
+    bool parse_flag = reader.parse(msg, root);
 
 	if (parse_flag == true)
 	{
@@ -74,9 +93,21 @@ void Rx_Msg_Handler(TCP_Server* server, SOCKET client_socket, string msg)
 			root["ErrorCode"] = 1;
 
 			Json::FastWriter fast_writer;
-			std::string ReportModelGenerationMsg = fast_writer.write(root);
+            std::string ReportModelGenerationMsg = fast_writer.write(root);
+            int num_of_tx_bytes = server->Send(client_socket, ReportModelGenerationMsg);
 
-			int num_of_tx_bytes = server->Send(client_socket, ReportModelGenerationMsg);
+            if (num_of_tx_bytes == SOCKET_ERROR)
+            {
+                cout << "TCP SERVER: Send failed!";
+            }
+            else
+            {
+                cout << "TCP SERVER: The following message has been sent:\n";
+
+                Json::StyledWriter styled_writer;
+                std::string ReportModelGenerationMsg_styled = styled_writer.write(root);
+                cout << ReportModelGenerationMsg_styled << endl;
+            }
 
 		} while (status.compare("done") != 0);
 	}

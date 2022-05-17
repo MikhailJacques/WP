@@ -19,8 +19,8 @@ public:
 	CONFIG_TCP(std::string server_ip_sightec, unsigned short server_port_sightec, 
 		std::string server_ip_third_eye, unsigned short server_port_third_eye) :
 		m_server_ip_sightec(server_ip_sightec),
-		m_server_port_sightec(server_port_sightec),
 		m_server_ip_third_eye(server_ip_third_eye),
+        m_server_port_sightec(server_port_sightec),
 		m_server_port_third_eye(server_port_third_eye),
 		m_valid_flag(true) { }
 

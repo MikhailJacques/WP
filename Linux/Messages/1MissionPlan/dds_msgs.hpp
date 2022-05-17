@@ -10,8 +10,8 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the Code Generator User's Manual.
 */
 
-#ifndef dds_msgs_1583855743_hpp
-#define dds_msgs_1583855743_hpp
+#ifndef dds_msgs_1583855687_hpp
+#define dds_msgs_1583855687_hpp
 
 #include <iosfwd>
 
@@ -883,6 +883,7 @@ namespace dds_msgs {
             uint32_t MsgCount,
             uint16_t MissionId,
             const dds_msgs::EnumPlatform& PlatformType,
+            uint8_t PlatformId,
             const std::string& GeoPathJpegFiles);
 
         #ifdef RTI_CXX11_RVALUE_REFERENCES
@@ -912,6 +913,18 @@ namespace dds_msgs {
         void PlatformType(dds_msgs::EnumPlatform&& value) {
             m_PlatformType_ = std::move(value);
         }
+        uint8_t& PlatformId() OMG_NOEXCEPT {
+            return m_PlatformId_;
+        }
+
+        const uint8_t& PlatformId() const OMG_NOEXCEPT {
+            return m_PlatformId_;
+        }
+
+        void PlatformId(uint8_t value) {
+            m_PlatformId_ = value;
+        }
+
         std::string& GeoPathJpegFiles() OMG_NOEXCEPT {
             return m_GeoPathJpegFiles_;
         }
@@ -936,6 +949,7 @@ namespace dds_msgs {
       private:
 
         dds_msgs::EnumPlatform m_PlatformType_;
+        uint8_t m_PlatformId_;
         std::string m_GeoPathJpegFiles_;
 
     };
@@ -947,6 +961,76 @@ namespace dds_msgs {
 
     NDDSUSERDllExport std::ostream& operator<<(std::ostream& o, const StartJpegGenerationMsg& sample);
 
+    class NDDSUSERDllExport StopJpegGenerationMsg
+    : public dds_msgs::BaseMsg {
+      public:
+        StopJpegGenerationMsg();
+
+        StopJpegGenerationMsg(
+            uint8_t MsgId,
+            uint32_t MsgCount,
+            uint16_t MissionId,
+            const dds_msgs::EnumPlatform& PlatformType,
+            uint8_t PlatformId);
+
+        #ifdef RTI_CXX11_RVALUE_REFERENCES
+        #ifndef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+        StopJpegGenerationMsg (StopJpegGenerationMsg&&) = default;
+        StopJpegGenerationMsg& operator=(StopJpegGenerationMsg&&) = default;
+        StopJpegGenerationMsg& operator=(const StopJpegGenerationMsg&) = default;
+        StopJpegGenerationMsg(const StopJpegGenerationMsg&) = default;
+        #else
+        StopJpegGenerationMsg(StopJpegGenerationMsg&& other_) OMG_NOEXCEPT;  
+        StopJpegGenerationMsg& operator=(StopJpegGenerationMsg&&  other_) OMG_NOEXCEPT;
+        #endif
+        #endif 
+
+        dds_msgs::EnumPlatform& PlatformType() OMG_NOEXCEPT {
+            return m_PlatformType_;
+        }
+
+        const dds_msgs::EnumPlatform& PlatformType() const OMG_NOEXCEPT {
+            return m_PlatformType_;
+        }
+
+        void PlatformType(const dds_msgs::EnumPlatform& value) {
+            m_PlatformType_ = value;
+        }
+
+        void PlatformType(dds_msgs::EnumPlatform&& value) {
+            m_PlatformType_ = std::move(value);
+        }
+        uint8_t& PlatformId() OMG_NOEXCEPT {
+            return m_PlatformId_;
+        }
+
+        const uint8_t& PlatformId() const OMG_NOEXCEPT {
+            return m_PlatformId_;
+        }
+
+        void PlatformId(uint8_t value) {
+            m_PlatformId_ = value;
+        }
+
+        bool operator == (const StopJpegGenerationMsg& other_) const;
+        bool operator != (const StopJpegGenerationMsg& other_) const;
+
+        void swap(StopJpegGenerationMsg& other_) OMG_NOEXCEPT ;
+
+      private:
+
+        dds_msgs::EnumPlatform m_PlatformType_;
+        uint8_t m_PlatformId_;
+
+    };
+
+    inline void swap(StopJpegGenerationMsg& a, StopJpegGenerationMsg& b)  OMG_NOEXCEPT 
+    {
+        a.swap(b);
+    }
+
+    NDDSUSERDllExport std::ostream& operator<<(std::ostream& o, const StopJpegGenerationMsg& sample);
+
     class NDDSUSERDllExport ReportJpegGenerationLivenessMsg
     : public dds_msgs::BaseMsg {
       public:
@@ -956,6 +1040,8 @@ namespace dds_msgs {
             uint8_t MsgId,
             uint32_t MsgCount,
             uint16_t MissionId,
+            const dds_msgs::EnumPlatform& PlatformType,
+            uint8_t PlatformId,
             uint16_t NumOfJpegFiles,
             const dds_msgs::EnumJpegGenerationSts& Status,
             uint8_t ErrorCode);
@@ -971,6 +1057,33 @@ namespace dds_msgs {
         ReportJpegGenerationLivenessMsg& operator=(ReportJpegGenerationLivenessMsg&&  other_) OMG_NOEXCEPT;
         #endif
         #endif 
+
+        dds_msgs::EnumPlatform& PlatformType() OMG_NOEXCEPT {
+            return m_PlatformType_;
+        }
+
+        const dds_msgs::EnumPlatform& PlatformType() const OMG_NOEXCEPT {
+            return m_PlatformType_;
+        }
+
+        void PlatformType(const dds_msgs::EnumPlatform& value) {
+            m_PlatformType_ = value;
+        }
+
+        void PlatformType(dds_msgs::EnumPlatform&& value) {
+            m_PlatformType_ = std::move(value);
+        }
+        uint8_t& PlatformId() OMG_NOEXCEPT {
+            return m_PlatformId_;
+        }
+
+        const uint8_t& PlatformId() const OMG_NOEXCEPT {
+            return m_PlatformId_;
+        }
+
+        void PlatformId(uint8_t value) {
+            m_PlatformId_ = value;
+        }
 
         uint16_t& NumOfJpegFiles() OMG_NOEXCEPT {
             return m_NumOfJpegFiles_;
@@ -1018,6 +1131,8 @@ namespace dds_msgs {
 
       private:
 
+        dds_msgs::EnumPlatform m_PlatformType_;
+        uint8_t m_PlatformId_;
         uint16_t m_NumOfJpegFiles_;
         dds_msgs::EnumJpegGenerationSts m_Status_;
         uint8_t m_ErrorCode_;
@@ -1232,7 +1347,7 @@ namespace dds_msgs {
             const dds_msgs::EnumMission& MissionType,
             uint8_t StationId,
             const dds_msgs::EnumPlatform& PlatformType,
-            uint16_t PlatformId,
+            uint8_t PlatformId,
             const dds_msgs::EnumScan& ScanType,
             const ::dds::core::array< dds_msgs::GeoPoint, 3L>& ScanArea,
             int16_t ScanAreaGroundAvgAlt,
@@ -1325,15 +1440,15 @@ namespace dds_msgs {
         void PlatformType(dds_msgs::EnumPlatform&& value) {
             m_PlatformType_ = std::move(value);
         }
-        uint16_t& PlatformId() OMG_NOEXCEPT {
+        uint8_t& PlatformId() OMG_NOEXCEPT {
             return m_PlatformId_;
         }
 
-        const uint16_t& PlatformId() const OMG_NOEXCEPT {
+        const uint8_t& PlatformId() const OMG_NOEXCEPT {
             return m_PlatformId_;
         }
 
-        void PlatformId(uint16_t value) {
+        void PlatformId(uint8_t value) {
             m_PlatformId_ = value;
         }
 
@@ -1643,7 +1758,7 @@ namespace dds_msgs {
         dds_msgs::EnumMission m_MissionType_;
         uint8_t m_StationId_;
         dds_msgs::EnumPlatform m_PlatformType_;
-        uint16_t m_PlatformId_;
+        uint8_t m_PlatformId_;
         dds_msgs::EnumScan m_ScanType_;
         ::dds::core::array< dds_msgs::GeoPoint, 3L> m_ScanArea_;
         int16_t m_ScanAreaGroundAvgAlt_;
@@ -1900,6 +2015,42 @@ namespace dds {
 
             NDDSUSERDllExport 
             static void allocate_sample(dds_msgs::StartJpegGenerationMsg& sample, int, int);
+
+            static const ::rti::topic::TypePluginKind::type type_plugin_kind = 
+            ::rti::topic::TypePluginKind::STL;
+        };
+
+        template<>
+        struct topic_type_name< dds_msgs::StopJpegGenerationMsg > {
+            NDDSUSERDllExport static std::string value() {
+                return "dds_msgs::StopJpegGenerationMsg";
+            }
+        };
+
+        template<>
+        struct is_topic_type< dds_msgs::StopJpegGenerationMsg > : public ::dds::core::true_type {};
+
+        template<>
+        struct topic_type_support< dds_msgs::StopJpegGenerationMsg > {
+            NDDSUSERDllExport 
+            static void register_type(
+                ::dds::domain::DomainParticipant& participant,
+                const std::string & type_name);
+
+            NDDSUSERDllExport 
+            static std::vector<char>& to_cdr_buffer(
+                std::vector<char>& buffer, 
+                const dds_msgs::StopJpegGenerationMsg& sample,
+                ::dds::core::policy::DataRepresentationId representation 
+                = ::dds::core::policy::DataRepresentation::auto_id());
+
+            NDDSUSERDllExport 
+            static void from_cdr_buffer(dds_msgs::StopJpegGenerationMsg& sample, const std::vector<char>& buffer);
+            NDDSUSERDllExport 
+            static void reset_sample(dds_msgs::StopJpegGenerationMsg& sample);
+
+            NDDSUSERDllExport 
+            static void allocate_sample(dds_msgs::StopJpegGenerationMsg& sample, int, int);
 
             static const ::rti::topic::TypePluginKind::type type_plugin_kind = 
             ::rti::topic::TypePluginKind::STL;
@@ -2305,6 +2456,20 @@ namespace rti {
 
         #ifndef NDDS_STANDALONE_TYPE
         template<>
+        struct dynamic_type< dds_msgs::StopJpegGenerationMsg > {
+            typedef ::dds::core::xtypes::StructType type;
+            NDDSUSERDllExport static const ::dds::core::xtypes::StructType& get();
+        };
+        #endif
+
+        template <>
+        struct extensibility< dds_msgs::StopJpegGenerationMsg > {
+            static const ::dds::core::xtypes::ExtensibilityKind::type kind =
+            ::dds::core::xtypes::ExtensibilityKind::EXTENSIBLE;                
+        };
+
+        #ifndef NDDS_STANDALONE_TYPE
+        template<>
         struct dynamic_type< dds_msgs::ReportJpegGenerationLivenessMsg > {
             typedef ::dds::core::xtypes::StructType type;
             NDDSUSERDllExport static const ::dds::core::xtypes::StructType& get();
@@ -2383,5 +2548,5 @@ namespace rti {
 #define NDDSUSERDllExport
 #endif
 
-#endif // dds_msgs_1583855743_hpp
+#endif // dds_msgs_1583855687_hpp
 

@@ -22,12 +22,12 @@ FlightPlan::FlightPlan(void) :
 
 	// Create new logger file for logging events	
 	stringstream flight_plan_log_path;
-    flight_plan_log_path << "/home/user/WP/logs/flight_plan_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
+    flight_plan_log_path << "/home/user/WP/Linux/GeoComp/logs/flight_plan_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
 	m_event_logger.Start(flight_plan_log_path.str(), "Flight Plan Service event logger is started");
 
 	// Open pre-defined DDS configuration file for reading DDS configuration information
 	stringstream config_dds_path;
-    config_dds_path << "/home/user/WP/config/config_dds.json";
+    config_dds_path << "/home/user/WP/Linux/GeoComp/config/config_dds.json";
 	config_file.open(config_dds_path.str(), ios::in);
 
 	// Read information from DDS configuration file in JSON format and store it in root
@@ -42,7 +42,7 @@ FlightPlan::FlightPlan(void) :
 		m_dds_comm_init_params.qos_default_library_name.assign(root["qos_default_library_name"].asString());	// "WorldPerceptionQoS";
 		//m_dds_comm_init_params.qos_default_profile_name;														// nothing
         stringstream config_qos_path;
-        config_qos_path << "/home/user/WP/config/USER_QOS_PROFILES.xml";
+        config_qos_path << "/home/user/WP/Linux/GeoComp/config/USER_QOS_PROFILES.xml";
         m_dds_comm_init_params.qos_xml_uri.assign(config_qos_path.str());
 
 		// Initialize DDS communicator

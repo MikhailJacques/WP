@@ -15,8 +15,8 @@ TCP_Client::TCP_Client() :
 { 
 	// Create new logger file for logging all events
 	stringstream tcp_client_log_dir_path;
-    tcp_client_log_dir_path << "/home/user/WP/logs/tcp_client_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
-	m_event_logger.Start(tcp_client_log_dir_path.str(), "TCP Client Service event logger is started");
+    tcp_client_log_dir_path << "/home/user/WP/Linux/GeoComp/logs/tcp_client_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
+    m_event_logger.Start(tcp_client_log_dir_path.str(), "TCP Client event logger is started");
 }
 
 TCP_Client::TCP_Client(std::string server_ip, int server_port) :
@@ -29,8 +29,8 @@ TCP_Client::TCP_Client(std::string server_ip, int server_port) :
 { 
 	// Create new logger file for logging all events
 	stringstream tcp_client_log_dir_path;
-    tcp_client_log_dir_path << "/home/user/WP/logs/tcp_client_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
-	m_event_logger.Start(tcp_client_log_dir_path.str(), "TCP Client Service event logger is started");
+    tcp_client_log_dir_path << "/home/user/WP/Linux/GeoComp/logs/tcp_client_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
+    m_event_logger.Start(tcp_client_log_dir_path.str(), "TCP Client event logger is started");
 }
 
 TCP_Client::~TCP_Client()
@@ -123,13 +123,13 @@ bool TCP_Client::Send(std::string msg)
 	}
 
 	// Fill in the buffer with the outgoing message
-	memcpy(m_client_msg_buff, msg.c_str(), msg.size() + 1);
+    // memcpy(m_client_msg_buff, msg, msg_len);
 
 	// ssize_t write(int fd, const void *buf, size_t count);
 	// ssize_t send(int sockfd, const void *buf, size_t len, int flags);
 	// sendto(m_client_socket, m_client_msg_buff, strlen(m_client_msg_buff), 0, (sockaddr*)&m_server_info, sizeof(m_server_info));
 
-	int num_of_tx_bytes = send(m_client_socket, m_client_msg_buff, (int)strlen(m_client_msg_buff), 0);
+    int num_of_tx_bytes = send(m_client_socket, msg.c_str(), (int)msg.size(), 0);
 	
 	if (num_of_tx_bytes == SOCKET_ERROR)
 	{
@@ -139,7 +139,7 @@ bool TCP_Client::Send(std::string msg)
 	}
 	else
 	{
-		ss << "TCP CLIENT: Message has been sent.";
+        ss << "TCP CLIENT: Message has been sent";
 		m_event_logger.Print(ss.str());
 	}
 
@@ -153,7 +153,7 @@ int TCP_Client::Receive(std::string& rx_msg)
 	// int bytes_received = read(m_client_socket, m_server_msg_buff, MSG_BUFF_LEN);
 	// If no error occurs, recv returns the number of bytes received and the buffer pointed to by the buf parameter 
 	// will contain this data received. If the connection has been gracefully closed, the return value is zero.
-	int num_of_rx_bytes = recv(m_client_socket, m_server_msg_buff, MSG_BUFF_LEN, NULL);
+    int num_of_rx_bytes = recv(m_client_socket, m_server_msg_buff, MSG_BUFF_LEN, 0);
 
 	if (num_of_rx_bytes < 0)
 	{
@@ -163,26 +163,49 @@ int TCP_Client::Receive(std::string& rx_msg)
 
 	if (num_of_rx_bytes > 0)
 	{
-		rx_msg.clear();
-		rx_msg.assign(m_server_msg_buff, num_of_rx_bytes);
+        rx_msg.clear();
+        rx_msg.assign(m_server_msg_buff, num_of_rx_bytes);
 	}
 
 	return num_of_rx_bytes;
 }
 
+//int TCP_Client::Receive(std::string& rx_msg)
+//{
+//	stringstream ss;
+
+//	// int bytes_received = read(m_client_socket, m_server_msg_buff, MSG_BUFF_LEN);
+//	// If no error occurs, recv returns the number of bytes received and the buffer pointed to by the buf parameter
+//	// will contain this data received. If the connection has been gracefully closed, the return value is zero.
+//    int num_of_rx_bytes = recv(m_client_socket, m_server_msg_buff, MSG_BUFF_LEN, 0);
+
+//	if (num_of_rx_bytes < 0)
+//	{
+//        ss << "TCP CLIENT: recv() failed!"; // << WSAGetLastError();
+//		m_event_logger.Print(ss.str());
+//	}
+
+//	if (num_of_rx_bytes > 0)
+//	{
+//		rx_msg.clear();
+//		rx_msg.assign(m_server_msg_buff, num_of_rx_bytes);
+//	}
+
+//	return num_of_rx_bytes;
+//}
+
 void TCP_Client::Close(void)
 {
 	m_init_flag = false;
 
-    close(m_client_socket);
-//	if (closesocket(m_client_socket) == SOCKET_ERROR)
-//	{
-//		stringstream ss;
-//        ss << "TCP CLIENT: closesocket() failed!"; // << WSAGetLastError();
-//		m_event_logger.Print(ss.str());
-//	}
-//	else
-//	{
-		m_event_logger.Print("TCP Client Service event logger is closed");
-//	}
+    if (close(m_client_socket) == SOCKET_ERROR)
+    {
+        stringstream ss;
+        ss << "TCP CLIENT: closesocket() failed!";
+        m_event_logger.Print(ss.str());
+    }
+    else
+    {
+        m_event_logger.Print("TCP CLIENT: Client socket closed");
+    }
 }

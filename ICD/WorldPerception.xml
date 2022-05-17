@@ -120,7 +120,7 @@
           <member name="PlatformId" type="uint8" default="0"/>
           <member name="GeoPathJpegFiles" type="string" stringMaxLength="256"/>
         </struct>
-        <struct name="StopJpegGeneration" baseType="dds_msgs::BaseMsg">
+        <struct name="StopJpegGenerationMsg" baseType="dds_msgs::BaseMsg">
           <member name="PlatformType" type="nonBasic" nonBasicTypeName="dds_msgs::EnumPlatform"/>
           <member name="PlatformId" type="uint8" default="0"/>
         </struct>

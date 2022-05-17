@@ -3,14 +3,15 @@
 // DOCUMENT:	None
 // DESCRIPTION: This file defines TCP server that accepts messages
 
-#include "tcp_server.h";
+#include "tcp_server.h"
 
 TCP_Server::TCP_Server(std::string server_ip, int server_port, RxMsgHandler rx_msg_handler) :
 	m_server_ip(server_ip),
 	m_server_port(server_port),
-	m_rx_msg_handler(rx_msg_handler)
+    m_rx_msg_handler(rx_msg_handler)
 { 
 	m_client_info = {};
+    //m_msg_to_client = {};
 	// memset(&m_client_info, 0, sizeof(m_client_info));
 
 	if (m_rx_msg_handler == NULL)
@@ -87,7 +88,7 @@ SOCKET TCP_Server::CreateListeningSocket(void)
 // upon establishing the connection creates a connected client socket
 SOCKET TCP_Server::WaitForConnection(SOCKET listening_socket)
 {
-	int client_size = sizeof(m_client_info);
+    socklen_t client_size = sizeof(m_client_info);
 
 	// The accept function permits an incoming connection attempt on a socket.
 	SOCKET client_socket = accept(listening_socket, (sockaddr*)&m_client_info, &client_size);
@@ -95,7 +96,7 @@ SOCKET TCP_Server::WaitForConnection(SOCKET listening_socket)
 	if (client_socket == INVALID_SOCKET)
 	{
 		stringstream ss;
-		ss << "SERVER ERROR: accept() failed: " << WSAGetLastError();
+        ss << "SERVER ERROR: accept() failed!";
 		Print_Msg(ss.str());
 
 		return -1;
@@ -103,7 +104,7 @@ SOCKET TCP_Server::WaitForConnection(SOCKET listening_socket)
 	else
 	{
 		// Once a client is connected, close the listening socket so that no other clients can connect on it
-		closesocket(listening_socket);
+        close(listening_socket);
 	}
 
 	return client_socket;
@@ -122,12 +123,12 @@ void TCP_Server::GetClientInfo(void)
 	// The getnameinfo function is used to translate the contents of a socket address structure to a node name and/or a service name. 
 	if (getnameinfo((sockaddr*)&m_client_info, sizeof(m_client_info), host, NI_MAXHOST, client_port, NI_MAXHOST, 0) == 0)
 	{
-		cout << host << " connected on port " << client_port << endl;
+        cout << "TCP SERVER: Client " << host << " connected on port " << client_port << endl;
 	}
 	else
 	{
         inet_ntop(AF_INET, &m_client_info.sin_addr, host, NI_MAXHOST);
-		cout << host << " connected on port" << ntohs(m_client_info.sin_port) << endl;
+        cout << "TCP SERVER: Client " << host << " connected on port" << ntohs(m_client_info.sin_port) << endl;
 	}
 }
 
@@ -156,7 +157,7 @@ void TCP_Server::Run(void)
 
 		if (client_socket != INVALID_SOCKET)
 		{
-			closesocket(listening_socket);
+            close(listening_socket);
 
 			int num_of_rx_bytes = 0;
 
@@ -181,13 +182,14 @@ void TCP_Server::Run(void)
 				{
 					if (m_rx_msg_handler != NULL)
 					{
-						string rx_msg = std::string(rx_buff, 0, num_of_rx_bytes);
-						m_rx_msg_handler(this, client_socket, rx_msg);
+                        string rx_msg = std::string(rx_buff, 0, num_of_rx_bytes);
+
+                        m_rx_msg_handler(this, client_socket, rx_msg);
 					}
 				}
 			} while (num_of_rx_bytes > 0);
 
-			closesocket(client_socket);
+            close(client_socket);
 		}
 	}
 }
@@ -195,12 +197,12 @@ void TCP_Server::Run(void)
 // This function sends data on a connected client socket
 int TCP_Server::Send(SOCKET client_socket, std::string msg)
 {
-	int num_of_tx_bytes = send(client_socket, msg.c_str(), (int)msg.size() + 1, 0);
+    int num_of_tx_bytes = send(client_socket, msg.c_str(), (int)msg.size() + 1, 0);
 
 	if (num_of_tx_bytes == SOCKET_ERROR)
 	{
 		stringstream ss;
-		ss << "SERVER ERROR: send() failed: " << WSAGetLastError();
+        ss << "SERVER ERROR: send() failed!";
 		Print_Msg(ss.str());
 	}
 
@@ -211,7 +213,6 @@ int TCP_Server::Send(SOCKET client_socket, std::string msg)
 void TCP_Server::Cleanup(void)
 {
 	Print_Msg("TCP SERVER: Shutting down");
-	WSACleanup();
 }
 
 // This function prints out a status message

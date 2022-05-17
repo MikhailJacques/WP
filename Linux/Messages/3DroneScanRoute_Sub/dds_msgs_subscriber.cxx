@@ -29,22 +29,18 @@
 #include "dds_msgs.hpp"
 #include "application.hpp"  // for command line parsing and ctrl-c
 
-int process_data(dds::sub::DataReader<dds_msgs::MissionPlanMsg> reader)
+int process_data(dds::sub::DataReader<dds_msgs::DroneScanRouteMsg> reader)
 {
     // Take all samples
     int count = 0;
-    dds::sub::LoanedSamples<dds_msgs::MissionPlanMsg> samples = reader.take();
-
-    for (const auto& sample : samples)
-    {
-        if (sample.info().valid())
-        {
+    dds::sub::LoanedSamples<dds_msgs::DroneScanRouteMsg> samples = reader.take();
+    for (const auto& sample : samples) {
+        if (sample.info().valid()) {
             count++;
             std::cout << sample.data() << std::endl;
-        }
-        else
-        {
-            std::cout << "Instance state changed to " << sample.info().state().instance_state() << std::endl;
+        } else {
+            std::cout << "Instance state changed to "
+            << sample.info().state().instance_state() << std::endl;
         }
     }
 
@@ -57,16 +53,19 @@ void run_subscriber_application(unsigned int domain_id, unsigned int sample_coun
     // (see https://community.rti.com/best-practices/use-modern-c-types-correctly)
 
     // Start communicating in a domain, usually one participant per application
-    dds::domain::DomainParticipant participant(domain_id);
+    dds::domain::DomainParticipant participant(66);
 
     // Create a Topic with a name and a datatype
-    dds::topic::Topic<dds_msgs::MissionPlanMsg> topic(participant, "MissionPlanMsg");
+    dds::topic::Topic<dds_msgs::DroneScanRouteMsg> topic(participant, "DroneScanRouteMsg");
 
     // Create a Subscriber and DataReader with default Qos
     dds::sub::Subscriber subscriber(participant);
-    dds::sub::DataReader<dds_msgs::MissionPlanMsg> reader(subscriber, topic);
+    //dds::sub::DataReader<dds_msgs::DroneScanRouteMsg> reader(subscriber, topic);
+    dds::core::QosProvider m_qos_provider = dds::core::QosProvider::Default();
+    dds::sub::DataReader<dds_msgs::DroneScanRouteMsg>reader(subscriber, topic, m_qos_provider.datareader_qos("WorldPerceptionQoS::DroneScanRouteMsg"));
 
-    // Create a ReadCondition for any data received on this reader and set a handler to process the data
+    // Create a ReadCondition for any data received on this reader and set a
+    // handler to process the data
     unsigned int samples_read = 0;
     dds::sub::cond::ReadCondition read_condition(
         reader,
@@ -77,18 +76,17 @@ void run_subscriber_application(unsigned int domain_id, unsigned int sample_coun
     dds::core::cond::WaitSet waitset;
     waitset += read_condition;
 
-    while (!application::shutdown_requested && samples_read < sample_count)
-    {
-        std::cout << "MissionPlanMsg subscriber sleeping up to 1 sec..." << std::endl;
+    while (!application::shutdown_requested && samples_read < sample_count) {
+
+        std::cout << "dds_msgs::DroneScanRouteMsg subscriber sleeping up to 1 sec..." << std::endl;
 
         // Run the handlers of the active conditions. Wait for up to 1 second.
-        waitset.dispatch(dds::core::Duration(2));
+        waitset.dispatch(dds::core::Duration(3));
     }
 }
 
 int main(int argc, char *argv[])
 {
-
     using namespace application;
 
     // Parse arguments and handle control-C
@@ -104,7 +102,7 @@ int main(int argc, char *argv[])
     rti::config::Logger::instance().verbosity(arguments.verbosity);
 
     arguments.domain_id = 66;
-    arguments.sample_count = 100;
+    arguments.sample_count = 30;
 
     try {
         run_subscriber_application(arguments.domain_id, arguments.sample_count);

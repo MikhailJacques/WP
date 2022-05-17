@@ -30,6 +30,7 @@
 #include <iostream>
 #include <sstream>
 #include "json.h"
+#include "msg_buff.h"
 
 using namespace std;
 
@@ -48,20 +49,21 @@ typedef void(*RxMsgHandler)(TCP_Server *tcp_server_ptr, SOCKET client_socket, st
 // Bind the IP address and port to a socket
 // Tell Winsock the socket is for listening
 // Wait for a connection
+// Accept connection
+// Close listening socket
 // Receive loop
 //		Send message
 // Close the socket
-// Close listening socket ???
 
 class TCP_Server
 {
 public:
 
-	TCP_Server(std::string server_ip, int server_port, RxMsgHandler rx_msg_handler);
+    TCP_Server(std::string server_ip, int server_port, RxMsgHandler rx_msg_handler);
 	~TCP_Server();
 	bool Init(void);						// Initializes winsockand creates a listening socket
 	void Run(void);							// Receives messages on the connected client socket	
-	int Send(SOCKET client_socket, std::string msg); // Sends a message to the connected client socket
+    int Send(SOCKET client_socket, std::string msg); // Sends a message to the connected client socket
 
 private:
 
@@ -76,5 +78,5 @@ private:
 	std::string	m_server_ip;				// Server IP address
 	int	m_server_port;						// Server listening port
 	sockaddr_in m_client_info;				// Client information
-	RxMsgHandler m_rx_msg_handler;			// Received message event handler	
+    RxMsgHandler m_rx_msg_handler;			// Received message event handler
 };

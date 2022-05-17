@@ -171,7 +171,6 @@ private:
 	GetDroneScanRouteMsg m_get_drone_scan_route_msg;
 	
     // Stores DroneScanRouteMsg (3) received from Geo Comp Flight Plan Service (Elta)
-    // Stores DroneScanRouteMsg (3) sent to Geo Comp Mission Broadcaster (COMMIT)
 	DroneScanRouteMsg m_drone_scan_route_msg;			
 		
 	// The PlatformLocationMsg is cyclical in nature.
@@ -183,7 +182,7 @@ private:
 	StartJpegGenerationMsg m_start_jpeg_generation_msg;
 
     // Stores StopJpegGenerationMsg (51) sent to Geo Comp JPEG Generator (TES)
-	BaseMsg m_stop_jpeg_generation_msg;
+    StopJpegGenerationMsg m_stop_jpeg_generation_msg;
 													
     // Stores ReportJpegGenerationLivenessMsg (6) received from Geo Comp JPEG Generator (TES)
 	ReportJpegGenerationLivenessMsg m_report_jpeg_generation_liveness_msg;

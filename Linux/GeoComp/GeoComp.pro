@@ -12,7 +12,5 @@ TEMPLATE = subdirs
 SUBDIRS += DDS/DDS.pro \
 	Manager/Manager.pro \
 	FlightPlan/FlightPlan.pro \
-	UserInput/UserInput.pro \
-	Messages/Messages.pro \
-	Server/Server.pro
+        UserInput/UserInput.pro
 

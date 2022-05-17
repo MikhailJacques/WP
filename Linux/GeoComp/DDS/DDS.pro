@@ -4,7 +4,8 @@
 
 TEMPLATE = lib
 TARGET = DDS
-DESTDIR = ../x64/Debug
+DESTDIR = $$_PRO_FILE_PWD_/../x64/Debug
+#message($$DESTDIR)
 CONFIG += staticlib debug console
 win32{ INCLUDEPATH += src \
                inc \

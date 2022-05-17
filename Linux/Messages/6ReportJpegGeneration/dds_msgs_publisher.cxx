@@ -43,7 +43,6 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     dds::pub::Publisher publisher(participant);
 
     // Create a DataWriter with default QoS
-    //dds::pub::DataWriter<dds_msgs::ReportJpegGenerationLivenessMsg> writer(publisher, topic);
     dds::core::QosProvider m_qos_provider = dds::core::QosProvider::Default();
     dds::pub::DataWriter<dds_msgs::ReportJpegGenerationLivenessMsg> writer(publisher, topic, m_qos_provider.datawriter_qos("WorldPerceptionQoS::ReportJpegGenerationLivenessMsg"));
 

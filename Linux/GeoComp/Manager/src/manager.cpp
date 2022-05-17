@@ -7,6 +7,9 @@
 #include <mutex>
 #include "manager.h"
 
+#include <stdio.h>
+#include <string.h>
+
 using namespace std;
 using namespace dds_msgs;
 
@@ -33,12 +36,12 @@ Manager::Manager(std::string sentinel) :
 
 	// Create new logger file for logging all events	
 	stringstream manager_log_path;
-    manager_log_path << "/home/user/WP/logs/manager_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
+    manager_log_path << "/home/user/WP/Linux/GeoComp/logs/manager_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
 	m_event_logger.Start(manager_log_path.str(), "Geo Comp Manager event logger is started");
 	
 	// Create new logger file for logging platform location message contents
 	stringstream platform_location_log_path;
-    platform_location_log_path << "/home/user/WP/logs/platform_location_log_" + m_platform_location_logger.Get_Timestamp_File() + ".txt";
+    platform_location_log_path << "/home/user/WP/Linux/GeoComp/logs/platform_location_log_" + m_platform_location_logger.Get_Timestamp_File() + ".txt";
 	m_platform_location_logger.Start(platform_location_log_path.str(), "Platform Location event logger is started");
 	m_platform_location_queue.push("Lat	Lon	Alt");
 
@@ -47,7 +50,7 @@ Manager::Manager(std::string sentinel) :
 	m_platform_location_thread = std::thread(&Manager::LogPlatformLocation, this, m_sentinel);
 
 	// Open pre-defined DDS configuration file for reading DDS configuration information
-    config_file.open("/home/user/WP/config/config_dds.json", ios::in);
+    config_file.open("/home/user/WP/Linux/GeoComp/config/config_dds.json", ios::in);
 
 	// Read information from DDS configuration file in JSON format and store it in root
 	bool init_flag = reader.parse(config_file, root);
@@ -60,7 +63,7 @@ Manager::Manager(std::string sentinel) :
 		m_dds_comm_init_params.communicator_name.assign(root["communicator_name"].asString());					// "WorldPerception";
 		m_dds_comm_init_params.qos_default_library_name.assign(root["qos_default_library_name"].asString());	// "WorldPerceptionQoS";
 		//m_dds_comm_init_params.qos_default_profile_name;														// nothing
-        m_dds_comm_init_params.qos_xml_uri.assign("/home/user/WP/config/USER_QOS_PROFILES.xml");
+        m_dds_comm_init_params.qos_xml_uri.assign("/home/user/WP/Linux/GeoComp/config/USER_QOS_PROFILES.xml");
 
 		// Initialize DDS communicator
 		init_flag = m_dds_comm.Init(m_dds_comm_init_params);
@@ -82,6 +85,7 @@ Manager::Manager(std::string sentinel) :
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<DroneScanRouteMsg>("DroneScanRouteMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<PlatformLocationMsg>("PlatformLocationMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<StartJpegGenerationMsg>("StartJpegGenerationMsg") != nullptr)) ? true : false;
+    init_flag = ((init_flag) && (m_dds_comm.CreateWriter<StopJpegGenerationMsg>("StopJpegGenerationMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<DoubleUrlMsg>("UploadCurrModelMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<DoubleUrlMsg>("UploadDiffModelMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<DoubleUrlMsg>("RequestRefModelMsg") != nullptr)) ? true : false;
@@ -91,7 +95,7 @@ Manager::Manager(std::string sentinel) :
 		// MJ TODO: Commented out for the purpose of integration with COMMIT
 		// Open pre-defined TCP configuration file for reading TCP configuration information
 
-        config_file.open("/home/user/WP/config/config_tcp.json", ios::in);
+        config_file.open("/home/user/WP/Linux/GeoComp/config/config_tcp.json", ios::in);
 
 		// Read configuration information from TCP configuration file in JSON format and store it in root
 		init_flag = reader.parse(config_file, root);
@@ -167,40 +171,46 @@ void Manager::Stop(void)
 
 void Manager::LogEvent(std::string sentinel)
 {
-	std::string msg;
-
 	while (true)
 	{
+        std::string msg;
+
 		msg.assign(m_event_queue.pop());
 
-		if (msg.compare(sentinel) == 0)
+        if (msg.compare(sentinel) != 0)
 		{
-			m_event_logger.Close("Geo Comp Manager event logger is closed");
-			break;
+            m_event_logger.Print(msg);
 		}
+        else
+        {
+            m_event_logger.Close("Geo Comp Manager event logger is closed");
+            break;
+        }
 
-		m_event_logger.Print(msg);
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(200));
 	}
 }
 
 void Manager::LogPlatformLocation(std::string sentinel)
 {
-	std::string msg;
+    while (true)
+    {
+        std::string msg;
 
-	while (true)
-	{
-		msg.assign(m_platform_location_queue.pop());
+        msg.assign(m_platform_location_queue.pop());
 
-		if (msg.compare(sentinel) == 0)
-		{
-			m_platform_location_logger.Close("Platform Location event logger is closed");
-			break;
-		}
+        if (msg.compare(sentinel) != 0)
+        {
+            m_platform_location_logger.Print_Location(msg);
+        }
+        else
+        {
+            m_platform_location_logger.Close("Platform Location event logger is closed");
+            break;
+        }
 
-		m_platform_location_logger.Print_Location(msg);
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
-	}
+        //std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
 }
 
 // AirBuild/AirDiff sequences
@@ -328,7 +338,7 @@ STATE_DEFINE(Manager, Get_Drone_Scan_Route_State, NoEventData)
 
 	m_get_drone_scan_route_msg.ScanArea().clear();
 	m_get_drone_scan_route_msg.ScanArea().shrink_to_fit();
-	for (int ii = 0; ii < m_mission_plan_msg.ScanArea().size(); ii++)
+    for (unsigned int ii = 0; ii < m_mission_plan_msg.ScanArea().size(); ii++)
 		m_get_drone_scan_route_msg.ScanArea().push_back(m_mission_plan_msg.ScanArea().at(ii));
 
 	m_get_drone_scan_route_msg.ScanAreaGroundAvgAlt(m_mission_plan_msg.ScanAreaGroundAvgAlt());
@@ -374,20 +384,27 @@ STATE_DEFINE(Manager, Drone_Scan_Route_State, NoEventData)
 	// Wait to receive a new DroneScanRouteMsg
 	m_drone_scan_route_msg = m_drone_scan_route_queue.pop();
 
-    if (m_dds_comm.Write<DroneScanRouteMsg>("DroneScanRouteMsg", m_drone_scan_route_msg))
-    {
-        std::stringstream ss;
-        ss << "Send DroneScanRouteMsg (3) (DDS) to Geo Comp Mission Broadcaster (COMMIT) and Geo Comp JPEG Generator (TES): "
-           << m_drone_scan_route_msg.MsgCount();
-        m_event_queue.push(ss.str());
-		m_event_queue.push("Drone_Scan_Route_State exit");
-		InternalEvent(START_JPEG_GENERATION_STATE);
-	}
-	else
-	{
-		m_event_queue.push("Drone_Scan_Route_State error");
-		InternalEvent(FINALIZATION_STATE);
-	}
+    std::stringstream ss;
+    ss << "Receive DroneScanRouteMsg (3) (DDS) from Geo Comp Flight Plan Service (Elta): "
+       << m_drone_scan_route_msg.MsgCount();
+    m_event_queue.push(ss.str());
+    m_event_queue.push("Drone_Scan_Route_State exit");
+    InternalEvent(START_JPEG_GENERATION_STATE);
+
+//    if (m_dds_comm.Write<DroneScanRouteMsg>("DroneScanRouteMsg", m_drone_scan_route_msg))
+//    {
+//        std::stringstream ss;
+//        ss << "Send DroneScanRouteMsg (3) (DDS) to Geo Comp Mission Broadcaster (COMMIT) and Geo Comp JPEG Generator (TES): "
+//           << m_drone_scan_route_msg.MsgCount();
+//        m_event_queue.push(ss.str());
+//		m_event_queue.push("Drone_Scan_Route_State exit");
+//		InternalEvent(START_JPEG_GENERATION_STATE);
+//	}
+//	else
+//	{
+//		m_event_queue.push("Drone_Scan_Route_State error");
+//		InternalEvent(FINALIZATION_STATE);
+//	}
 }
 
 // AirBuild/AirDiff sequences
@@ -440,7 +457,7 @@ STATE_DEFINE(Manager, Stop_Jpeg_Generation_State, NoEventData)
 	m_stop_jpeg_generation_msg.MissionId(m_mission_plan_msg.MissionId());
 
 	// Send DDS message
-	if (m_dds_comm.Write<BaseMsg>("StopJpegGenerationMsg", m_stop_jpeg_generation_msg))
+    if (m_dds_comm.Write<StopJpegGenerationMsg>("StopJpegGenerationMsg", m_stop_jpeg_generation_msg))
 	{
 		std::stringstream ss;
         ss << "Send StopJpegGenerationMsg (51) (DDS) to Geo Comp JPEG Generator (TES): "
@@ -519,7 +536,7 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
 
 		if (valid_param_flag == true)
 		{
-			// Compose StartModelGenerationMsg (7) in JSON format
+            // Compose StartModelGenerationMsg (7) payload in JSON format
 			Json::Value root;
 			root["MsgId"] = 7;
 			root["MsgCount"] = ++m_start_model_generation_msg_cnt;
@@ -536,21 +553,20 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
 			//Json::StyledWriter styled_writer;
 			//std::string StartModelGenerationMsg = styled_writer.write(root);
 
-			if (m_tcp_client_sightec.Send(StartModelGenerationMsg) == true)
+            if (m_tcp_client_sightec.Send(StartModelGenerationMsg) == true)
 			{
 				m_event_queue.push("Send StartModelGenerationMsg (7) to Geo Comp DSM App (Sightec) (TCP)");
 			}
 			else
 			{
-				m_event_queue.push("Send StartModelGenerationMsg (7) to Geo Comp DSM App (Sightec) (TCP) - FAILED");
+                m_event_queue.push("ERROR: Failed to send StartModelGenerationMsg (7) to Geo Comp DSM App (Sightec) (TCP)");
 			}
 
-			std::string rx_msg, status;
+            std::string rx_msg, status;
 
 			do
 			{
-				// MJ TODO: Discuss with Sightec message arrival frequency
-				int num_of_rx_bytes = m_tcp_client_sightec.Receive(rx_msg);
+                int num_of_rx_bytes = m_tcp_client_sightec.Receive(rx_msg);
 
 				// MJ TODO: Confirm with Sightec status and termination procedure / keywords
 				if (num_of_rx_bytes < 0)
@@ -571,28 +587,28 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
 				{
 					m_event_queue.push("Receive ReportModelGenerationMsg (8) from Geo Comp DSM App (Sightec) (TCP)");
 
-					Json::Value root;
-					Json::Reader reader;
-					bool parse_flag = reader.parse(rx_msg, root);
-					
-					if (parse_flag == true)
-					{
-						//unsigned short msg_id = root["MsgId"].asUInt();
-						//unsigned short msg_cnt = root["MsgCount"].asUInt();
-						//unsigned short mission_id = root["MissionId"].asUInt();
-						status = root["Status"].asString();
-						//unsigned short error_code = root["ErrorCode"].asUInt();
+                    Json::Value root;
+                    Json::Reader reader;
+                    bool parse_flag = reader.parse(rx_msg, root);
 
-						stringstream ss;
-						ss << "ReportModelGenerationMsg (8) status: " << status;
-						m_event_queue.push(ss.str());
-					}
-					else
-					{
-						stringstream ss;
-						ss << "ERROR: ReportModelGenerationMsg (8) bad format";
-						m_event_queue.push(ss.str());
-					}
+                    if (parse_flag == true)
+                    {
+                        //unsigned short msg_id = root["MsgId"].asUInt();
+                        //unsigned short msg_cnt = root["MsgCount"].asUInt();
+                        //unsigned short mission_id = root["MissionId"].asUInt();
+                        status = root["Status"].asString();
+                        //unsigned short error_code = root["ErrorCode"].asUInt();
+
+                        stringstream ss;
+                        ss << "ReportModelGenerationMsg (8) status: " << status;
+                        m_event_queue.push(ss.str());
+                    }
+                    else
+                    {
+                        stringstream ss;
+                        ss << "ERROR: ReportModelGenerationMsg (8) bad format";
+                        m_event_queue.push(ss.str());
+                    }
 				}
 
 			} while (status.compare(m_sentinel) != 0);
@@ -816,12 +832,12 @@ STATE_DEFINE(Manager, Finalization_State, NoEventData)
 	m_event_queue.push("Finalization_State entry");
 
 	stringstream ss;
-	ss << "Thank you for using Michael's Geo Computer Manager Service";
+    ss << "Thank you for using Michael's Geo Computer Manager";
 	m_event_queue.push(ss.str());
 	m_event_queue.push(m_sentinel);
 	m_platform_location_queue.push(m_sentinel);
 	
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    // std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	m_event_thread.join();
 	m_platform_location_thread.join();

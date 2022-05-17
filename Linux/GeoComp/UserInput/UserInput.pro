@@ -4,7 +4,7 @@
 
 TEMPLATE = app
 TARGET = UserInput
-DESTDIR = ../x64/Debug
+DESTDIR = $$_PRO_FILE_PWD_/../x64/Debug
 CONFIG += debug console
 win32{ INCLUDEPATH += src \
                inc \
@@ -36,7 +36,7 @@ win32{ LIBS += \
     -lDDS
     }
 linux{ LIBS += \
-    -L$$PWD/../../build/x64/Debug/  -lDDS \
+    -L$$PWD/../x64/Debug/  -lDDS \
     -L/home/user/rti_connext_dds-6.1.0/lib/x64Linux4gcc7.3.0 -lnddscpp2zd \
     -L/home/user/rti_connext_dds-6.1.0/lib/x64Linux4gcc7.3.0 -lnddsczd \
     -L/home/user/rti_connext_dds-6.1.0/lib/x64Linux4gcc7.3.0 -lnddscorezd \

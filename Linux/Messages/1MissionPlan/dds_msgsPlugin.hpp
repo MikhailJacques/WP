@@ -10,8 +10,8 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the Code Generator User's Manual.
 */
 
-#ifndef dds_msgsPlugin_1583855743_h
-#define dds_msgsPlugin_1583855743_h
+#ifndef dds_msgsPlugin_1583855687_h
+#define dds_msgsPlugin_1583855687_h
 
 #include "dds_msgs.hpp"
 
@@ -1534,6 +1534,215 @@ namespace dds_msgs {
     /* The type used to store keys for instances of type struct
     * AnotherSimple.
     *
+    * By default, this type is struct StopJpegGenerationMsg
+    * itself. However, if for some reason this choice is not practical for your
+    * system (e.g. if sizeof(struct StopJpegGenerationMsg)
+    * is very large), you may redefine this typedef in terms of another type of
+    * your choosing. HOWEVER, if you define the KeyHolder type to be something
+    * other than struct AnotherSimple, the
+    * following restriction applies: the key of struct
+    * StopJpegGenerationMsg must consist of a
+    * single field of your redefined KeyHolder type and that field must be the
+    * first field in struct StopJpegGenerationMsg.
+    */
+    typedef  class StopJpegGenerationMsg StopJpegGenerationMsgKeyHolder;
+
+    #define StopJpegGenerationMsgPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample
+
+    #define StopJpegGenerationMsgPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+    #define StopJpegGenerationMsgPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer
+
+    #define StopJpegGenerationMsgPlugin_get_key PRESTypePluginDefaultEndpointData_getKey 
+    #define StopJpegGenerationMsgPlugin_return_key PRESTypePluginDefaultEndpointData_returnKey
+
+    #define StopJpegGenerationMsgPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+    #define StopJpegGenerationMsgPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+
+    /* --------------------------------------------------------------------------------------
+    Support functions:
+    * -------------------------------------------------------------------------------------- */
+
+    NDDSUSERDllExport extern StopJpegGenerationMsg*
+    StopJpegGenerationMsgPluginSupport_create_data_w_params(
+        const struct DDS_TypeAllocationParams_t * alloc_params);
+
+    NDDSUSERDllExport extern StopJpegGenerationMsg*
+    StopJpegGenerationMsgPluginSupport_create_data_ex(RTIBool allocate_pointers);
+
+    NDDSUSERDllExport extern StopJpegGenerationMsg*
+    StopJpegGenerationMsgPluginSupport_create_data(void);
+
+    NDDSUSERDllExport extern RTIBool 
+    StopJpegGenerationMsgPluginSupport_copy_data(
+        StopJpegGenerationMsg *out,
+        const StopJpegGenerationMsg *in);
+
+    NDDSUSERDllExport extern void 
+    StopJpegGenerationMsgPluginSupport_destroy_data_w_params(
+        StopJpegGenerationMsg *sample,
+        const struct DDS_TypeDeallocationParams_t * dealloc_params);
+
+    NDDSUSERDllExport extern void 
+    StopJpegGenerationMsgPluginSupport_destroy_data_ex(
+        StopJpegGenerationMsg *sample,RTIBool deallocate_pointers);
+
+    NDDSUSERDllExport extern void 
+    StopJpegGenerationMsgPluginSupport_destroy_data(
+        StopJpegGenerationMsg *sample);
+
+    NDDSUSERDllExport extern void 
+    StopJpegGenerationMsgPluginSupport_print_data(
+        const StopJpegGenerationMsg *sample,
+        const char *desc,
+        unsigned int indent);
+
+    NDDSUSERDllExport extern StopJpegGenerationMsg*
+    StopJpegGenerationMsgPluginSupport_create_key_ex(RTIBool allocate_pointers);
+
+    NDDSUSERDllExport extern StopJpegGenerationMsg*
+    StopJpegGenerationMsgPluginSupport_create_key(void);
+
+    NDDSUSERDllExport extern void 
+    StopJpegGenerationMsgPluginSupport_destroy_key_ex(
+        StopJpegGenerationMsgKeyHolder *key,RTIBool deallocate_pointers);
+
+    NDDSUSERDllExport extern void 
+    StopJpegGenerationMsgPluginSupport_destroy_key(
+        StopJpegGenerationMsgKeyHolder *key);
+
+    /* ----------------------------------------------------------------------------
+    Callback functions:
+    * ---------------------------------------------------------------------------- */
+
+    NDDSUSERDllExport extern PRESTypePluginParticipantData 
+    StopJpegGenerationMsgPlugin_on_participant_attached(
+        void *registration_data, 
+        const struct PRESTypePluginParticipantInfo *participant_info,
+        RTIBool top_level_registration, 
+        void *container_plugin_context,
+        RTICdrTypeCode *typeCode);
+
+    NDDSUSERDllExport extern void 
+    StopJpegGenerationMsgPlugin_on_participant_detached(
+        PRESTypePluginParticipantData participant_data);
+
+    NDDSUSERDllExport extern PRESTypePluginEndpointData 
+    StopJpegGenerationMsgPlugin_on_endpoint_attached(
+        PRESTypePluginParticipantData participant_data,
+        const struct PRESTypePluginEndpointInfo *endpoint_info,
+        RTIBool top_level_registration, 
+        void *container_plugin_context);
+
+    NDDSUSERDllExport extern void 
+    StopJpegGenerationMsgPlugin_on_endpoint_detached(
+        PRESTypePluginEndpointData endpoint_data);
+
+    NDDSUSERDllExport extern void    
+    StopJpegGenerationMsgPlugin_return_sample(
+        PRESTypePluginEndpointData endpoint_data,
+        StopJpegGenerationMsg *sample,
+        void *handle);    
+
+    NDDSUSERDllExport extern RTIBool 
+    StopJpegGenerationMsgPlugin_copy_sample(
+        PRESTypePluginEndpointData endpoint_data,
+        StopJpegGenerationMsg *out,
+        const StopJpegGenerationMsg *in);
+
+    /* ----------------------------------------------------------------------------
+    (De)Serialize functions:
+    * ------------------------------------------------------------------------- */
+
+    NDDSUSERDllExport extern RTIBool
+    StopJpegGenerationMsgPlugin_serialize_to_cdr_buffer(
+        char * buffer,
+        unsigned int * length,
+        const StopJpegGenerationMsg *sample,
+        ::dds::core::policy::DataRepresentationId representation
+        = ::dds::core::policy::DataRepresentation::xcdr()); 
+
+    NDDSUSERDllExport extern RTIBool 
+    StopJpegGenerationMsgPlugin_deserialize(
+        PRESTypePluginEndpointData endpoint_data,
+        StopJpegGenerationMsg **sample, 
+        RTIBool * drop_sample,
+        struct RTICdrStream *stream,
+        RTIBool deserialize_encapsulation,
+        RTIBool deserialize_sample, 
+        void *endpoint_plugin_qos);
+
+    NDDSUSERDllExport extern RTIBool
+    StopJpegGenerationMsgPlugin_deserialize_from_cdr_buffer(
+        StopJpegGenerationMsg *sample,
+        const char * buffer,
+        unsigned int length);    
+
+    NDDSUSERDllExport extern unsigned int 
+    StopJpegGenerationMsgPlugin_get_serialized_sample_max_size(
+        PRESTypePluginEndpointData endpoint_data,
+        RTIBool include_encapsulation,
+        RTIEncapsulationId encapsulation_id,
+        unsigned int current_alignment);
+
+    /* --------------------------------------------------------------------------------------
+    Key Management functions:
+    * -------------------------------------------------------------------------------------- */
+    NDDSUSERDllExport extern PRESTypePluginKeyKind 
+    StopJpegGenerationMsgPlugin_get_key_kind(void);
+
+    NDDSUSERDllExport extern unsigned int 
+    StopJpegGenerationMsgPlugin_get_serialized_key_max_size(
+        PRESTypePluginEndpointData endpoint_data,
+        RTIBool include_encapsulation,
+        RTIEncapsulationId encapsulation_id,
+        unsigned int current_alignment);
+
+    NDDSUSERDllExport extern unsigned int 
+    StopJpegGenerationMsgPlugin_get_serialized_key_max_size_for_keyhash(
+        PRESTypePluginEndpointData endpoint_data,
+        RTIEncapsulationId encapsulation_id,
+        unsigned int current_alignment);
+
+    NDDSUSERDllExport extern RTIBool 
+    StopJpegGenerationMsgPlugin_deserialize_key(
+        PRESTypePluginEndpointData endpoint_data,
+        StopJpegGenerationMsg ** sample,
+        RTIBool * drop_sample,
+        struct RTICdrStream *stream,
+        RTIBool deserialize_encapsulation,
+        RTIBool deserialize_key,
+        void *endpoint_plugin_qos);
+
+    NDDSUSERDllExport extern RTIBool 
+    StopJpegGenerationMsgPlugin_instance_to_key(
+        PRESTypePluginEndpointData endpoint_data,
+        StopJpegGenerationMsgKeyHolder *key, 
+        const StopJpegGenerationMsg *instance);
+
+    NDDSUSERDllExport extern RTIBool 
+    StopJpegGenerationMsgPlugin_key_to_instance(
+        PRESTypePluginEndpointData endpoint_data,
+        StopJpegGenerationMsg *instance, 
+        const StopJpegGenerationMsgKeyHolder *key);
+
+    NDDSUSERDllExport extern RTIBool 
+    StopJpegGenerationMsgPlugin_serialized_sample_to_keyhash(
+        PRESTypePluginEndpointData endpoint_data,
+        struct RTICdrStream *stream, 
+        DDS_KeyHash_t *keyhash,
+        RTIBool deserialize_encapsulation,
+        void *endpoint_plugin_qos); 
+
+    /* Plugin Functions */
+    NDDSUSERDllExport extern struct PRESTypePlugin*
+    StopJpegGenerationMsgPlugin_new(void);
+
+    NDDSUSERDllExport extern void
+    StopJpegGenerationMsgPlugin_delete(struct PRESTypePlugin *);
+
+    /* The type used to store keys for instances of type struct
+    * AnotherSimple.
+    *
     * By default, this type is struct ReportJpegGenerationLivenessMsg
     * itself. However, if for some reason this choice is not practical for your
     * system (e.g. if sizeof(struct ReportJpegGenerationLivenessMsg)
@@ -2585,5 +2794,5 @@ namespace dds_msgs {
 #define NDDSUSERDllExport
 #endif
 
-#endif /* dds_msgsPlugin_1583855743_h */
+#endif /* dds_msgsPlugin_1583855687_h */
 

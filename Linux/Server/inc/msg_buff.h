@@ -7,8 +7,14 @@
 
 const unsigned short MSG_BUFF_LEN = (1024);
 
-// Global structure for storing all incoming messages
 typedef struct msg_buff_struct
 {
 	unsigned char payload_bptr[MSG_BUFF_LEN];
 } MSG_BUFF_STRUCT;
+
+typedef struct msg_struct
+{
+    unsigned short len;
+    unsigned char payload_bptr[MSG_BUFF_LEN];
+
+} MSG_STRUCT;

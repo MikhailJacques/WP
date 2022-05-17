@@ -43,7 +43,6 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     dds::pub::Publisher publisher(participant);
 
     // Create a DataWriter with default QoS
-    //dds::pub::DataWriter<dds_msgs::GetDroneScanRouteMsg> writer(publisher, topic);
     dds::core::QosProvider m_qos_provider = dds::core::QosProvider::Default();
     dds::pub::DataWriter<dds_msgs::GetDroneScanRouteMsg> writer(publisher, topic, m_qos_provider.datawriter_qos("WorldPerceptionQoS::GetDroneScanRouteMsg"));
 
@@ -60,7 +59,7 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     waypoints[1] = dds_msgs::GeoPoint(32.635200, 35.046665, 200);
     waypoints[2] = dds_msgs::GeoPoint(32.635200, 35.046700, 300);
 
-    for (int ii = 0; ii < data.ScanArea().size(); ii++)
+    for (unsigned long ii = 0; ii < data.ScanArea().size(); ii++)
         data.ScanArea().push_back(waypoints[ii]);
 
     data.ScanAreaGroundAvgAlt(100);

@@ -9,11 +9,13 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 TEMPLATE = subdirs
 SUBDIRS += 1MissionPlan/1MissionPlan.pro \
-        1MissionPlan_Subscriber/1MissionPlan_Subscriber.pro \
+        1MissionPlan_Sub/1MissionPlan_Sub.pro \
 	2GetDroneScanRoute/2GetDroneScanRoute.pro \
 	3DroneScanRoute/3DroneScanRoute.pro \
+        3DroneScanRoute_Sub/3DroneScanRoute_Sub.pro \
 	4PlatformLocation/4PlatformLocation.pro \
 	5StartJpegGeneration/5StartJpegGeneration.pro \
+	51StopJpegGeneration/51StopJpegGeneration.pro \
 	6ReportJpegGeneration/6ReportJpegGeneration.pro \
         91UploadCurrModel/91UploadCurrModel.pro \
         92UploadDiffModel/92UploadDiffModel.pro \

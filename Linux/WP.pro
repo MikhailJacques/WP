@@ -9,14 +9,7 @@ message("You are running qmake on a generated .pro file. This may not work!")
 CONFIG +=ordered
 
 TEMPLATE = subdirs
-SUBDIRS += DDS/DDS.pro \
-	Manager/Manager.pro \
-	FlightPlan/FlightPlan.pro \
-	UserInput/UserInput.pro \
+SUBDIRS += GeoComp/GeoComp.pro \
 	Messages/Messages.pro \
 	Server/Server.pro
-	
-	GeoComp/GeoComp.pro \
-	Messages/Messages.pro \
-	Server\Server.pro
 

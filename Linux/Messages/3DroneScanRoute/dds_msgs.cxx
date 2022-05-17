@@ -341,6 +341,900 @@ namespace dds_msgs {
         return o;
     }
 
+    // ---- GetDroneScanRouteMsg: 
+
+    GetDroneScanRouteMsg::GetDroneScanRouteMsg() :
+        m_ScanType_(dds_msgs::EnumScan::None) ,
+        m_ScanAreaGroundAvgAlt_ (0) ,
+        m_FlightAltAboveGroundAvgAlt_ (0) ,
+        m_TakeoffAltAboveSeaLevel_ (0) ,
+        m_FlightSpeed_ (0) ,
+        m_CameraHorizontalFOV_ (0) ,
+        m_CameraVerticalFOV_ (0) ,
+        m_CameraHorizontalResolution_ (0U) ,
+        m_CameraVerticalResolution_ (0U) ,
+        m_OverlapInFlightDirection_ (0) ,
+        m_OverlapInLateralDirection_ (0) ,
+        m_GimbalPitchAngle_ (0) ,
+        m_SquareSide_ (0U)  {
+    }   
+
+    GetDroneScanRouteMsg::GetDroneScanRouteMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const dds_msgs::EnumScan& ScanType,
+        const ::rti::core::bounded_sequence< dds_msgs::GeoPoint, 3L >& ScanArea,
+        int16_t ScanAreaGroundAvgAlt,
+        int16_t FlightAltAboveGroundAvgAlt,
+        int16_t TakeoffAltAboveSeaLevel,
+        uint8_t FlightSpeed,
+        uint8_t CameraHorizontalFOV,
+        uint8_t CameraVerticalFOV,
+        uint16_t CameraHorizontalResolution,
+        uint16_t CameraVerticalResolution,
+        uint8_t OverlapInFlightDirection,
+        uint8_t OverlapInLateralDirection,
+        int16_t GimbalPitchAngle,
+        const dds_msgs::GeoPoint& SquareCenter,
+        uint16_t SquareSide)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_ScanType_( ScanType ),
+            m_ScanArea_( ScanArea ),
+            m_ScanAreaGroundAvgAlt_( ScanAreaGroundAvgAlt ),
+            m_FlightAltAboveGroundAvgAlt_( FlightAltAboveGroundAvgAlt ),
+            m_TakeoffAltAboveSeaLevel_( TakeoffAltAboveSeaLevel ),
+            m_FlightSpeed_( FlightSpeed ),
+            m_CameraHorizontalFOV_( CameraHorizontalFOV ),
+            m_CameraVerticalFOV_( CameraVerticalFOV ),
+            m_CameraHorizontalResolution_( CameraHorizontalResolution ),
+            m_CameraVerticalResolution_( CameraVerticalResolution ),
+            m_OverlapInFlightDirection_( OverlapInFlightDirection ),
+            m_OverlapInLateralDirection_( OverlapInLateralDirection ),
+            m_GimbalPitchAngle_( GimbalPitchAngle ),
+            m_SquareCenter_( SquareCenter ),
+            m_SquareSide_( SquareSide ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    GetDroneScanRouteMsg::GetDroneScanRouteMsg(GetDroneScanRouteMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_ScanType_ (std::move(other_.m_ScanType_))
+    ,
+    m_ScanArea_ (std::move(other_.m_ScanArea_))
+    ,
+    m_ScanAreaGroundAvgAlt_ (std::move(other_.m_ScanAreaGroundAvgAlt_))
+    ,
+    m_FlightAltAboveGroundAvgAlt_ (std::move(other_.m_FlightAltAboveGroundAvgAlt_))
+    ,
+    m_TakeoffAltAboveSeaLevel_ (std::move(other_.m_TakeoffAltAboveSeaLevel_))
+    ,
+    m_FlightSpeed_ (std::move(other_.m_FlightSpeed_))
+    ,
+    m_CameraHorizontalFOV_ (std::move(other_.m_CameraHorizontalFOV_))
+    ,
+    m_CameraVerticalFOV_ (std::move(other_.m_CameraVerticalFOV_))
+    ,
+    m_CameraHorizontalResolution_ (std::move(other_.m_CameraHorizontalResolution_))
+    ,
+    m_CameraVerticalResolution_ (std::move(other_.m_CameraVerticalResolution_))
+    ,
+    m_OverlapInFlightDirection_ (std::move(other_.m_OverlapInFlightDirection_))
+    ,
+    m_OverlapInLateralDirection_ (std::move(other_.m_OverlapInLateralDirection_))
+    ,
+    m_GimbalPitchAngle_ (std::move(other_.m_GimbalPitchAngle_))
+    ,
+    m_SquareCenter_ (std::move(other_.m_SquareCenter_))
+    ,
+    m_SquareSide_ (std::move(other_.m_SquareSide_))
+    {
+    } 
+
+    GetDroneScanRouteMsg& GetDroneScanRouteMsg::operator=(GetDroneScanRouteMsg&&  other_) OMG_NOEXCEPT {
+        GetDroneScanRouteMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void GetDroneScanRouteMsg::swap(GetDroneScanRouteMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_ScanType_, other_.m_ScanType_);
+        swap(m_ScanArea_, other_.m_ScanArea_);
+        swap(m_ScanAreaGroundAvgAlt_, other_.m_ScanAreaGroundAvgAlt_);
+        swap(m_FlightAltAboveGroundAvgAlt_, other_.m_FlightAltAboveGroundAvgAlt_);
+        swap(m_TakeoffAltAboveSeaLevel_, other_.m_TakeoffAltAboveSeaLevel_);
+        swap(m_FlightSpeed_, other_.m_FlightSpeed_);
+        swap(m_CameraHorizontalFOV_, other_.m_CameraHorizontalFOV_);
+        swap(m_CameraVerticalFOV_, other_.m_CameraVerticalFOV_);
+        swap(m_CameraHorizontalResolution_, other_.m_CameraHorizontalResolution_);
+        swap(m_CameraVerticalResolution_, other_.m_CameraVerticalResolution_);
+        swap(m_OverlapInFlightDirection_, other_.m_OverlapInFlightDirection_);
+        swap(m_OverlapInLateralDirection_, other_.m_OverlapInLateralDirection_);
+        swap(m_GimbalPitchAngle_, other_.m_GimbalPitchAngle_);
+        swap(m_SquareCenter_, other_.m_SquareCenter_);
+        swap(m_SquareSide_, other_.m_SquareSide_);
+    }  
+
+    bool GetDroneScanRouteMsg::operator == (const GetDroneScanRouteMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_ScanType_ != other_.m_ScanType_) {
+            return false;
+        }
+        if (m_ScanArea_ != other_.m_ScanArea_) {
+            return false;
+        }
+        if (m_ScanAreaGroundAvgAlt_ != other_.m_ScanAreaGroundAvgAlt_) {
+            return false;
+        }
+        if (m_FlightAltAboveGroundAvgAlt_ != other_.m_FlightAltAboveGroundAvgAlt_) {
+            return false;
+        }
+        if (m_TakeoffAltAboveSeaLevel_ != other_.m_TakeoffAltAboveSeaLevel_) {
+            return false;
+        }
+        if (m_FlightSpeed_ != other_.m_FlightSpeed_) {
+            return false;
+        }
+        if (m_CameraHorizontalFOV_ != other_.m_CameraHorizontalFOV_) {
+            return false;
+        }
+        if (m_CameraVerticalFOV_ != other_.m_CameraVerticalFOV_) {
+            return false;
+        }
+        if (m_CameraHorizontalResolution_ != other_.m_CameraHorizontalResolution_) {
+            return false;
+        }
+        if (m_CameraVerticalResolution_ != other_.m_CameraVerticalResolution_) {
+            return false;
+        }
+        if (m_OverlapInFlightDirection_ != other_.m_OverlapInFlightDirection_) {
+            return false;
+        }
+        if (m_OverlapInLateralDirection_ != other_.m_OverlapInLateralDirection_) {
+            return false;
+        }
+        if (m_GimbalPitchAngle_ != other_.m_GimbalPitchAngle_) {
+            return false;
+        }
+        if (m_SquareCenter_ != other_.m_SquareCenter_) {
+            return false;
+        }
+        if (m_SquareSide_ != other_.m_SquareSide_) {
+            return false;
+        }
+        return true;
+    }
+    bool GetDroneScanRouteMsg::operator != (const GetDroneScanRouteMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const GetDroneScanRouteMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "ScanType: " << sample.ScanType()<<", ";
+        o << "ScanArea: " << sample.ScanArea()<<", ";
+        o << "ScanAreaGroundAvgAlt: " << sample.ScanAreaGroundAvgAlt()<<", ";
+        o << "FlightAltAboveGroundAvgAlt: " << sample.FlightAltAboveGroundAvgAlt()<<", ";
+        o << "TakeoffAltAboveSeaLevel: " << sample.TakeoffAltAboveSeaLevel()<<", ";
+        o << "FlightSpeed: " << (int)sample.FlightSpeed() <<", ";
+        o << "CameraHorizontalFOV: " << (int)sample.CameraHorizontalFOV() <<", ";
+        o << "CameraVerticalFOV: " << (int)sample.CameraVerticalFOV() <<", ";
+        o << "CameraHorizontalResolution: " << sample.CameraHorizontalResolution()<<", ";
+        o << "CameraVerticalResolution: " << sample.CameraVerticalResolution()<<", ";
+        o << "OverlapInFlightDirection: " << (int)sample.OverlapInFlightDirection() <<", ";
+        o << "OverlapInLateralDirection: " << (int)sample.OverlapInLateralDirection() <<", ";
+        o << "GimbalPitchAngle: " << sample.GimbalPitchAngle()<<", ";
+        o << "SquareCenter: " << sample.SquareCenter()<<", ";
+        o << "SquareSide: " << sample.SquareSide() ;
+        o <<"]";
+        return o;
+    }
+
+    // ---- DroneScanRouteMsg: 
+
+    DroneScanRouteMsg::DroneScanRouteMsg() :
+        m_ScanAreaLength_ (0U) ,
+        m_ScanAreaWidth_ (0U) ,
+        m_ModelGroundResolution_ (0) ,
+        m_TimePeriodBetweenFrames_ (0U) ,
+        m_ShortLegLength_ (0U) ,
+        m_NumOfFramesPerLongLeg_ (0U) ,
+        m_TotalNumOfFrames_ (0U)  {
+    }   
+
+    DroneScanRouteMsg::DroneScanRouteMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const ::rti::core::bounded_sequence< dds_msgs::GeoPoint, 100L >& Waypoints,
+        uint16_t ScanAreaLength,
+        uint16_t ScanAreaWidth,
+        uint8_t ModelGroundResolution,
+        uint16_t TimePeriodBetweenFrames,
+        uint16_t ShortLegLength,
+        uint16_t NumOfFramesPerLongLeg,
+        uint16_t TotalNumOfFrames)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_Waypoints_( Waypoints ),
+            m_ScanAreaLength_( ScanAreaLength ),
+            m_ScanAreaWidth_( ScanAreaWidth ),
+            m_ModelGroundResolution_( ModelGroundResolution ),
+            m_TimePeriodBetweenFrames_( TimePeriodBetweenFrames ),
+            m_ShortLegLength_( ShortLegLength ),
+            m_NumOfFramesPerLongLeg_( NumOfFramesPerLongLeg ),
+            m_TotalNumOfFrames_( TotalNumOfFrames ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    DroneScanRouteMsg::DroneScanRouteMsg(DroneScanRouteMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_Waypoints_ (std::move(other_.m_Waypoints_))
+    ,
+    m_ScanAreaLength_ (std::move(other_.m_ScanAreaLength_))
+    ,
+    m_ScanAreaWidth_ (std::move(other_.m_ScanAreaWidth_))
+    ,
+    m_ModelGroundResolution_ (std::move(other_.m_ModelGroundResolution_))
+    ,
+    m_TimePeriodBetweenFrames_ (std::move(other_.m_TimePeriodBetweenFrames_))
+    ,
+    m_ShortLegLength_ (std::move(other_.m_ShortLegLength_))
+    ,
+    m_NumOfFramesPerLongLeg_ (std::move(other_.m_NumOfFramesPerLongLeg_))
+    ,
+    m_TotalNumOfFrames_ (std::move(other_.m_TotalNumOfFrames_))
+    {
+    } 
+
+    DroneScanRouteMsg& DroneScanRouteMsg::operator=(DroneScanRouteMsg&&  other_) OMG_NOEXCEPT {
+        DroneScanRouteMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void DroneScanRouteMsg::swap(DroneScanRouteMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_Waypoints_, other_.m_Waypoints_);
+        swap(m_ScanAreaLength_, other_.m_ScanAreaLength_);
+        swap(m_ScanAreaWidth_, other_.m_ScanAreaWidth_);
+        swap(m_ModelGroundResolution_, other_.m_ModelGroundResolution_);
+        swap(m_TimePeriodBetweenFrames_, other_.m_TimePeriodBetweenFrames_);
+        swap(m_ShortLegLength_, other_.m_ShortLegLength_);
+        swap(m_NumOfFramesPerLongLeg_, other_.m_NumOfFramesPerLongLeg_);
+        swap(m_TotalNumOfFrames_, other_.m_TotalNumOfFrames_);
+    }  
+
+    bool DroneScanRouteMsg::operator == (const DroneScanRouteMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_Waypoints_ != other_.m_Waypoints_) {
+            return false;
+        }
+        if (m_ScanAreaLength_ != other_.m_ScanAreaLength_) {
+            return false;
+        }
+        if (m_ScanAreaWidth_ != other_.m_ScanAreaWidth_) {
+            return false;
+        }
+        if (m_ModelGroundResolution_ != other_.m_ModelGroundResolution_) {
+            return false;
+        }
+        if (m_TimePeriodBetweenFrames_ != other_.m_TimePeriodBetweenFrames_) {
+            return false;
+        }
+        if (m_ShortLegLength_ != other_.m_ShortLegLength_) {
+            return false;
+        }
+        if (m_NumOfFramesPerLongLeg_ != other_.m_NumOfFramesPerLongLeg_) {
+            return false;
+        }
+        if (m_TotalNumOfFrames_ != other_.m_TotalNumOfFrames_) {
+            return false;
+        }
+        return true;
+    }
+    bool DroneScanRouteMsg::operator != (const DroneScanRouteMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const DroneScanRouteMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "Waypoints: " << sample.Waypoints()<<", ";
+        o << "ScanAreaLength: " << sample.ScanAreaLength()<<", ";
+        o << "ScanAreaWidth: " << sample.ScanAreaWidth()<<", ";
+        o << "ModelGroundResolution: " << (int)sample.ModelGroundResolution() <<", ";
+        o << "TimePeriodBetweenFrames: " << sample.TimePeriodBetweenFrames()<<", ";
+        o << "ShortLegLength: " << sample.ShortLegLength()<<", ";
+        o << "NumOfFramesPerLongLeg: " << sample.NumOfFramesPerLongLeg()<<", ";
+        o << "TotalNumOfFrames: " << sample.TotalNumOfFrames() ;
+        o <<"]";
+        return o;
+    }
+
+    // ---- PlatformLocationMsg: 
+
+    PlatformLocationMsg::PlatformLocationMsg() :
+        m_PlatformType_(dds_msgs::EnumPlatform::None) ,
+        m_PlatformId_ (0) ,
+        m_PlatformSpeed_ (0) ,
+        m_PlatformHeading_ (0ULL) ,
+        m_Timestamp_ (0ULL)  {
+    }   
+
+    PlatformLocationMsg::PlatformLocationMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const dds_msgs::EnumPlatform& PlatformType,
+        uint8_t PlatformId,
+        uint8_t PlatformSpeed,
+        double PlatformHeading,
+        const dds_msgs::GeoPoint& PlatformLocation,
+        uint64_t Timestamp)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_PlatformType_( PlatformType ),
+            m_PlatformId_( PlatformId ),
+            m_PlatformSpeed_( PlatformSpeed ),
+            m_PlatformHeading_( PlatformHeading ),
+            m_PlatformLocation_( PlatformLocation ),
+            m_Timestamp_( Timestamp ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    PlatformLocationMsg::PlatformLocationMsg(PlatformLocationMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_PlatformType_ (std::move(other_.m_PlatformType_))
+    ,
+    m_PlatformId_ (std::move(other_.m_PlatformId_))
+    ,
+    m_PlatformSpeed_ (std::move(other_.m_PlatformSpeed_))
+    ,
+    m_PlatformHeading_ (std::move(other_.m_PlatformHeading_))
+    ,
+    m_PlatformLocation_ (std::move(other_.m_PlatformLocation_))
+    ,
+    m_Timestamp_ (std::move(other_.m_Timestamp_))
+    {
+    } 
+
+    PlatformLocationMsg& PlatformLocationMsg::operator=(PlatformLocationMsg&&  other_) OMG_NOEXCEPT {
+        PlatformLocationMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void PlatformLocationMsg::swap(PlatformLocationMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_PlatformType_, other_.m_PlatformType_);
+        swap(m_PlatformId_, other_.m_PlatformId_);
+        swap(m_PlatformSpeed_, other_.m_PlatformSpeed_);
+        swap(m_PlatformHeading_, other_.m_PlatformHeading_);
+        swap(m_PlatformLocation_, other_.m_PlatformLocation_);
+        swap(m_Timestamp_, other_.m_Timestamp_);
+    }  
+
+    bool PlatformLocationMsg::operator == (const PlatformLocationMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_PlatformType_ != other_.m_PlatformType_) {
+            return false;
+        }
+        if (m_PlatformId_ != other_.m_PlatformId_) {
+            return false;
+        }
+        if (m_PlatformSpeed_ != other_.m_PlatformSpeed_) {
+            return false;
+        }
+        if (m_PlatformHeading_ != other_.m_PlatformHeading_) {
+            return false;
+        }
+        if (m_PlatformLocation_ != other_.m_PlatformLocation_) {
+            return false;
+        }
+        if (m_Timestamp_ != other_.m_Timestamp_) {
+            return false;
+        }
+        return true;
+    }
+    bool PlatformLocationMsg::operator != (const PlatformLocationMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const PlatformLocationMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "PlatformType: " << sample.PlatformType()<<", ";
+        o << "PlatformId: " << (int)sample.PlatformId() <<", ";
+        o << "PlatformSpeed: " << (int)sample.PlatformSpeed() <<", ";
+        o << "PlatformHeading: " << std::setprecision(15) <<sample.PlatformHeading()<<", ";
+        o << "PlatformLocation: " << sample.PlatformLocation()<<", ";
+        o << "Timestamp: " << sample.Timestamp() ;
+        o <<"]";
+        return o;
+    }
+
+    // ---- StartJpegGenerationMsg: 
+
+    StartJpegGenerationMsg::StartJpegGenerationMsg() :
+        m_PlatformType_(dds_msgs::EnumPlatform::None) ,
+        m_PlatformId_ (0) ,
+        m_GeoPathJpegFiles_ ("")  {
+    }   
+
+    StartJpegGenerationMsg::StartJpegGenerationMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const dds_msgs::EnumPlatform& PlatformType,
+        uint8_t PlatformId,
+        const std::string& GeoPathJpegFiles)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_PlatformType_( PlatformType ),
+            m_PlatformId_( PlatformId ),
+            m_GeoPathJpegFiles_( GeoPathJpegFiles ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    StartJpegGenerationMsg::StartJpegGenerationMsg(StartJpegGenerationMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_PlatformType_ (std::move(other_.m_PlatformType_))
+    ,
+    m_PlatformId_ (std::move(other_.m_PlatformId_))
+    ,
+    m_GeoPathJpegFiles_ (std::move(other_.m_GeoPathJpegFiles_))
+    {
+    } 
+
+    StartJpegGenerationMsg& StartJpegGenerationMsg::operator=(StartJpegGenerationMsg&&  other_) OMG_NOEXCEPT {
+        StartJpegGenerationMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void StartJpegGenerationMsg::swap(StartJpegGenerationMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_PlatformType_, other_.m_PlatformType_);
+        swap(m_PlatformId_, other_.m_PlatformId_);
+        swap(m_GeoPathJpegFiles_, other_.m_GeoPathJpegFiles_);
+    }  
+
+    bool StartJpegGenerationMsg::operator == (const StartJpegGenerationMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_PlatformType_ != other_.m_PlatformType_) {
+            return false;
+        }
+        if (m_PlatformId_ != other_.m_PlatformId_) {
+            return false;
+        }
+        if (m_GeoPathJpegFiles_ != other_.m_GeoPathJpegFiles_) {
+            return false;
+        }
+        return true;
+    }
+    bool StartJpegGenerationMsg::operator != (const StartJpegGenerationMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const StartJpegGenerationMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "PlatformType: " << sample.PlatformType()<<", ";
+        o << "PlatformId: " << (int)sample.PlatformId() <<", ";
+        o << "GeoPathJpegFiles: " << sample.GeoPathJpegFiles() ;
+        o <<"]";
+        return o;
+    }
+
+    // ---- StopJpegGenerationMsg: 
+
+    StopJpegGenerationMsg::StopJpegGenerationMsg() :
+        m_PlatformType_(dds_msgs::EnumPlatform::None) ,
+        m_PlatformId_ (0)  {
+    }   
+
+    StopJpegGenerationMsg::StopJpegGenerationMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const dds_msgs::EnumPlatform& PlatformType,
+        uint8_t PlatformId)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_PlatformType_( PlatformType ),
+            m_PlatformId_( PlatformId ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    StopJpegGenerationMsg::StopJpegGenerationMsg(StopJpegGenerationMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_PlatformType_ (std::move(other_.m_PlatformType_))
+    ,
+    m_PlatformId_ (std::move(other_.m_PlatformId_))
+    {
+    } 
+
+    StopJpegGenerationMsg& StopJpegGenerationMsg::operator=(StopJpegGenerationMsg&&  other_) OMG_NOEXCEPT {
+        StopJpegGenerationMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void StopJpegGenerationMsg::swap(StopJpegGenerationMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_PlatformType_, other_.m_PlatformType_);
+        swap(m_PlatformId_, other_.m_PlatformId_);
+    }  
+
+    bool StopJpegGenerationMsg::operator == (const StopJpegGenerationMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_PlatformType_ != other_.m_PlatformType_) {
+            return false;
+        }
+        if (m_PlatformId_ != other_.m_PlatformId_) {
+            return false;
+        }
+        return true;
+    }
+    bool StopJpegGenerationMsg::operator != (const StopJpegGenerationMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const StopJpegGenerationMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "PlatformType: " << sample.PlatformType()<<", ";
+        o << "PlatformId: " << (int)sample.PlatformId()  ;
+        o <<"]";
+        return o;
+    }
+
+    // ---- ReportJpegGenerationLivenessMsg: 
+
+    ReportJpegGenerationLivenessMsg::ReportJpegGenerationLivenessMsg() :
+        m_PlatformType_(dds_msgs::EnumPlatform::None) ,
+        m_PlatformId_ (0) ,
+        m_NumOfJpegFiles_ (0U) ,
+        m_Status_(dds_msgs::EnumJpegGenerationSts::None) ,
+        m_ErrorCode_ (0)  {
+    }   
+
+    ReportJpegGenerationLivenessMsg::ReportJpegGenerationLivenessMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const dds_msgs::EnumPlatform& PlatformType,
+        uint8_t PlatformId,
+        uint16_t NumOfJpegFiles,
+        const dds_msgs::EnumJpegGenerationSts& Status,
+        uint8_t ErrorCode)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_PlatformType_( PlatformType ),
+            m_PlatformId_( PlatformId ),
+            m_NumOfJpegFiles_( NumOfJpegFiles ),
+            m_Status_( Status ),
+            m_ErrorCode_( ErrorCode ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    ReportJpegGenerationLivenessMsg::ReportJpegGenerationLivenessMsg(ReportJpegGenerationLivenessMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_PlatformType_ (std::move(other_.m_PlatformType_))
+    ,
+    m_PlatformId_ (std::move(other_.m_PlatformId_))
+    ,
+    m_NumOfJpegFiles_ (std::move(other_.m_NumOfJpegFiles_))
+    ,
+    m_Status_ (std::move(other_.m_Status_))
+    ,
+    m_ErrorCode_ (std::move(other_.m_ErrorCode_))
+    {
+    } 
+
+    ReportJpegGenerationLivenessMsg& ReportJpegGenerationLivenessMsg::operator=(ReportJpegGenerationLivenessMsg&&  other_) OMG_NOEXCEPT {
+        ReportJpegGenerationLivenessMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void ReportJpegGenerationLivenessMsg::swap(ReportJpegGenerationLivenessMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_PlatformType_, other_.m_PlatformType_);
+        swap(m_PlatformId_, other_.m_PlatformId_);
+        swap(m_NumOfJpegFiles_, other_.m_NumOfJpegFiles_);
+        swap(m_Status_, other_.m_Status_);
+        swap(m_ErrorCode_, other_.m_ErrorCode_);
+    }  
+
+    bool ReportJpegGenerationLivenessMsg::operator == (const ReportJpegGenerationLivenessMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_PlatformType_ != other_.m_PlatformType_) {
+            return false;
+        }
+        if (m_PlatformId_ != other_.m_PlatformId_) {
+            return false;
+        }
+        if (m_NumOfJpegFiles_ != other_.m_NumOfJpegFiles_) {
+            return false;
+        }
+        if (m_Status_ != other_.m_Status_) {
+            return false;
+        }
+        if (m_ErrorCode_ != other_.m_ErrorCode_) {
+            return false;
+        }
+        return true;
+    }
+    bool ReportJpegGenerationLivenessMsg::operator != (const ReportJpegGenerationLivenessMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const ReportJpegGenerationLivenessMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "PlatformType: " << sample.PlatformType()<<", ";
+        o << "PlatformId: " << (int)sample.PlatformId() <<", ";
+        o << "NumOfJpegFiles: " << sample.NumOfJpegFiles()<<", ";
+        o << "Status: " << sample.Status()<<", ";
+        o << "ErrorCode: " << (int)sample.ErrorCode()  ;
+        o <<"]";
+        return o;
+    }
+
+    // ---- LasFileTransmissionStsMsg: 
+
+    LasFileTransmissionStsMsg::LasFileTransmissionStsMsg() :
+        m_Status_(dds_msgs::EnumLasFileTransmissionSts::None)  {
+    }   
+
+    LasFileTransmissionStsMsg::LasFileTransmissionStsMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const dds_msgs::EnumLasFileTransmissionSts& Status)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_Status_( Status ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    LasFileTransmissionStsMsg::LasFileTransmissionStsMsg(LasFileTransmissionStsMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_Status_ (std::move(other_.m_Status_))
+    {
+    } 
+
+    LasFileTransmissionStsMsg& LasFileTransmissionStsMsg::operator=(LasFileTransmissionStsMsg&&  other_) OMG_NOEXCEPT {
+        LasFileTransmissionStsMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void LasFileTransmissionStsMsg::swap(LasFileTransmissionStsMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_Status_, other_.m_Status_);
+    }  
+
+    bool LasFileTransmissionStsMsg::operator == (const LasFileTransmissionStsMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_Status_ != other_.m_Status_) {
+            return false;
+        }
+        return true;
+    }
+    bool LasFileTransmissionStsMsg::operator != (const LasFileTransmissionStsMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const LasFileTransmissionStsMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "Status: " << sample.Status() ;
+        o <<"]";
+        return o;
+    }
+
+    // ---- SingleUrlMsg: 
+
+    SingleUrlMsg::SingleUrlMsg() :
+        m_CloudUrl_ ("")  {
+    }   
+
+    SingleUrlMsg::SingleUrlMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const std::string& CloudUrl)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_CloudUrl_( CloudUrl ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    SingleUrlMsg::SingleUrlMsg(SingleUrlMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_CloudUrl_ (std::move(other_.m_CloudUrl_))
+    {
+    } 
+
+    SingleUrlMsg& SingleUrlMsg::operator=(SingleUrlMsg&&  other_) OMG_NOEXCEPT {
+        SingleUrlMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void SingleUrlMsg::swap(SingleUrlMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_CloudUrl_, other_.m_CloudUrl_);
+    }  
+
+    bool SingleUrlMsg::operator == (const SingleUrlMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_CloudUrl_ != other_.m_CloudUrl_) {
+            return false;
+        }
+        return true;
+    }
+    bool SingleUrlMsg::operator != (const SingleUrlMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const SingleUrlMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "CloudUrl: " << sample.CloudUrl() ;
+        o <<"]";
+        return o;
+    }
+
+    // ---- DoubleUrlMsg: 
+
+    DoubleUrlMsg::DoubleUrlMsg() :
+        m_GeoPath_ ("") ,
+        m_CloudUrl_ ("")  {
+    }   
+
+    DoubleUrlMsg::DoubleUrlMsg (
+        uint8_t MsgId,
+        uint32_t MsgCount,
+        uint16_t MissionId,
+        const std::string& GeoPath,
+        const std::string& CloudUrl)
+        :
+            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
+            m_GeoPath_( GeoPath ),
+            m_CloudUrl_( CloudUrl ) {
+    }
+
+    #ifdef RTI_CXX11_RVALUE_REFERENCES
+    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
+    DoubleUrlMsg::DoubleUrlMsg(DoubleUrlMsg&& other_) OMG_NOEXCEPT  : 
+    dds_msgs::BaseMsg(std::move(other_)),
+    m_GeoPath_ (std::move(other_.m_GeoPath_))
+    ,
+    m_CloudUrl_ (std::move(other_.m_CloudUrl_))
+    {
+    } 
+
+    DoubleUrlMsg& DoubleUrlMsg::operator=(DoubleUrlMsg&&  other_) OMG_NOEXCEPT {
+        DoubleUrlMsg tmp(std::move(other_));
+        swap(tmp); 
+        return *this;
+    }
+    #endif
+    #endif   
+
+    void DoubleUrlMsg::swap(DoubleUrlMsg& other_)  OMG_NOEXCEPT 
+    {
+        using std::swap;
+        dds_msgs::BaseMsg::swap(other_);
+        swap(m_GeoPath_, other_.m_GeoPath_);
+        swap(m_CloudUrl_, other_.m_CloudUrl_);
+    }  
+
+    bool DoubleUrlMsg::operator == (const DoubleUrlMsg& other_) const {
+        if (!dds_msgs::BaseMsg::operator == (other_)){
+            return false;
+        }
+        if (m_GeoPath_ != other_.m_GeoPath_) {
+            return false;
+        }
+        if (m_CloudUrl_ != other_.m_CloudUrl_) {
+            return false;
+        }
+        return true;
+    }
+    bool DoubleUrlMsg::operator != (const DoubleUrlMsg& other_) const {
+        return !this->operator ==(other_);
+    }
+
+    std::ostream& operator << (std::ostream& o,const DoubleUrlMsg& sample)
+    {
+        ::rti::util::StreamFlagSaver flag_saver (o);
+        o <<"[";
+        o << static_cast<const dds_msgs::BaseMsg &>(sample);
+        o << "GeoPath: " << sample.GeoPath()<<", ";
+        o << "CloudUrl: " << sample.CloudUrl() ;
+        o <<"]";
+        return o;
+    }
+
     // ---- MissionPlanMsg: 
 
     MissionPlanMsg::MissionPlanMsg() :
@@ -348,7 +1242,7 @@ namespace dds_msgs {
         m_MissionType_(dds_msgs::EnumMission::None) ,
         m_StationId_ (0) ,
         m_PlatformType_(dds_msgs::EnumPlatform::None) ,
-        m_PlatformId_ (0U) ,
+        m_PlatformId_ (0) ,
         m_ScanType_(dds_msgs::EnumScan::None) ,
         m_ScanAreaGroundAvgAlt_ (0) ,
         m_FlightAltAboveGroundAvgAlt_ (0U) ,
@@ -374,7 +1268,7 @@ namespace dds_msgs {
         const dds_msgs::EnumMission& MissionType,
         uint8_t StationId,
         const dds_msgs::EnumPlatform& PlatformType,
-        uint16_t PlatformId,
+        uint8_t PlatformId,
         const dds_msgs::EnumScan& ScanType,
         const ::dds::core::array< dds_msgs::GeoPoint, 3L>& ScanArea,
         int16_t ScanAreaGroundAvgAlt,
@@ -629,7 +1523,7 @@ namespace dds_msgs {
         o << "MissionType: " << sample.MissionType()<<", ";
         o << "StationId: " << (int)sample.StationId() <<", ";
         o << "PlatformType: " << sample.PlatformType()<<", ";
-        o << "PlatformId: " << sample.PlatformId()<<", ";
+        o << "PlatformId: " << (int)sample.PlatformId() <<", ";
         o << "ScanType: " << sample.ScanType()<<", ";
         o << "ScanArea: " << sample.ScanArea()<<", ";
         o << "ScanAreaGroundAvgAlt: " << sample.ScanAreaGroundAvgAlt()<<", ";
@@ -652,798 +1546,6 @@ namespace dds_msgs {
         o << "CloudUrlCurrModel: " << sample.CloudUrlCurrModel()<<", ";
         o << "CloudUrlRefModel: " << sample.CloudUrlRefModel()<<", ";
         o << "CloudUrlDiffModel: " << sample.CloudUrlDiffModel() ;
-        o <<"]";
-        return o;
-    }
-
-    // ---- GetDroneScanRouteMsg: 
-
-    GetDroneScanRouteMsg::GetDroneScanRouteMsg() :
-        m_ScanType_(dds_msgs::EnumScan::None) ,
-        m_ScanAreaGroundAvgAlt_ (0) ,
-        m_FlightAltAboveGroundAvgAlt_ (0) ,
-        m_TakeoffAltAboveSeaLevel_ (0) ,
-        m_FlightSpeed_ (0) ,
-        m_CameraHorizontalFOV_ (0) ,
-        m_CameraVerticalFOV_ (0) ,
-        m_CameraHorizontalResolution_ (0U) ,
-        m_CameraVerticalResolution_ (0U) ,
-        m_OverlapInFlightDirection_ (0) ,
-        m_OverlapInLateralDirection_ (0) ,
-        m_GimbalPitchAngle_ (0) ,
-        m_SquareSide_ (0U)  {
-    }   
-
-    GetDroneScanRouteMsg::GetDroneScanRouteMsg (
-        uint8_t MsgId,
-        uint32_t MsgCount,
-        uint16_t MissionId,
-        const dds_msgs::EnumScan& ScanType,
-        const ::rti::core::bounded_sequence< dds_msgs::GeoPoint, 3L >& ScanArea,
-        int16_t ScanAreaGroundAvgAlt,
-        int16_t FlightAltAboveGroundAvgAlt,
-        int16_t TakeoffAltAboveSeaLevel,
-        uint8_t FlightSpeed,
-        uint8_t CameraHorizontalFOV,
-        uint8_t CameraVerticalFOV,
-        uint16_t CameraHorizontalResolution,
-        uint16_t CameraVerticalResolution,
-        uint8_t OverlapInFlightDirection,
-        uint8_t OverlapInLateralDirection,
-        int16_t GimbalPitchAngle,
-        const dds_msgs::GeoPoint& SquareCenter,
-        uint16_t SquareSide)
-        :
-            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
-            m_ScanType_( ScanType ),
-            m_ScanArea_( ScanArea ),
-            m_ScanAreaGroundAvgAlt_( ScanAreaGroundAvgAlt ),
-            m_FlightAltAboveGroundAvgAlt_( FlightAltAboveGroundAvgAlt ),
-            m_TakeoffAltAboveSeaLevel_( TakeoffAltAboveSeaLevel ),
-            m_FlightSpeed_( FlightSpeed ),
-            m_CameraHorizontalFOV_( CameraHorizontalFOV ),
-            m_CameraVerticalFOV_( CameraVerticalFOV ),
-            m_CameraHorizontalResolution_( CameraHorizontalResolution ),
-            m_CameraVerticalResolution_( CameraVerticalResolution ),
-            m_OverlapInFlightDirection_( OverlapInFlightDirection ),
-            m_OverlapInLateralDirection_( OverlapInLateralDirection ),
-            m_GimbalPitchAngle_( GimbalPitchAngle ),
-            m_SquareCenter_( SquareCenter ),
-            m_SquareSide_( SquareSide ) {
-    }
-
-    #ifdef RTI_CXX11_RVALUE_REFERENCES
-    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    GetDroneScanRouteMsg::GetDroneScanRouteMsg(GetDroneScanRouteMsg&& other_) OMG_NOEXCEPT  : 
-    dds_msgs::BaseMsg(std::move(other_)),
-    m_ScanType_ (std::move(other_.m_ScanType_))
-    ,
-    m_ScanArea_ (std::move(other_.m_ScanArea_))
-    ,
-    m_ScanAreaGroundAvgAlt_ (std::move(other_.m_ScanAreaGroundAvgAlt_))
-    ,
-    m_FlightAltAboveGroundAvgAlt_ (std::move(other_.m_FlightAltAboveGroundAvgAlt_))
-    ,
-    m_TakeoffAltAboveSeaLevel_ (std::move(other_.m_TakeoffAltAboveSeaLevel_))
-    ,
-    m_FlightSpeed_ (std::move(other_.m_FlightSpeed_))
-    ,
-    m_CameraHorizontalFOV_ (std::move(other_.m_CameraHorizontalFOV_))
-    ,
-    m_CameraVerticalFOV_ (std::move(other_.m_CameraVerticalFOV_))
-    ,
-    m_CameraHorizontalResolution_ (std::move(other_.m_CameraHorizontalResolution_))
-    ,
-    m_CameraVerticalResolution_ (std::move(other_.m_CameraVerticalResolution_))
-    ,
-    m_OverlapInFlightDirection_ (std::move(other_.m_OverlapInFlightDirection_))
-    ,
-    m_OverlapInLateralDirection_ (std::move(other_.m_OverlapInLateralDirection_))
-    ,
-    m_GimbalPitchAngle_ (std::move(other_.m_GimbalPitchAngle_))
-    ,
-    m_SquareCenter_ (std::move(other_.m_SquareCenter_))
-    ,
-    m_SquareSide_ (std::move(other_.m_SquareSide_))
-    {
-    } 
-
-    GetDroneScanRouteMsg& GetDroneScanRouteMsg::operator=(GetDroneScanRouteMsg&&  other_) OMG_NOEXCEPT {
-        GetDroneScanRouteMsg tmp(std::move(other_));
-        swap(tmp); 
-        return *this;
-    }
-    #endif
-    #endif   
-
-    void GetDroneScanRouteMsg::swap(GetDroneScanRouteMsg& other_)  OMG_NOEXCEPT 
-    {
-        using std::swap;
-        dds_msgs::BaseMsg::swap(other_);
-        swap(m_ScanType_, other_.m_ScanType_);
-        swap(m_ScanArea_, other_.m_ScanArea_);
-        swap(m_ScanAreaGroundAvgAlt_, other_.m_ScanAreaGroundAvgAlt_);
-        swap(m_FlightAltAboveGroundAvgAlt_, other_.m_FlightAltAboveGroundAvgAlt_);
-        swap(m_TakeoffAltAboveSeaLevel_, other_.m_TakeoffAltAboveSeaLevel_);
-        swap(m_FlightSpeed_, other_.m_FlightSpeed_);
-        swap(m_CameraHorizontalFOV_, other_.m_CameraHorizontalFOV_);
-        swap(m_CameraVerticalFOV_, other_.m_CameraVerticalFOV_);
-        swap(m_CameraHorizontalResolution_, other_.m_CameraHorizontalResolution_);
-        swap(m_CameraVerticalResolution_, other_.m_CameraVerticalResolution_);
-        swap(m_OverlapInFlightDirection_, other_.m_OverlapInFlightDirection_);
-        swap(m_OverlapInLateralDirection_, other_.m_OverlapInLateralDirection_);
-        swap(m_GimbalPitchAngle_, other_.m_GimbalPitchAngle_);
-        swap(m_SquareCenter_, other_.m_SquareCenter_);
-        swap(m_SquareSide_, other_.m_SquareSide_);
-    }  
-
-    bool GetDroneScanRouteMsg::operator == (const GetDroneScanRouteMsg& other_) const {
-        if (!dds_msgs::BaseMsg::operator == (other_)){
-            return false;
-        }
-        if (m_ScanType_ != other_.m_ScanType_) {
-            return false;
-        }
-        if (m_ScanArea_ != other_.m_ScanArea_) {
-            return false;
-        }
-        if (m_ScanAreaGroundAvgAlt_ != other_.m_ScanAreaGroundAvgAlt_) {
-            return false;
-        }
-        if (m_FlightAltAboveGroundAvgAlt_ != other_.m_FlightAltAboveGroundAvgAlt_) {
-            return false;
-        }
-        if (m_TakeoffAltAboveSeaLevel_ != other_.m_TakeoffAltAboveSeaLevel_) {
-            return false;
-        }
-        if (m_FlightSpeed_ != other_.m_FlightSpeed_) {
-            return false;
-        }
-        if (m_CameraHorizontalFOV_ != other_.m_CameraHorizontalFOV_) {
-            return false;
-        }
-        if (m_CameraVerticalFOV_ != other_.m_CameraVerticalFOV_) {
-            return false;
-        }
-        if (m_CameraHorizontalResolution_ != other_.m_CameraHorizontalResolution_) {
-            return false;
-        }
-        if (m_CameraVerticalResolution_ != other_.m_CameraVerticalResolution_) {
-            return false;
-        }
-        if (m_OverlapInFlightDirection_ != other_.m_OverlapInFlightDirection_) {
-            return false;
-        }
-        if (m_OverlapInLateralDirection_ != other_.m_OverlapInLateralDirection_) {
-            return false;
-        }
-        if (m_GimbalPitchAngle_ != other_.m_GimbalPitchAngle_) {
-            return false;
-        }
-        if (m_SquareCenter_ != other_.m_SquareCenter_) {
-            return false;
-        }
-        if (m_SquareSide_ != other_.m_SquareSide_) {
-            return false;
-        }
-        return true;
-    }
-    bool GetDroneScanRouteMsg::operator != (const GetDroneScanRouteMsg& other_) const {
-        return !this->operator ==(other_);
-    }
-
-    std::ostream& operator << (std::ostream& o,const GetDroneScanRouteMsg& sample)
-    {
-        ::rti::util::StreamFlagSaver flag_saver (o);
-        o <<"[";
-        o << static_cast<const dds_msgs::BaseMsg &>(sample);
-        o << "ScanType: " << sample.ScanType()<<", ";
-        o << "ScanArea: " << sample.ScanArea()<<", ";
-        o << "ScanAreaGroundAvgAlt: " << sample.ScanAreaGroundAvgAlt()<<", ";
-        o << "FlightAltAboveGroundAvgAlt: " << sample.FlightAltAboveGroundAvgAlt()<<", ";
-        o << "TakeoffAltAboveSeaLevel: " << sample.TakeoffAltAboveSeaLevel()<<", ";
-        o << "FlightSpeed: " << (int)sample.FlightSpeed() <<", ";
-        o << "CameraHorizontalFOV: " << (int)sample.CameraHorizontalFOV() <<", ";
-        o << "CameraVerticalFOV: " << (int)sample.CameraVerticalFOV() <<", ";
-        o << "CameraHorizontalResolution: " << sample.CameraHorizontalResolution()<<", ";
-        o << "CameraVerticalResolution: " << sample.CameraVerticalResolution()<<", ";
-        o << "OverlapInFlightDirection: " << (int)sample.OverlapInFlightDirection() <<", ";
-        o << "OverlapInLateralDirection: " << (int)sample.OverlapInLateralDirection() <<", ";
-        o << "GimbalPitchAngle: " << sample.GimbalPitchAngle()<<", ";
-        o << "SquareCenter: " << sample.SquareCenter()<<", ";
-        o << "SquareSide: " << sample.SquareSide() ;
-        o <<"]";
-        return o;
-    }
-
-    // ---- PlatformLocationMsg: 
-
-    PlatformLocationMsg::PlatformLocationMsg() :
-        m_PlatformType_(dds_msgs::EnumPlatform::None) ,
-        m_PlatformId_ (0) ,
-        m_PlatformSpeed_ (0) ,
-        m_PlatformHeading_ (0ULL) ,
-        m_Timestamp_ (0ULL)  {
-    }   
-
-    PlatformLocationMsg::PlatformLocationMsg (
-        uint8_t MsgId,
-        uint32_t MsgCount,
-        uint16_t MissionId,
-        const dds_msgs::EnumPlatform& PlatformType,
-        uint8_t PlatformId,
-        uint8_t PlatformSpeed,
-        double PlatformHeading,
-        const dds_msgs::GeoPoint& PlatformLocation,
-        uint64_t Timestamp)
-        :
-            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
-            m_PlatformType_( PlatformType ),
-            m_PlatformId_( PlatformId ),
-            m_PlatformSpeed_( PlatformSpeed ),
-            m_PlatformHeading_( PlatformHeading ),
-            m_PlatformLocation_( PlatformLocation ),
-            m_Timestamp_( Timestamp ) {
-    }
-
-    #ifdef RTI_CXX11_RVALUE_REFERENCES
-    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    PlatformLocationMsg::PlatformLocationMsg(PlatformLocationMsg&& other_) OMG_NOEXCEPT  : 
-    dds_msgs::BaseMsg(std::move(other_)),
-    m_PlatformType_ (std::move(other_.m_PlatformType_))
-    ,
-    m_PlatformId_ (std::move(other_.m_PlatformId_))
-    ,
-    m_PlatformSpeed_ (std::move(other_.m_PlatformSpeed_))
-    ,
-    m_PlatformHeading_ (std::move(other_.m_PlatformHeading_))
-    ,
-    m_PlatformLocation_ (std::move(other_.m_PlatformLocation_))
-    ,
-    m_Timestamp_ (std::move(other_.m_Timestamp_))
-    {
-    } 
-
-    PlatformLocationMsg& PlatformLocationMsg::operator=(PlatformLocationMsg&&  other_) OMG_NOEXCEPT {
-        PlatformLocationMsg tmp(std::move(other_));
-        swap(tmp); 
-        return *this;
-    }
-    #endif
-    #endif   
-
-    void PlatformLocationMsg::swap(PlatformLocationMsg& other_)  OMG_NOEXCEPT 
-    {
-        using std::swap;
-        dds_msgs::BaseMsg::swap(other_);
-        swap(m_PlatformType_, other_.m_PlatformType_);
-        swap(m_PlatformId_, other_.m_PlatformId_);
-        swap(m_PlatformSpeed_, other_.m_PlatformSpeed_);
-        swap(m_PlatformHeading_, other_.m_PlatformHeading_);
-        swap(m_PlatformLocation_, other_.m_PlatformLocation_);
-        swap(m_Timestamp_, other_.m_Timestamp_);
-    }  
-
-    bool PlatformLocationMsg::operator == (const PlatformLocationMsg& other_) const {
-        if (!dds_msgs::BaseMsg::operator == (other_)){
-            return false;
-        }
-        if (m_PlatformType_ != other_.m_PlatformType_) {
-            return false;
-        }
-        if (m_PlatformId_ != other_.m_PlatformId_) {
-            return false;
-        }
-        if (m_PlatformSpeed_ != other_.m_PlatformSpeed_) {
-            return false;
-        }
-        if (m_PlatformHeading_ != other_.m_PlatformHeading_) {
-            return false;
-        }
-        if (m_PlatformLocation_ != other_.m_PlatformLocation_) {
-            return false;
-        }
-        if (m_Timestamp_ != other_.m_Timestamp_) {
-            return false;
-        }
-        return true;
-    }
-    bool PlatformLocationMsg::operator != (const PlatformLocationMsg& other_) const {
-        return !this->operator ==(other_);
-    }
-
-    std::ostream& operator << (std::ostream& o,const PlatformLocationMsg& sample)
-    {
-        ::rti::util::StreamFlagSaver flag_saver (o);
-        o <<"[";
-        o << static_cast<const dds_msgs::BaseMsg &>(sample);
-        o << "PlatformType: " << sample.PlatformType()<<", ";
-        o << "PlatformId: " << (int)sample.PlatformId() <<", ";
-        o << "PlatformSpeed: " << (int)sample.PlatformSpeed() <<", ";
-        o << "PlatformHeading: " << std::setprecision(15) <<sample.PlatformHeading()<<", ";
-        o << "PlatformLocation: " << sample.PlatformLocation()<<", ";
-        o << "Timestamp: " << sample.Timestamp() ;
-        o <<"]";
-        return o;
-    }
-
-    // ---- StartJpegGenerationMsg: 
-
-    StartJpegGenerationMsg::StartJpegGenerationMsg() :
-        m_PlatformType_(dds_msgs::EnumPlatform::None) ,
-        m_GeoPathJpegFiles_ ("")  {
-    }   
-
-    StartJpegGenerationMsg::StartJpegGenerationMsg (
-        uint8_t MsgId,
-        uint32_t MsgCount,
-        uint16_t MissionId,
-        const dds_msgs::EnumPlatform& PlatformType,
-        const std::string& GeoPathJpegFiles)
-        :
-            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
-            m_PlatformType_( PlatformType ),
-            m_GeoPathJpegFiles_( GeoPathJpegFiles ) {
-    }
-
-    #ifdef RTI_CXX11_RVALUE_REFERENCES
-    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    StartJpegGenerationMsg::StartJpegGenerationMsg(StartJpegGenerationMsg&& other_) OMG_NOEXCEPT  : 
-    dds_msgs::BaseMsg(std::move(other_)),
-    m_PlatformType_ (std::move(other_.m_PlatformType_))
-    ,
-    m_GeoPathJpegFiles_ (std::move(other_.m_GeoPathJpegFiles_))
-    {
-    } 
-
-    StartJpegGenerationMsg& StartJpegGenerationMsg::operator=(StartJpegGenerationMsg&&  other_) OMG_NOEXCEPT {
-        StartJpegGenerationMsg tmp(std::move(other_));
-        swap(tmp); 
-        return *this;
-    }
-    #endif
-    #endif   
-
-    void StartJpegGenerationMsg::swap(StartJpegGenerationMsg& other_)  OMG_NOEXCEPT 
-    {
-        using std::swap;
-        dds_msgs::BaseMsg::swap(other_);
-        swap(m_PlatformType_, other_.m_PlatformType_);
-        swap(m_GeoPathJpegFiles_, other_.m_GeoPathJpegFiles_);
-    }  
-
-    bool StartJpegGenerationMsg::operator == (const StartJpegGenerationMsg& other_) const {
-        if (!dds_msgs::BaseMsg::operator == (other_)){
-            return false;
-        }
-        if (m_PlatformType_ != other_.m_PlatformType_) {
-            return false;
-        }
-        if (m_GeoPathJpegFiles_ != other_.m_GeoPathJpegFiles_) {
-            return false;
-        }
-        return true;
-    }
-    bool StartJpegGenerationMsg::operator != (const StartJpegGenerationMsg& other_) const {
-        return !this->operator ==(other_);
-    }
-
-    std::ostream& operator << (std::ostream& o,const StartJpegGenerationMsg& sample)
-    {
-        ::rti::util::StreamFlagSaver flag_saver (o);
-        o <<"[";
-        o << static_cast<const dds_msgs::BaseMsg &>(sample);
-        o << "PlatformType: " << sample.PlatformType()<<", ";
-        o << "GeoPathJpegFiles: " << sample.GeoPathJpegFiles() ;
-        o <<"]";
-        return o;
-    }
-
-    // ---- ReportJpegGenerationLivenessMsg: 
-
-    ReportJpegGenerationLivenessMsg::ReportJpegGenerationLivenessMsg() :
-        m_NumOfJpegFiles_ (0U) ,
-        m_Status_(dds_msgs::EnumJpegGenerationSts::None) ,
-        m_ErrorCode_ (0)  {
-    }   
-
-    ReportJpegGenerationLivenessMsg::ReportJpegGenerationLivenessMsg (
-        uint8_t MsgId,
-        uint32_t MsgCount,
-        uint16_t MissionId,
-        uint16_t NumOfJpegFiles,
-        const dds_msgs::EnumJpegGenerationSts& Status,
-        uint8_t ErrorCode)
-        :
-            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
-            m_NumOfJpegFiles_( NumOfJpegFiles ),
-            m_Status_( Status ),
-            m_ErrorCode_( ErrorCode ) {
-    }
-
-    #ifdef RTI_CXX11_RVALUE_REFERENCES
-    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    ReportJpegGenerationLivenessMsg::ReportJpegGenerationLivenessMsg(ReportJpegGenerationLivenessMsg&& other_) OMG_NOEXCEPT  : 
-    dds_msgs::BaseMsg(std::move(other_)),
-    m_NumOfJpegFiles_ (std::move(other_.m_NumOfJpegFiles_))
-    ,
-    m_Status_ (std::move(other_.m_Status_))
-    ,
-    m_ErrorCode_ (std::move(other_.m_ErrorCode_))
-    {
-    } 
-
-    ReportJpegGenerationLivenessMsg& ReportJpegGenerationLivenessMsg::operator=(ReportJpegGenerationLivenessMsg&&  other_) OMG_NOEXCEPT {
-        ReportJpegGenerationLivenessMsg tmp(std::move(other_));
-        swap(tmp); 
-        return *this;
-    }
-    #endif
-    #endif   
-
-    void ReportJpegGenerationLivenessMsg::swap(ReportJpegGenerationLivenessMsg& other_)  OMG_NOEXCEPT 
-    {
-        using std::swap;
-        dds_msgs::BaseMsg::swap(other_);
-        swap(m_NumOfJpegFiles_, other_.m_NumOfJpegFiles_);
-        swap(m_Status_, other_.m_Status_);
-        swap(m_ErrorCode_, other_.m_ErrorCode_);
-    }  
-
-    bool ReportJpegGenerationLivenessMsg::operator == (const ReportJpegGenerationLivenessMsg& other_) const {
-        if (!dds_msgs::BaseMsg::operator == (other_)){
-            return false;
-        }
-        if (m_NumOfJpegFiles_ != other_.m_NumOfJpegFiles_) {
-            return false;
-        }
-        if (m_Status_ != other_.m_Status_) {
-            return false;
-        }
-        if (m_ErrorCode_ != other_.m_ErrorCode_) {
-            return false;
-        }
-        return true;
-    }
-    bool ReportJpegGenerationLivenessMsg::operator != (const ReportJpegGenerationLivenessMsg& other_) const {
-        return !this->operator ==(other_);
-    }
-
-    std::ostream& operator << (std::ostream& o,const ReportJpegGenerationLivenessMsg& sample)
-    {
-        ::rti::util::StreamFlagSaver flag_saver (o);
-        o <<"[";
-        o << static_cast<const dds_msgs::BaseMsg &>(sample);
-        o << "NumOfJpegFiles: " << sample.NumOfJpegFiles()<<", ";
-        o << "Status: " << sample.Status()<<", ";
-        o << "ErrorCode: <" << std::hex<<(int)sample.ErrorCode()  ;
-        o <<"]";
-        return o;
-    }
-
-    // ---- LasFileTransmissionStsMsg: 
-
-    LasFileTransmissionStsMsg::LasFileTransmissionStsMsg() :
-        m_Status_(dds_msgs::EnumLasFileTransmissionSts::None)  {
-    }   
-
-    LasFileTransmissionStsMsg::LasFileTransmissionStsMsg (
-        uint8_t MsgId,
-        uint32_t MsgCount,
-        uint16_t MissionId,
-        const dds_msgs::EnumLasFileTransmissionSts& Status)
-        :
-            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
-            m_Status_( Status ) {
-    }
-
-    #ifdef RTI_CXX11_RVALUE_REFERENCES
-    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    LasFileTransmissionStsMsg::LasFileTransmissionStsMsg(LasFileTransmissionStsMsg&& other_) OMG_NOEXCEPT  : 
-    dds_msgs::BaseMsg(std::move(other_)),
-    m_Status_ (std::move(other_.m_Status_))
-    {
-    } 
-
-    LasFileTransmissionStsMsg& LasFileTransmissionStsMsg::operator=(LasFileTransmissionStsMsg&&  other_) OMG_NOEXCEPT {
-        LasFileTransmissionStsMsg tmp(std::move(other_));
-        swap(tmp); 
-        return *this;
-    }
-    #endif
-    #endif   
-
-    void LasFileTransmissionStsMsg::swap(LasFileTransmissionStsMsg& other_)  OMG_NOEXCEPT 
-    {
-        using std::swap;
-        dds_msgs::BaseMsg::swap(other_);
-        swap(m_Status_, other_.m_Status_);
-    }  
-
-    bool LasFileTransmissionStsMsg::operator == (const LasFileTransmissionStsMsg& other_) const {
-        if (!dds_msgs::BaseMsg::operator == (other_)){
-            return false;
-        }
-        if (m_Status_ != other_.m_Status_) {
-            return false;
-        }
-        return true;
-    }
-    bool LasFileTransmissionStsMsg::operator != (const LasFileTransmissionStsMsg& other_) const {
-        return !this->operator ==(other_);
-    }
-
-    std::ostream& operator << (std::ostream& o,const LasFileTransmissionStsMsg& sample)
-    {
-        ::rti::util::StreamFlagSaver flag_saver (o);
-        o <<"[";
-        o << static_cast<const dds_msgs::BaseMsg &>(sample);
-        o << "Status: " << sample.Status() ;
-        o <<"]";
-        return o;
-    }
-
-    // ---- SingleUrlMsg: 
-
-    SingleUrlMsg::SingleUrlMsg() :
-        m_CloudUrl_ ("")  {
-    }   
-
-    SingleUrlMsg::SingleUrlMsg (
-        uint8_t MsgId,
-        uint32_t MsgCount,
-        uint16_t MissionId,
-        const std::string& CloudUrl)
-        :
-            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
-            m_CloudUrl_( CloudUrl ) {
-    }
-
-    #ifdef RTI_CXX11_RVALUE_REFERENCES
-    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    SingleUrlMsg::SingleUrlMsg(SingleUrlMsg&& other_) OMG_NOEXCEPT  : 
-    dds_msgs::BaseMsg(std::move(other_)),
-    m_CloudUrl_ (std::move(other_.m_CloudUrl_))
-    {
-    } 
-
-    SingleUrlMsg& SingleUrlMsg::operator=(SingleUrlMsg&&  other_) OMG_NOEXCEPT {
-        SingleUrlMsg tmp(std::move(other_));
-        swap(tmp); 
-        return *this;
-    }
-    #endif
-    #endif   
-
-    void SingleUrlMsg::swap(SingleUrlMsg& other_)  OMG_NOEXCEPT 
-    {
-        using std::swap;
-        dds_msgs::BaseMsg::swap(other_);
-        swap(m_CloudUrl_, other_.m_CloudUrl_);
-    }  
-
-    bool SingleUrlMsg::operator == (const SingleUrlMsg& other_) const {
-        if (!dds_msgs::BaseMsg::operator == (other_)){
-            return false;
-        }
-        if (m_CloudUrl_ != other_.m_CloudUrl_) {
-            return false;
-        }
-        return true;
-    }
-    bool SingleUrlMsg::operator != (const SingleUrlMsg& other_) const {
-        return !this->operator ==(other_);
-    }
-
-    std::ostream& operator << (std::ostream& o,const SingleUrlMsg& sample)
-    {
-        ::rti::util::StreamFlagSaver flag_saver (o);
-        o <<"[";
-        o << static_cast<const dds_msgs::BaseMsg &>(sample);
-        o << "CloudUrl: " << sample.CloudUrl() ;
-        o <<"]";
-        return o;
-    }
-
-    // ---- DoubleUrlMsg: 
-
-    DoubleUrlMsg::DoubleUrlMsg() :
-        m_GeoPath_ ("") ,
-        m_CloudUrl_ ("")  {
-    }   
-
-    DoubleUrlMsg::DoubleUrlMsg (
-        uint8_t MsgId,
-        uint32_t MsgCount,
-        uint16_t MissionId,
-        const std::string& GeoPath,
-        const std::string& CloudUrl)
-        :
-            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
-            m_GeoPath_( GeoPath ),
-            m_CloudUrl_( CloudUrl ) {
-    }
-
-    #ifdef RTI_CXX11_RVALUE_REFERENCES
-    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    DoubleUrlMsg::DoubleUrlMsg(DoubleUrlMsg&& other_) OMG_NOEXCEPT  : 
-    dds_msgs::BaseMsg(std::move(other_)),
-    m_GeoPath_ (std::move(other_.m_GeoPath_))
-    ,
-    m_CloudUrl_ (std::move(other_.m_CloudUrl_))
-    {
-    } 
-
-    DoubleUrlMsg& DoubleUrlMsg::operator=(DoubleUrlMsg&&  other_) OMG_NOEXCEPT {
-        DoubleUrlMsg tmp(std::move(other_));
-        swap(tmp); 
-        return *this;
-    }
-    #endif
-    #endif   
-
-    void DoubleUrlMsg::swap(DoubleUrlMsg& other_)  OMG_NOEXCEPT 
-    {
-        using std::swap;
-        dds_msgs::BaseMsg::swap(other_);
-        swap(m_GeoPath_, other_.m_GeoPath_);
-        swap(m_CloudUrl_, other_.m_CloudUrl_);
-    }  
-
-    bool DoubleUrlMsg::operator == (const DoubleUrlMsg& other_) const {
-        if (!dds_msgs::BaseMsg::operator == (other_)){
-            return false;
-        }
-        if (m_GeoPath_ != other_.m_GeoPath_) {
-            return false;
-        }
-        if (m_CloudUrl_ != other_.m_CloudUrl_) {
-            return false;
-        }
-        return true;
-    }
-    bool DoubleUrlMsg::operator != (const DoubleUrlMsg& other_) const {
-        return !this->operator ==(other_);
-    }
-
-    std::ostream& operator << (std::ostream& o,const DoubleUrlMsg& sample)
-    {
-        ::rti::util::StreamFlagSaver flag_saver (o);
-        o <<"[";
-        o << static_cast<const dds_msgs::BaseMsg &>(sample);
-        o << "GeoPath: " << sample.GeoPath()<<", ";
-        o << "CloudUrl: " << sample.CloudUrl() ;
-        o <<"]";
-        return o;
-    }
-
-    // ---- DroneScanRouteMsg: 
-
-    DroneScanRouteMsg::DroneScanRouteMsg() :
-        m_ScanAreaLength_ (0U) ,
-        m_ScanAreaWidth_ (0U) ,
-        m_ModelGroundResolution_ (0) ,
-        m_TimePeriodBetweenFrames_ (0U) ,
-        m_ShortLegLength_ (0U) ,
-        m_NumOfFramesPerLongLeg_ (0U) ,
-        m_TotalNumOfFrames_ (0U)  {
-    }   
-
-    DroneScanRouteMsg::DroneScanRouteMsg (
-        uint8_t MsgId,
-        uint32_t MsgCount,
-        uint16_t MissionId,
-        const ::rti::core::bounded_sequence< dds_msgs::GeoPoint, 100L >& Waypoints,
-        uint16_t ScanAreaLength,
-        uint16_t ScanAreaWidth,
-        uint8_t ModelGroundResolution,
-        uint16_t TimePeriodBetweenFrames,
-        uint16_t ShortLegLength,
-        uint16_t NumOfFramesPerLongLeg,
-        uint16_t TotalNumOfFrames)
-        :
-            dds_msgs::BaseMsg(MsgId,MsgCount,MissionId ),
-            m_Waypoints_( Waypoints ),
-            m_ScanAreaLength_( ScanAreaLength ),
-            m_ScanAreaWidth_( ScanAreaWidth ),
-            m_ModelGroundResolution_( ModelGroundResolution ),
-            m_TimePeriodBetweenFrames_( TimePeriodBetweenFrames ),
-            m_ShortLegLength_( ShortLegLength ),
-            m_NumOfFramesPerLongLeg_( NumOfFramesPerLongLeg ),
-            m_TotalNumOfFrames_( TotalNumOfFrames ) {
-    }
-
-    #ifdef RTI_CXX11_RVALUE_REFERENCES
-    #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    DroneScanRouteMsg::DroneScanRouteMsg(DroneScanRouteMsg&& other_) OMG_NOEXCEPT  : 
-    dds_msgs::BaseMsg(std::move(other_)),
-    m_Waypoints_ (std::move(other_.m_Waypoints_))
-    ,
-    m_ScanAreaLength_ (std::move(other_.m_ScanAreaLength_))
-    ,
-    m_ScanAreaWidth_ (std::move(other_.m_ScanAreaWidth_))
-    ,
-    m_ModelGroundResolution_ (std::move(other_.m_ModelGroundResolution_))
-    ,
-    m_TimePeriodBetweenFrames_ (std::move(other_.m_TimePeriodBetweenFrames_))
-    ,
-    m_ShortLegLength_ (std::move(other_.m_ShortLegLength_))
-    ,
-    m_NumOfFramesPerLongLeg_ (std::move(other_.m_NumOfFramesPerLongLeg_))
-    ,
-    m_TotalNumOfFrames_ (std::move(other_.m_TotalNumOfFrames_))
-    {
-    } 
-
-    DroneScanRouteMsg& DroneScanRouteMsg::operator=(DroneScanRouteMsg&&  other_) OMG_NOEXCEPT {
-        DroneScanRouteMsg tmp(std::move(other_));
-        swap(tmp); 
-        return *this;
-    }
-    #endif
-    #endif   
-
-    void DroneScanRouteMsg::swap(DroneScanRouteMsg& other_)  OMG_NOEXCEPT 
-    {
-        using std::swap;
-        dds_msgs::BaseMsg::swap(other_);
-        swap(m_Waypoints_, other_.m_Waypoints_);
-        swap(m_ScanAreaLength_, other_.m_ScanAreaLength_);
-        swap(m_ScanAreaWidth_, other_.m_ScanAreaWidth_);
-        swap(m_ModelGroundResolution_, other_.m_ModelGroundResolution_);
-        swap(m_TimePeriodBetweenFrames_, other_.m_TimePeriodBetweenFrames_);
-        swap(m_ShortLegLength_, other_.m_ShortLegLength_);
-        swap(m_NumOfFramesPerLongLeg_, other_.m_NumOfFramesPerLongLeg_);
-        swap(m_TotalNumOfFrames_, other_.m_TotalNumOfFrames_);
-    }  
-
-    bool DroneScanRouteMsg::operator == (const DroneScanRouteMsg& other_) const {
-        if (!dds_msgs::BaseMsg::operator == (other_)){
-            return false;
-        }
-        if (m_Waypoints_ != other_.m_Waypoints_) {
-            return false;
-        }
-        if (m_ScanAreaLength_ != other_.m_ScanAreaLength_) {
-            return false;
-        }
-        if (m_ScanAreaWidth_ != other_.m_ScanAreaWidth_) {
-            return false;
-        }
-        if (m_ModelGroundResolution_ != other_.m_ModelGroundResolution_) {
-            return false;
-        }
-        if (m_TimePeriodBetweenFrames_ != other_.m_TimePeriodBetweenFrames_) {
-            return false;
-        }
-        if (m_ShortLegLength_ != other_.m_ShortLegLength_) {
-            return false;
-        }
-        if (m_NumOfFramesPerLongLeg_ != other_.m_NumOfFramesPerLongLeg_) {
-            return false;
-        }
-        if (m_TotalNumOfFrames_ != other_.m_TotalNumOfFrames_) {
-            return false;
-        }
-        return true;
-    }
-    bool DroneScanRouteMsg::operator != (const DroneScanRouteMsg& other_) const {
-        return !this->operator ==(other_);
-    }
-
-    std::ostream& operator << (std::ostream& o,const DroneScanRouteMsg& sample)
-    {
-        ::rti::util::StreamFlagSaver flag_saver (o);
-        o <<"[";
-        o << static_cast<const dds_msgs::BaseMsg &>(sample);
-        o << "Waypoints: " << sample.Waypoints()<<", ";
-        o << "ScanAreaLength: " << sample.ScanAreaLength()<<", ";
-        o << "ScanAreaWidth: " << sample.ScanAreaWidth()<<", ";
-        o << "ModelGroundResolution: " << (int)sample.ModelGroundResolution() <<", ";
-        o << "TimePeriodBetweenFrames: " << sample.TimePeriodBetweenFrames()<<", ";
-        o << "ShortLegLength: " << sample.ShortLegLength()<<", ";
-        o << "NumOfFramesPerLongLeg: " << sample.NumOfFramesPerLongLeg()<<", ";
-        o << "TotalNumOfFrames: " << sample.TotalNumOfFrames() ;
         o <<"]";
         return o;
     }
@@ -3287,871 +3389,6 @@ namespace rti {
 
         #ifndef NDDS_STANDALONE_TYPE
         template<>
-        struct native_type_code< dds_msgs::MissionPlanMsg > {
-            static DDS_TypeCode * get()
-            {
-                using namespace ::rti::topic::interpreter;
-
-                static RTIBool is_initialized = RTI_FALSE;
-
-                static DDS_TypeCode MissionPlanMsg_g_tc_MissionName_string;
-                static DDS_TypeCode MissionPlanMsg_g_tc_ScanArea_array =DDS_INITIALIZE_ARRAY_TYPECODE(1,3L, NULL,NULL);
-                static DDS_TypeCode MissionPlanMsg_g_tc_GeoPathJpegFiles_string;
-                static DDS_TypeCode MissionPlanMsg_g_tc_GeoPathCurrModel_string;
-                static DDS_TypeCode MissionPlanMsg_g_tc_GeoPathRefModel_string;
-                static DDS_TypeCode MissionPlanMsg_g_tc_GeoPathDiffModel_string;
-                static DDS_TypeCode MissionPlanMsg_g_tc_CloudUrlCurrModel_string;
-                static DDS_TypeCode MissionPlanMsg_g_tc_CloudUrlRefModel_string;
-                static DDS_TypeCode MissionPlanMsg_g_tc_CloudUrlDiffModel_string;
-
-                static DDS_TypeCode_Member MissionPlanMsg_g_tc_members[27]=
-                {
-
-                    {
-                        (char *)"MissionName",/* Member name */
-                        {
-                            3,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"MissionType",/* Member name */
-                        {
-                            4,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"StationId",/* Member name */
-                        {
-                            5,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"PlatformType",/* Member name */
-                        {
-                            6,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"PlatformId",/* Member name */
-                        {
-                            7,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"ScanType",/* Member name */
-                        {
-                            8,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"ScanArea",/* Member name */
-                        {
-                            9,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"ScanAreaGroundAvgAlt",/* Member name */
-                        {
-                            10,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"FlightAltAboveGroundAvgAlt",/* Member name */
-                        {
-                            11,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"TakeoffAltAboveSeaLevel",/* Member name */
-                        {
-                            12,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"FlightSpeed",/* Member name */
-                        {
-                            13,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"CameraHorizontalFOV",/* Member name */
-                        {
-                            14,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"CameraVerticalFOV",/* Member name */
-                        {
-                            15,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"CameraHorizontalResolution",/* Member name */
-                        {
-                            16,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"CameraVerticalResolution",/* Member name */
-                        {
-                            17,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"OverlapInFlightDirection",/* Member name */
-                        {
-                            18,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"OverlapInLateralDirection",/* Member name */
-                        {
-                            19,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"GimbalPitchAngle",/* Member name */
-                        {
-                            20,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"SquareCenter",/* Member name */
-                        {
-                            21,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"SquareSide",/* Member name */
-                        {
-                            22,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"GeoPathJpegFiles",/* Member name */
-                        {
-                            23,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"GeoPathCurrModel",/* Member name */
-                        {
-                            24,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"GeoPathRefModel",/* Member name */
-                        {
-                            25,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"GeoPathDiffModel",/* Member name */
-                        {
-                            26,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"CloudUrlCurrModel",/* Member name */
-                        {
-                            27,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"CloudUrlRefModel",/* Member name */
-                        {
-                            28,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }, 
-                    {
-                        (char *)"CloudUrlDiffModel",/* Member name */
-                        {
-                            29,/* Representation ID */
-                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
-                            -1, /* Bitfield bits */
-                            NULL/* Member type code is assigned later */
-                        },
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
-                        DDS_PUBLIC_MEMBER,/* Member visibility */
-                        1,
-                        NULL, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER
-                    }
-                };
-
-                static DDS_TypeCode MissionPlanMsg_g_tc =
-                {{
-                        DDS_TK_VALUE, /* Kind */
-                        DDS_BOOLEAN_FALSE, /* Ignored */
-                        -1, /*Ignored*/
-                        (char *)"dds_msgs::MissionPlanMsg", /* Name */
-                        NULL, /* Ignored */      
-                        0, /* Ignored */
-                        0, /* Ignored */
-                        NULL, /* Ignored */
-                        27, /* Number of members */
-                        MissionPlanMsg_g_tc_members, /* Members */
-                        DDS_VM_NONE, /* Ignored */
-                        RTICdrTypeCodeAnnotations_INITIALIZER,
-                        DDS_BOOLEAN_TRUE, /* _isCopyable */
-                        NULL, /* _sampleAccessInfo: assigned later */
-                        NULL /* _typePlugin: assigned later */
-                    }}; /* Type code for MissionPlanMsg*/
-
-                if (is_initialized) {
-                    return &MissionPlanMsg_g_tc;
-                }
-
-                MissionPlanMsg_g_tc_MissionName_string = initialize_string_typecode((256L));
-                MissionPlanMsg_g_tc_GeoPathJpegFiles_string = initialize_string_typecode((256L));
-                MissionPlanMsg_g_tc_GeoPathCurrModel_string = initialize_string_typecode((256L));
-                MissionPlanMsg_g_tc_GeoPathRefModel_string = initialize_string_typecode((256L));
-                MissionPlanMsg_g_tc_GeoPathDiffModel_string = initialize_string_typecode((256L));
-                MissionPlanMsg_g_tc_CloudUrlCurrModel_string = initialize_string_typecode((256L));
-                MissionPlanMsg_g_tc_CloudUrlRefModel_string = initialize_string_typecode((256L));
-                MissionPlanMsg_g_tc_CloudUrlDiffModel_string = initialize_string_typecode((256L));
-
-                MissionPlanMsg_g_tc._data._annotations._allowedDataRepresentationMask = 5;
-
-                MissionPlanMsg_g_tc_ScanArea_array._data._typeCode =(RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::GeoPoint>::get().native();
-                MissionPlanMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_MissionName_string;
-                MissionPlanMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumMission>::get().native();
-                MissionPlanMsg_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
-                MissionPlanMsg_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumPlatform>::get().native();
-                MissionPlanMsg_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                MissionPlanMsg_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumScan>::get().native();
-                MissionPlanMsg_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)& MissionPlanMsg_g_tc_ScanArea_array;
-                MissionPlanMsg_g_tc_members[7]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_short;
-                MissionPlanMsg_g_tc_members[8]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                MissionPlanMsg_g_tc_members[9]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_short;
-                MissionPlanMsg_g_tc_members[10]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
-                MissionPlanMsg_g_tc_members[11]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
-                MissionPlanMsg_g_tc_members[12]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
-                MissionPlanMsg_g_tc_members[13]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                MissionPlanMsg_g_tc_members[14]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                MissionPlanMsg_g_tc_members[15]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
-                MissionPlanMsg_g_tc_members[16]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
-                MissionPlanMsg_g_tc_members[17]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_short;
-                MissionPlanMsg_g_tc_members[18]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::GeoPoint>::get().native();
-                MissionPlanMsg_g_tc_members[19]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                MissionPlanMsg_g_tc_members[20]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_GeoPathJpegFiles_string;
-                MissionPlanMsg_g_tc_members[21]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_GeoPathCurrModel_string;
-                MissionPlanMsg_g_tc_members[22]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_GeoPathRefModel_string;
-                MissionPlanMsg_g_tc_members[23]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_GeoPathDiffModel_string;
-                MissionPlanMsg_g_tc_members[24]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_CloudUrlCurrModel_string;
-                MissionPlanMsg_g_tc_members[25]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_CloudUrlRefModel_string;
-                MissionPlanMsg_g_tc_members[26]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_CloudUrlDiffModel_string;
-
-                /* Initialize the values for member annotations. */
-                MissionPlanMsg_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_STRING;
-                MissionPlanMsg_g_tc_members[0]._annotations._defaultValue._u.string_value = (DDS_Char *) "";
-
-                MissionPlanMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
-                MissionPlanMsg_g_tc_members[1]._annotations._defaultValue._u.enumerated_value = 0;
-
-                MissionPlanMsg_g_tc_members[2]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[2]._annotations._defaultValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[2]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[2]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
-                MissionPlanMsg_g_tc_members[2]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[2]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
-
-                MissionPlanMsg_g_tc_members[3]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
-                MissionPlanMsg_g_tc_members[3]._annotations._defaultValue._u.enumerated_value = 0;
-
-                MissionPlanMsg_g_tc_members[4]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[4]._annotations._defaultValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[4]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[4]._annotations._minValue._u.ushort_value = RTIXCdrUnsignedShort_MIN;
-                MissionPlanMsg_g_tc_members[4]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[4]._annotations._maxValue._u.ushort_value = RTIXCdrUnsignedShort_MAX;
-
-                MissionPlanMsg_g_tc_members[5]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
-                MissionPlanMsg_g_tc_members[5]._annotations._defaultValue._u.enumerated_value = 0;
-
-                MissionPlanMsg_g_tc_members[7]._annotations._defaultValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[7]._annotations._defaultValue._u.short_value = 0;
-                MissionPlanMsg_g_tc_members[7]._annotations._minValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[7]._annotations._minValue._u.short_value = -432;
-                MissionPlanMsg_g_tc_members[7]._annotations._maxValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[7]._annotations._maxValue._u.short_value = 3000;
-
-                MissionPlanMsg_g_tc_members[8]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[8]._annotations._defaultValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[8]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[8]._annotations._minValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[8]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[8]._annotations._maxValue._u.ushort_value = 1500U;
-
-                MissionPlanMsg_g_tc_members[9]._annotations._defaultValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[9]._annotations._defaultValue._u.short_value = 0;
-                MissionPlanMsg_g_tc_members[9]._annotations._minValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[9]._annotations._minValue._u.short_value = -432;
-                MissionPlanMsg_g_tc_members[9]._annotations._maxValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[9]._annotations._maxValue._u.short_value = 3000;
-
-                MissionPlanMsg_g_tc_members[10]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[10]._annotations._defaultValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[10]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[10]._annotations._minValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[10]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[10]._annotations._maxValue._u.octet_value = 40;
-
-                MissionPlanMsg_g_tc_members[11]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[11]._annotations._defaultValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[11]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[11]._annotations._minValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[11]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[11]._annotations._maxValue._u.octet_value = 180;
-
-                MissionPlanMsg_g_tc_members[12]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[12]._annotations._defaultValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[12]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[12]._annotations._minValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[12]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[12]._annotations._maxValue._u.octet_value = 180;
-
-                MissionPlanMsg_g_tc_members[13]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[13]._annotations._defaultValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[13]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[13]._annotations._minValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[13]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[13]._annotations._maxValue._u.ushort_value = 15000U;
-
-                MissionPlanMsg_g_tc_members[14]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[14]._annotations._defaultValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[14]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[14]._annotations._minValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[14]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[14]._annotations._maxValue._u.ushort_value = 15000U;
-
-                MissionPlanMsg_g_tc_members[15]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[15]._annotations._defaultValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[15]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[15]._annotations._minValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[15]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[15]._annotations._maxValue._u.octet_value = 100;
-
-                MissionPlanMsg_g_tc_members[16]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[16]._annotations._defaultValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[16]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[16]._annotations._minValue._u.octet_value = 0;
-                MissionPlanMsg_g_tc_members[16]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                MissionPlanMsg_g_tc_members[16]._annotations._maxValue._u.octet_value = 100;
-
-                MissionPlanMsg_g_tc_members[17]._annotations._defaultValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[17]._annotations._defaultValue._u.short_value = 0;
-                MissionPlanMsg_g_tc_members[17]._annotations._minValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[17]._annotations._minValue._u.short_value = -9000;
-                MissionPlanMsg_g_tc_members[17]._annotations._maxValue._d = RTI_XCDR_TK_SHORT;
-                MissionPlanMsg_g_tc_members[17]._annotations._maxValue._u.short_value = 9000;
-
-                MissionPlanMsg_g_tc_members[19]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[19]._annotations._defaultValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[19]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[19]._annotations._minValue._u.ushort_value = 0U;
-                MissionPlanMsg_g_tc_members[19]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                MissionPlanMsg_g_tc_members[19]._annotations._maxValue._u.ushort_value = 5000U;
-
-                MissionPlanMsg_g_tc_members[21]._annotations._defaultValue._d = RTI_XCDR_TK_STRING;
-                MissionPlanMsg_g_tc_members[21]._annotations._defaultValue._u.string_value = (DDS_Char *) "";
-
-                MissionPlanMsg_g_tc_members[24]._annotations._defaultValue._d = RTI_XCDR_TK_STRING;
-                MissionPlanMsg_g_tc_members[24]._annotations._defaultValue._u.string_value = (DDS_Char *) "";
-
-                MissionPlanMsg_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
-
-                MissionPlanMsg_g_tc._data._sampleAccessInfo = sample_access_info();
-                MissionPlanMsg_g_tc._data._typePlugin = type_plugin_info();    
-
-                is_initialized = RTI_TRUE;
-
-                return &MissionPlanMsg_g_tc;
-            }
-
-            static RTIXCdrSampleAccessInfo * sample_access_info()
-            {
-                static RTIBool is_initialized = RTI_FALSE;
-
-                dds_msgs::MissionPlanMsg *sample;
-
-                static RTIXCdrMemberAccessInfo MissionPlanMsg_g_memberAccessInfos[27] =
-                {RTIXCdrMemberAccessInfo_INITIALIZER};
-
-                static RTIXCdrSampleAccessInfo MissionPlanMsg_g_sampleAccessInfo = 
-                RTIXCdrSampleAccessInfo_INITIALIZER;
-
-                if (is_initialized) {
-                    return (RTIXCdrSampleAccessInfo*) &MissionPlanMsg_g_sampleAccessInfo;
-                }
-
-                RTIXCdrHeap_allocateStruct(
-                    &sample, 
-                    dds_msgs::MissionPlanMsg);
-                if (sample == NULL) {
-                    return NULL;
-                }
-
-                MissionPlanMsg_g_memberAccessInfos[0].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->MissionName() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->MissionType() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[2].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->StationId() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[3].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformType() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[4].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformId() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[5].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->ScanType() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[6].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->ScanArea() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[7].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->ScanAreaGroundAvgAlt() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[8].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->FlightAltAboveGroundAvgAlt() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[9].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->TakeoffAltAboveSeaLevel() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[10].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->FlightSpeed() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[11].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->CameraHorizontalFOV() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[12].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->CameraVerticalFOV() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[13].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->CameraHorizontalResolution() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[14].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->CameraVerticalResolution() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[15].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->OverlapInFlightDirection() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[16].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->OverlapInLateralDirection() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[17].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->GimbalPitchAngle() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[18].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->SquareCenter() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[19].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->SquareSide() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[20].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathJpegFiles() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[21].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathCurrModel() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[22].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathRefModel() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[23].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathDiffModel() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[24].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->CloudUrlCurrModel() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[25].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->CloudUrlRefModel() - (char *)sample);
-
-                MissionPlanMsg_g_memberAccessInfos[26].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->CloudUrlDiffModel() - (char *)sample);
-
-                MissionPlanMsg_g_sampleAccessInfo.memberAccessInfos = 
-                MissionPlanMsg_g_memberAccessInfos;
-
-                {
-                    size_t candidateTypeSize = sizeof(dds_msgs::MissionPlanMsg);
-
-                    if (candidateTypeSize > RTIXCdrLong_MAX) {
-                        MissionPlanMsg_g_sampleAccessInfo.typeSize[0] =
-                        RTIXCdrLong_MAX;
-                    } else {
-                        MissionPlanMsg_g_sampleAccessInfo.typeSize[0] =
-                        (RTIXCdrUnsignedLong) candidateTypeSize;
-                    }
-                }
-
-                MissionPlanMsg_g_sampleAccessInfo.useGetMemberValueOnlyWithRef =
-                RTI_XCDR_TRUE;
-
-                MissionPlanMsg_g_sampleAccessInfo.getMemberValuePointerFcn = 
-                interpreter::get_aggregation_value_pointer< dds_msgs::MissionPlanMsg >;
-
-                MissionPlanMsg_g_sampleAccessInfo.languageBinding = 
-                RTI_XCDR_TYPE_BINDING_CPP_11_STL ;
-
-                RTIXCdrHeap_freeStruct(sample);
-                is_initialized = RTI_TRUE;
-                return (RTIXCdrSampleAccessInfo*) &MissionPlanMsg_g_sampleAccessInfo;
-            }
-
-            static RTIXCdrTypePlugin * type_plugin_info()
-            {
-                static RTIXCdrTypePlugin MissionPlanMsg_g_typePlugin = 
-                {
-                    NULL, /* serialize */
-                    NULL, /* serialize_key */
-                    NULL, /* deserialize_sample */
-                    NULL, /* deserialize_key_sample */
-                    NULL, /* skip */
-                    NULL, /* get_serialized_sample_size */
-                    NULL, /* get_serialized_sample_max_size_ex */
-                    NULL, /* get_serialized_key_max_size_ex */
-                    NULL, /* get_serialized_sample_min_size */
-                    NULL, /* serialized_sample_to_key */
-                    NULL,
-                    NULL,
-                    NULL,
-                    NULL
-                };
-
-                return &MissionPlanMsg_g_typePlugin;
-            }
-        }; // native_type_code
-        #endif
-
-        const ::dds::core::xtypes::StructType& dynamic_type< dds_msgs::MissionPlanMsg >::get()
-        {
-            return static_cast<const ::dds::core::xtypes::StructType&>(
-                ::rti::core::native_conversions::cast_from_native< ::dds::core::xtypes::DynamicType >(
-                    *(native_type_code< dds_msgs::MissionPlanMsg >::get())));
-        }
-
-        #ifndef NDDS_STANDALONE_TYPE
-        template<>
         struct native_type_code< dds_msgs::GetDroneScanRouteMsg > {
             static DDS_TypeCode * get()
             {
@@ -4709,6 +3946,372 @@ namespace rti {
 
         #ifndef NDDS_STANDALONE_TYPE
         template<>
+        struct native_type_code< dds_msgs::DroneScanRouteMsg > {
+            static DDS_TypeCode * get()
+            {
+                using namespace ::rti::topic::interpreter;
+
+                static RTIBool is_initialized = RTI_FALSE;
+
+                static DDS_TypeCode DroneScanRouteMsg_g_tc_Waypoints_sequence;
+
+                static DDS_TypeCode_Member DroneScanRouteMsg_g_tc_members[8]=
+                {
+
+                    {
+                        (char *)"Waypoints",/* Member name */
+                        {
+                            3,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"ScanAreaLength",/* Member name */
+                        {
+                            4,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"ScanAreaWidth",/* Member name */
+                        {
+                            5,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"ModelGroundResolution",/* Member name */
+                        {
+                            6,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"TimePeriodBetweenFrames",/* Member name */
+                        {
+                            7,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"ShortLegLength",/* Member name */
+                        {
+                            8,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"NumOfFramesPerLongLeg",/* Member name */
+                        {
+                            9,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"TotalNumOfFrames",/* Member name */
+                        {
+                            10,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }
+                };
+
+                static DDS_TypeCode DroneScanRouteMsg_g_tc =
+                {{
+                        DDS_TK_VALUE, /* Kind */
+                        DDS_BOOLEAN_FALSE, /* Ignored */
+                        -1, /*Ignored*/
+                        (char *)"dds_msgs::DroneScanRouteMsg", /* Name */
+                        NULL, /* Ignored */      
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        8, /* Number of members */
+                        DroneScanRouteMsg_g_tc_members, /* Members */
+                        DDS_VM_NONE, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER,
+                        DDS_BOOLEAN_TRUE, /* _isCopyable */
+                        NULL, /* _sampleAccessInfo: assigned later */
+                        NULL /* _typePlugin: assigned later */
+                    }}; /* Type code for DroneScanRouteMsg*/
+
+                if (is_initialized) {
+                    return &DroneScanRouteMsg_g_tc;
+                }
+
+                DroneScanRouteMsg_g_tc_Waypoints_sequence = initialize_sequence_typecode< ::rti::core::bounded_sequence< dds_msgs::GeoPoint, 100L > >((100L));
+
+                DroneScanRouteMsg_g_tc._data._annotations._allowedDataRepresentationMask = 5;
+
+                DroneScanRouteMsg_g_tc_Waypoints_sequence._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::GeoPoint>::get().native();
+                DroneScanRouteMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)& DroneScanRouteMsg_g_tc_Waypoints_sequence;
+                DroneScanRouteMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                DroneScanRouteMsg_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                DroneScanRouteMsg_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                DroneScanRouteMsg_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                DroneScanRouteMsg_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                DroneScanRouteMsg_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                DroneScanRouteMsg_g_tc_members[7]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+
+                /* Initialize the values for member annotations. */
+
+                DroneScanRouteMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[1]._annotations._defaultValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[1]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[1]._annotations._minValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[1]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[1]._annotations._maxValue._u.ushort_value = 20000U;
+
+                DroneScanRouteMsg_g_tc_members[2]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[2]._annotations._defaultValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[2]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[2]._annotations._minValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[2]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[2]._annotations._maxValue._u.ushort_value = 20000U;
+
+                DroneScanRouteMsg_g_tc_members[3]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                DroneScanRouteMsg_g_tc_members[3]._annotations._defaultValue._u.octet_value = 0;
+                DroneScanRouteMsg_g_tc_members[3]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                DroneScanRouteMsg_g_tc_members[3]._annotations._minValue._u.octet_value = 0;
+                DroneScanRouteMsg_g_tc_members[3]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                DroneScanRouteMsg_g_tc_members[3]._annotations._maxValue._u.octet_value = 100;
+
+                DroneScanRouteMsg_g_tc_members[4]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[4]._annotations._defaultValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[4]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[4]._annotations._minValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[4]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[4]._annotations._maxValue._u.ushort_value = 3000U;
+
+                DroneScanRouteMsg_g_tc_members[5]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[5]._annotations._defaultValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[5]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[5]._annotations._minValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[5]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[5]._annotations._maxValue._u.ushort_value = 20000U;
+
+                DroneScanRouteMsg_g_tc_members[6]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[6]._annotations._defaultValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[6]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[6]._annotations._minValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[6]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[6]._annotations._maxValue._u.ushort_value = 3000U;
+
+                DroneScanRouteMsg_g_tc_members[7]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[7]._annotations._defaultValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[7]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[7]._annotations._minValue._u.ushort_value = 0U;
+                DroneScanRouteMsg_g_tc_members[7]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                DroneScanRouteMsg_g_tc_members[7]._annotations._maxValue._u.ushort_value = 20000U;
+
+                DroneScanRouteMsg_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
+
+                DroneScanRouteMsg_g_tc._data._sampleAccessInfo = sample_access_info();
+                DroneScanRouteMsg_g_tc._data._typePlugin = type_plugin_info();    
+
+                is_initialized = RTI_TRUE;
+
+                return &DroneScanRouteMsg_g_tc;
+            }
+
+            static RTIXCdrSampleAccessInfo * sample_access_info()
+            {
+                static RTIBool is_initialized = RTI_FALSE;
+
+                dds_msgs::DroneScanRouteMsg *sample;
+
+                static RTIXCdrMemberAccessInfo DroneScanRouteMsg_g_memberAccessInfos[8] =
+                {RTIXCdrMemberAccessInfo_INITIALIZER};
+
+                static RTIXCdrSampleAccessInfo DroneScanRouteMsg_g_sampleAccessInfo = 
+                RTIXCdrSampleAccessInfo_INITIALIZER;
+
+                if (is_initialized) {
+                    return (RTIXCdrSampleAccessInfo*) &DroneScanRouteMsg_g_sampleAccessInfo;
+                }
+
+                RTIXCdrHeap_allocateStruct(
+                    &sample, 
+                    dds_msgs::DroneScanRouteMsg);
+                if (sample == NULL) {
+                    return NULL;
+                }
+
+                DroneScanRouteMsg_g_memberAccessInfos[0].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->Waypoints() - (char *)sample);
+
+                DroneScanRouteMsg_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->ScanAreaLength() - (char *)sample);
+
+                DroneScanRouteMsg_g_memberAccessInfos[2].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->ScanAreaWidth() - (char *)sample);
+
+                DroneScanRouteMsg_g_memberAccessInfos[3].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->ModelGroundResolution() - (char *)sample);
+
+                DroneScanRouteMsg_g_memberAccessInfos[4].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->TimePeriodBetweenFrames() - (char *)sample);
+
+                DroneScanRouteMsg_g_memberAccessInfos[5].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->ShortLegLength() - (char *)sample);
+
+                DroneScanRouteMsg_g_memberAccessInfos[6].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->NumOfFramesPerLongLeg() - (char *)sample);
+
+                DroneScanRouteMsg_g_memberAccessInfos[7].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->TotalNumOfFrames() - (char *)sample);
+
+                DroneScanRouteMsg_g_sampleAccessInfo.memberAccessInfos = 
+                DroneScanRouteMsg_g_memberAccessInfos;
+
+                {
+                    size_t candidateTypeSize = sizeof(dds_msgs::DroneScanRouteMsg);
+
+                    if (candidateTypeSize > RTIXCdrLong_MAX) {
+                        DroneScanRouteMsg_g_sampleAccessInfo.typeSize[0] =
+                        RTIXCdrLong_MAX;
+                    } else {
+                        DroneScanRouteMsg_g_sampleAccessInfo.typeSize[0] =
+                        (RTIXCdrUnsignedLong) candidateTypeSize;
+                    }
+                }
+
+                DroneScanRouteMsg_g_sampleAccessInfo.useGetMemberValueOnlyWithRef =
+                RTI_XCDR_TRUE;
+
+                DroneScanRouteMsg_g_sampleAccessInfo.getMemberValuePointerFcn = 
+                interpreter::get_aggregation_value_pointer< dds_msgs::DroneScanRouteMsg >;
+
+                DroneScanRouteMsg_g_sampleAccessInfo.languageBinding = 
+                RTI_XCDR_TYPE_BINDING_CPP_11_STL ;
+
+                RTIXCdrHeap_freeStruct(sample);
+                is_initialized = RTI_TRUE;
+                return (RTIXCdrSampleAccessInfo*) &DroneScanRouteMsg_g_sampleAccessInfo;
+            }
+
+            static RTIXCdrTypePlugin * type_plugin_info()
+            {
+                static RTIXCdrTypePlugin DroneScanRouteMsg_g_typePlugin = 
+                {
+                    NULL, /* serialize */
+                    NULL, /* serialize_key */
+                    NULL, /* deserialize_sample */
+                    NULL, /* deserialize_key_sample */
+                    NULL, /* skip */
+                    NULL, /* get_serialized_sample_size */
+                    NULL, /* get_serialized_sample_max_size_ex */
+                    NULL, /* get_serialized_key_max_size_ex */
+                    NULL, /* get_serialized_sample_min_size */
+                    NULL, /* serialized_sample_to_key */
+                    NULL,
+                    NULL,
+                    NULL,
+                    NULL
+                };
+
+                return &DroneScanRouteMsg_g_typePlugin;
+            }
+        }; // native_type_code
+        #endif
+
+        const ::dds::core::xtypes::StructType& dynamic_type< dds_msgs::DroneScanRouteMsg >::get()
+        {
+            return static_cast<const ::dds::core::xtypes::StructType&>(
+                ::rti::core::native_conversions::cast_from_native< ::dds::core::xtypes::DynamicType >(
+                    *(native_type_code< dds_msgs::DroneScanRouteMsg >::get())));
+        }
+
+        #ifndef NDDS_STANDALONE_TYPE
+        template<>
         struct native_type_code< dds_msgs::PlatformLocationMsg > {
             static DDS_TypeCode * get()
             {
@@ -4868,9 +4471,9 @@ namespace rti {
                 PlatformLocationMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
                 PlatformLocationMsg_g_tc_members[1]._annotations._defaultValue._u.octet_value = 0;
                 PlatformLocationMsg_g_tc_members[1]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                PlatformLocationMsg_g_tc_members[1]._annotations._minValue._u.octet_value = 0;
+                PlatformLocationMsg_g_tc_members[1]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
                 PlatformLocationMsg_g_tc_members[1]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                PlatformLocationMsg_g_tc_members[1]._annotations._maxValue._u.octet_value = 255;
+                PlatformLocationMsg_g_tc_members[1]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
 
                 PlatformLocationMsg_g_tc_members[2]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
                 PlatformLocationMsg_g_tc_members[2]._annotations._defaultValue._u.octet_value = 0;
@@ -5016,7 +4619,7 @@ namespace rti {
 
                 static DDS_TypeCode StartJpegGenerationMsg_g_tc_GeoPathJpegFiles_string;
 
-                static DDS_TypeCode_Member StartJpegGenerationMsg_g_tc_members[2]=
+                static DDS_TypeCode_Member StartJpegGenerationMsg_g_tc_members[3]=
                 {
 
                     {
@@ -5038,9 +4641,27 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"GeoPathJpegFiles",/* Member name */
+                        (char *)"PlatformId",/* Member name */
                         {
                             4,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"GeoPathJpegFiles",/* Member name */
+                        {
+                            5,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
                             -1, /* Bitfield bits */
                             NULL/* Member type code is assigned later */
@@ -5067,7 +4688,7 @@ namespace rti {
                         0, /* Ignored */
                         0, /* Ignored */
                         NULL, /* Ignored */
-                        2, /* Number of members */
+                        3, /* Number of members */
                         StartJpegGenerationMsg_g_tc_members, /* Members */
                         DDS_VM_NONE, /* Ignored */
                         RTICdrTypeCodeAnnotations_INITIALIZER,
@@ -5085,14 +4706,22 @@ namespace rti {
                 StartJpegGenerationMsg_g_tc._data._annotations._allowedDataRepresentationMask = 5;
 
                 StartJpegGenerationMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumPlatform>::get().native();
-                StartJpegGenerationMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&StartJpegGenerationMsg_g_tc_GeoPathJpegFiles_string;
+                StartJpegGenerationMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                StartJpegGenerationMsg_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&StartJpegGenerationMsg_g_tc_GeoPathJpegFiles_string;
 
                 /* Initialize the values for member annotations. */
                 StartJpegGenerationMsg_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
                 StartJpegGenerationMsg_g_tc_members[0]._annotations._defaultValue._u.enumerated_value = 0;
 
-                StartJpegGenerationMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_STRING;
-                StartJpegGenerationMsg_g_tc_members[1]._annotations._defaultValue._u.string_value = (DDS_Char *) "";
+                StartJpegGenerationMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                StartJpegGenerationMsg_g_tc_members[1]._annotations._defaultValue._u.octet_value = 0;
+                StartJpegGenerationMsg_g_tc_members[1]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                StartJpegGenerationMsg_g_tc_members[1]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
+                StartJpegGenerationMsg_g_tc_members[1]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                StartJpegGenerationMsg_g_tc_members[1]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
+
+                StartJpegGenerationMsg_g_tc_members[2]._annotations._defaultValue._d = RTI_XCDR_TK_STRING;
+                StartJpegGenerationMsg_g_tc_members[2]._annotations._defaultValue._u.string_value = (DDS_Char *) "";
 
                 StartJpegGenerationMsg_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
 
@@ -5110,7 +4739,7 @@ namespace rti {
 
                 dds_msgs::StartJpegGenerationMsg *sample;
 
-                static RTIXCdrMemberAccessInfo StartJpegGenerationMsg_g_memberAccessInfos[2] =
+                static RTIXCdrMemberAccessInfo StartJpegGenerationMsg_g_memberAccessInfos[3] =
                 {RTIXCdrMemberAccessInfo_INITIALIZER};
 
                 static RTIXCdrSampleAccessInfo StartJpegGenerationMsg_g_sampleAccessInfo = 
@@ -5131,6 +4760,9 @@ namespace rti {
                 (RTIXCdrUnsignedLong) ((char *)&sample->PlatformType() - (char *)sample);
 
                 StartJpegGenerationMsg_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformId() - (char *)sample);
+
+                StartJpegGenerationMsg_g_memberAccessInfos[2].bindingMemberValueOffset[0] = 
                 (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathJpegFiles() - (char *)sample);
 
                 StartJpegGenerationMsg_g_sampleAccessInfo.memberAccessInfos = 
@@ -5196,18 +4828,18 @@ namespace rti {
 
         #ifndef NDDS_STANDALONE_TYPE
         template<>
-        struct native_type_code< dds_msgs::ReportJpegGenerationLivenessMsg > {
+        struct native_type_code< dds_msgs::StopJpegGenerationMsg > {
             static DDS_TypeCode * get()
             {
                 using namespace ::rti::topic::interpreter;
 
                 static RTIBool is_initialized = RTI_FALSE;
 
-                static DDS_TypeCode_Member ReportJpegGenerationLivenessMsg_g_tc_members[3]=
+                static DDS_TypeCode_Member StopJpegGenerationMsg_g_tc_members[2]=
                 {
 
                     {
-                        (char *)"NumOfJpegFiles",/* Member name */
+                        (char *)"PlatformType",/* Member name */
                         {
                             3,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -5225,7 +4857,196 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"Status",/* Member name */
+                        (char *)"PlatformId",/* Member name */
+                        {
+                            4,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }
+                };
+
+                static DDS_TypeCode StopJpegGenerationMsg_g_tc =
+                {{
+                        DDS_TK_VALUE, /* Kind */
+                        DDS_BOOLEAN_FALSE, /* Ignored */
+                        -1, /*Ignored*/
+                        (char *)"dds_msgs::StopJpegGenerationMsg", /* Name */
+                        NULL, /* Ignored */      
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        2, /* Number of members */
+                        StopJpegGenerationMsg_g_tc_members, /* Members */
+                        DDS_VM_NONE, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER,
+                        DDS_BOOLEAN_TRUE, /* _isCopyable */
+                        NULL, /* _sampleAccessInfo: assigned later */
+                        NULL /* _typePlugin: assigned later */
+                    }}; /* Type code for StopJpegGenerationMsg*/
+
+                if (is_initialized) {
+                    return &StopJpegGenerationMsg_g_tc;
+                }
+
+                StopJpegGenerationMsg_g_tc._data._annotations._allowedDataRepresentationMask = 5;
+
+                StopJpegGenerationMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumPlatform>::get().native();
+                StopJpegGenerationMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+
+                /* Initialize the values for member annotations. */
+                StopJpegGenerationMsg_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
+                StopJpegGenerationMsg_g_tc_members[0]._annotations._defaultValue._u.enumerated_value = 0;
+
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._defaultValue._u.octet_value = 0;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
+
+                StopJpegGenerationMsg_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
+
+                StopJpegGenerationMsg_g_tc._data._sampleAccessInfo = sample_access_info();
+                StopJpegGenerationMsg_g_tc._data._typePlugin = type_plugin_info();    
+
+                is_initialized = RTI_TRUE;
+
+                return &StopJpegGenerationMsg_g_tc;
+            }
+
+            static RTIXCdrSampleAccessInfo * sample_access_info()
+            {
+                static RTIBool is_initialized = RTI_FALSE;
+
+                dds_msgs::StopJpegGenerationMsg *sample;
+
+                static RTIXCdrMemberAccessInfo StopJpegGenerationMsg_g_memberAccessInfos[2] =
+                {RTIXCdrMemberAccessInfo_INITIALIZER};
+
+                static RTIXCdrSampleAccessInfo StopJpegGenerationMsg_g_sampleAccessInfo = 
+                RTIXCdrSampleAccessInfo_INITIALIZER;
+
+                if (is_initialized) {
+                    return (RTIXCdrSampleAccessInfo*) &StopJpegGenerationMsg_g_sampleAccessInfo;
+                }
+
+                RTIXCdrHeap_allocateStruct(
+                    &sample, 
+                    dds_msgs::StopJpegGenerationMsg);
+                if (sample == NULL) {
+                    return NULL;
+                }
+
+                StopJpegGenerationMsg_g_memberAccessInfos[0].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformType() - (char *)sample);
+
+                StopJpegGenerationMsg_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformId() - (char *)sample);
+
+                StopJpegGenerationMsg_g_sampleAccessInfo.memberAccessInfos = 
+                StopJpegGenerationMsg_g_memberAccessInfos;
+
+                {
+                    size_t candidateTypeSize = sizeof(dds_msgs::StopJpegGenerationMsg);
+
+                    if (candidateTypeSize > RTIXCdrLong_MAX) {
+                        StopJpegGenerationMsg_g_sampleAccessInfo.typeSize[0] =
+                        RTIXCdrLong_MAX;
+                    } else {
+                        StopJpegGenerationMsg_g_sampleAccessInfo.typeSize[0] =
+                        (RTIXCdrUnsignedLong) candidateTypeSize;
+                    }
+                }
+
+                StopJpegGenerationMsg_g_sampleAccessInfo.useGetMemberValueOnlyWithRef =
+                RTI_XCDR_TRUE;
+
+                StopJpegGenerationMsg_g_sampleAccessInfo.getMemberValuePointerFcn = 
+                interpreter::get_aggregation_value_pointer< dds_msgs::StopJpegGenerationMsg >;
+
+                StopJpegGenerationMsg_g_sampleAccessInfo.languageBinding = 
+                RTI_XCDR_TYPE_BINDING_CPP_11_STL ;
+
+                RTIXCdrHeap_freeStruct(sample);
+                is_initialized = RTI_TRUE;
+                return (RTIXCdrSampleAccessInfo*) &StopJpegGenerationMsg_g_sampleAccessInfo;
+            }
+
+            static RTIXCdrTypePlugin * type_plugin_info()
+            {
+                static RTIXCdrTypePlugin StopJpegGenerationMsg_g_typePlugin = 
+                {
+                    NULL, /* serialize */
+                    NULL, /* serialize_key */
+                    NULL, /* deserialize_sample */
+                    NULL, /* deserialize_key_sample */
+                    NULL, /* skip */
+                    NULL, /* get_serialized_sample_size */
+                    NULL, /* get_serialized_sample_max_size_ex */
+                    NULL, /* get_serialized_key_max_size_ex */
+                    NULL, /* get_serialized_sample_min_size */
+                    NULL, /* serialized_sample_to_key */
+                    NULL,
+                    NULL,
+                    NULL,
+                    NULL
+                };
+
+                return &StopJpegGenerationMsg_g_typePlugin;
+            }
+        }; // native_type_code
+        #endif
+
+        const ::dds::core::xtypes::StructType& dynamic_type< dds_msgs::StopJpegGenerationMsg >::get()
+        {
+            return static_cast<const ::dds::core::xtypes::StructType&>(
+                ::rti::core::native_conversions::cast_from_native< ::dds::core::xtypes::DynamicType >(
+                    *(native_type_code< dds_msgs::StopJpegGenerationMsg >::get())));
+        }
+
+        #ifndef NDDS_STANDALONE_TYPE
+        template<>
+        struct native_type_code< dds_msgs::ReportJpegGenerationLivenessMsg > {
+            static DDS_TypeCode * get()
+            {
+                using namespace ::rti::topic::interpreter;
+
+                static RTIBool is_initialized = RTI_FALSE;
+
+                static DDS_TypeCode_Member ReportJpegGenerationLivenessMsg_g_tc_members[5]=
+                {
+
+                    {
+                        (char *)"PlatformType",/* Member name */
+                        {
+                            3,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"PlatformId",/* Member name */
                         {
                             4,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -5243,9 +5064,45 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"ErrorCode",/* Member name */
+                        (char *)"NumOfJpegFiles",/* Member name */
                         {
                             5,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"Status",/* Member name */
+                        {
+                            6,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"ErrorCode",/* Member name */
+                        {
+                            7,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
                             -1, /* Bitfield bits */
                             NULL/* Member type code is assigned later */
@@ -5272,7 +5129,7 @@ namespace rti {
                         0, /* Ignored */
                         0, /* Ignored */
                         NULL, /* Ignored */
-                        3, /* Number of members */
+                        5, /* Number of members */
                         ReportJpegGenerationLivenessMsg_g_tc_members, /* Members */
                         DDS_VM_NONE, /* Ignored */
                         RTICdrTypeCodeAnnotations_INITIALIZER,
@@ -5287,27 +5144,39 @@ namespace rti {
 
                 ReportJpegGenerationLivenessMsg_g_tc._data._annotations._allowedDataRepresentationMask = 5;
 
-                ReportJpegGenerationLivenessMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                ReportJpegGenerationLivenessMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumJpegGenerationSts>::get().native();
-                ReportJpegGenerationLivenessMsg_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                ReportJpegGenerationLivenessMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumPlatform>::get().native();
+                ReportJpegGenerationLivenessMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                ReportJpegGenerationLivenessMsg_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                ReportJpegGenerationLivenessMsg_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumJpegGenerationSts>::get().native();
+                ReportJpegGenerationLivenessMsg_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
 
                 /* Initialize the values for member annotations. */
-                ReportJpegGenerationLivenessMsg_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                ReportJpegGenerationLivenessMsg_g_tc_members[0]._annotations._defaultValue._u.ushort_value = 0U;
-                ReportJpegGenerationLivenessMsg_g_tc_members[0]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                ReportJpegGenerationLivenessMsg_g_tc_members[0]._annotations._minValue._u.ushort_value = RTIXCdrUnsignedShort_MIN;
-                ReportJpegGenerationLivenessMsg_g_tc_members[0]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                ReportJpegGenerationLivenessMsg_g_tc_members[0]._annotations._maxValue._u.ushort_value = RTIXCdrUnsignedShort_MAX;
+                ReportJpegGenerationLivenessMsg_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
+                ReportJpegGenerationLivenessMsg_g_tc_members[0]._annotations._defaultValue._u.enumerated_value = 0;
 
-                ReportJpegGenerationLivenessMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
-                ReportJpegGenerationLivenessMsg_g_tc_members[1]._annotations._defaultValue._u.enumerated_value = 0;
+                ReportJpegGenerationLivenessMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                ReportJpegGenerationLivenessMsg_g_tc_members[1]._annotations._defaultValue._u.octet_value = 0;
+                ReportJpegGenerationLivenessMsg_g_tc_members[1]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                ReportJpegGenerationLivenessMsg_g_tc_members[1]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
+                ReportJpegGenerationLivenessMsg_g_tc_members[1]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                ReportJpegGenerationLivenessMsg_g_tc_members[1]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
 
-                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._defaultValue._u.octet_value = 0;
-                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
-                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
+                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._defaultValue._u.ushort_value = 0U;
+                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._minValue._u.ushort_value = RTIXCdrUnsignedShort_MIN;
+                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                ReportJpegGenerationLivenessMsg_g_tc_members[2]._annotations._maxValue._u.ushort_value = RTIXCdrUnsignedShort_MAX;
+
+                ReportJpegGenerationLivenessMsg_g_tc_members[3]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
+                ReportJpegGenerationLivenessMsg_g_tc_members[3]._annotations._defaultValue._u.enumerated_value = 0;
+
+                ReportJpegGenerationLivenessMsg_g_tc_members[4]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                ReportJpegGenerationLivenessMsg_g_tc_members[4]._annotations._defaultValue._u.octet_value = 0;
+                ReportJpegGenerationLivenessMsg_g_tc_members[4]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                ReportJpegGenerationLivenessMsg_g_tc_members[4]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
+                ReportJpegGenerationLivenessMsg_g_tc_members[4]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                ReportJpegGenerationLivenessMsg_g_tc_members[4]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
 
                 ReportJpegGenerationLivenessMsg_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
 
@@ -5325,7 +5194,7 @@ namespace rti {
 
                 dds_msgs::ReportJpegGenerationLivenessMsg *sample;
 
-                static RTIXCdrMemberAccessInfo ReportJpegGenerationLivenessMsg_g_memberAccessInfos[3] =
+                static RTIXCdrMemberAccessInfo ReportJpegGenerationLivenessMsg_g_memberAccessInfos[5] =
                 {RTIXCdrMemberAccessInfo_INITIALIZER};
 
                 static RTIXCdrSampleAccessInfo ReportJpegGenerationLivenessMsg_g_sampleAccessInfo = 
@@ -5343,12 +5212,18 @@ namespace rti {
                 }
 
                 ReportJpegGenerationLivenessMsg_g_memberAccessInfos[0].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->NumOfJpegFiles() - (char *)sample);
+                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformType() - (char *)sample);
 
                 ReportJpegGenerationLivenessMsg_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->Status() - (char *)sample);
+                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformId() - (char *)sample);
 
                 ReportJpegGenerationLivenessMsg_g_memberAccessInfos[2].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->NumOfJpegFiles() - (char *)sample);
+
+                ReportJpegGenerationLivenessMsg_g_memberAccessInfos[3].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->Status() - (char *)sample);
+
+                ReportJpegGenerationLivenessMsg_g_memberAccessInfos[4].bindingMemberValueOffset[0] = 
                 (RTIXCdrUnsignedLong) ((char *)&sample->ErrorCode() - (char *)sample);
 
                 ReportJpegGenerationLivenessMsg_g_sampleAccessInfo.memberAccessInfos = 
@@ -5929,20 +5804,28 @@ namespace rti {
 
         #ifndef NDDS_STANDALONE_TYPE
         template<>
-        struct native_type_code< dds_msgs::DroneScanRouteMsg > {
+        struct native_type_code< dds_msgs::MissionPlanMsg > {
             static DDS_TypeCode * get()
             {
                 using namespace ::rti::topic::interpreter;
 
                 static RTIBool is_initialized = RTI_FALSE;
 
-                static DDS_TypeCode DroneScanRouteMsg_g_tc_Waypoints_sequence;
+                static DDS_TypeCode MissionPlanMsg_g_tc_MissionName_string;
+                static DDS_TypeCode MissionPlanMsg_g_tc_ScanArea_array =DDS_INITIALIZE_ARRAY_TYPECODE(1,3L, NULL,NULL);
+                static DDS_TypeCode MissionPlanMsg_g_tc_GeoPathJpegFiles_string;
+                static DDS_TypeCode MissionPlanMsg_g_tc_GeoPathCurrModel_string;
+                static DDS_TypeCode MissionPlanMsg_g_tc_GeoPathRefModel_string;
+                static DDS_TypeCode MissionPlanMsg_g_tc_GeoPathDiffModel_string;
+                static DDS_TypeCode MissionPlanMsg_g_tc_CloudUrlCurrModel_string;
+                static DDS_TypeCode MissionPlanMsg_g_tc_CloudUrlRefModel_string;
+                static DDS_TypeCode MissionPlanMsg_g_tc_CloudUrlDiffModel_string;
 
-                static DDS_TypeCode_Member DroneScanRouteMsg_g_tc_members[8]=
+                static DDS_TypeCode_Member MissionPlanMsg_g_tc_members[27]=
                 {
 
                     {
-                        (char *)"Waypoints",/* Member name */
+                        (char *)"MissionName",/* Member name */
                         {
                             3,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -5960,7 +5843,7 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"ScanAreaLength",/* Member name */
+                        (char *)"MissionType",/* Member name */
                         {
                             4,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -5978,7 +5861,7 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"ScanAreaWidth",/* Member name */
+                        (char *)"StationId",/* Member name */
                         {
                             5,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -5996,7 +5879,7 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"ModelGroundResolution",/* Member name */
+                        (char *)"PlatformType",/* Member name */
                         {
                             6,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -6014,7 +5897,7 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"TimePeriodBetweenFrames",/* Member name */
+                        (char *)"PlatformId",/* Member name */
                         {
                             7,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -6032,7 +5915,7 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"ShortLegLength",/* Member name */
+                        (char *)"ScanType",/* Member name */
                         {
                             8,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -6050,7 +5933,7 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"NumOfFramesPerLongLeg",/* Member name */
+                        (char *)"ScanArea",/* Member name */
                         {
                             9,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -6068,7 +5951,7 @@ namespace rti {
                         RTICdrTypeCodeAnnotations_INITIALIZER
                     }, 
                     {
-                        (char *)"TotalNumOfFrames",/* Member name */
+                        (char *)"ScanAreaGroundAvgAlt",/* Member name */
                         {
                             10,/* Representation ID */
                             DDS_BOOLEAN_FALSE,/* Is a pointer? */
@@ -6084,186 +5967,677 @@ namespace rti {
                         1,
                         NULL, /* Ignored */
                         RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"FlightAltAboveGroundAvgAlt",/* Member name */
+                        {
+                            11,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"TakeoffAltAboveSeaLevel",/* Member name */
+                        {
+                            12,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"FlightSpeed",/* Member name */
+                        {
+                            13,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"CameraHorizontalFOV",/* Member name */
+                        {
+                            14,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"CameraVerticalFOV",/* Member name */
+                        {
+                            15,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"CameraHorizontalResolution",/* Member name */
+                        {
+                            16,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"CameraVerticalResolution",/* Member name */
+                        {
+                            17,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"OverlapInFlightDirection",/* Member name */
+                        {
+                            18,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"OverlapInLateralDirection",/* Member name */
+                        {
+                            19,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"GimbalPitchAngle",/* Member name */
+                        {
+                            20,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"SquareCenter",/* Member name */
+                        {
+                            21,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"SquareSide",/* Member name */
+                        {
+                            22,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"GeoPathJpegFiles",/* Member name */
+                        {
+                            23,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"GeoPathCurrModel",/* Member name */
+                        {
+                            24,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"GeoPathRefModel",/* Member name */
+                        {
+                            25,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"GeoPathDiffModel",/* Member name */
+                        {
+                            26,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"CloudUrlCurrModel",/* Member name */
+                        {
+                            27,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"CloudUrlRefModel",/* Member name */
+                        {
+                            28,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
+                    }, 
+                    {
+                        (char *)"CloudUrlDiffModel",/* Member name */
+                        {
+                            29,/* Representation ID */
+                            DDS_BOOLEAN_FALSE,/* Is a pointer? */
+                            -1, /* Bitfield bits */
+                            NULL/* Member type code is assigned later */
+                        },
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        0, /* Ignored */
+                        NULL, /* Ignored */
+                        RTI_CDR_NONKEY_MEMBER, /* Is a key? */
+                        DDS_PUBLIC_MEMBER,/* Member visibility */
+                        1,
+                        NULL, /* Ignored */
+                        RTICdrTypeCodeAnnotations_INITIALIZER
                     }
                 };
 
-                static DDS_TypeCode DroneScanRouteMsg_g_tc =
+                static DDS_TypeCode MissionPlanMsg_g_tc =
                 {{
                         DDS_TK_VALUE, /* Kind */
                         DDS_BOOLEAN_FALSE, /* Ignored */
                         -1, /*Ignored*/
-                        (char *)"dds_msgs::DroneScanRouteMsg", /* Name */
+                        (char *)"dds_msgs::MissionPlanMsg", /* Name */
                         NULL, /* Ignored */      
                         0, /* Ignored */
                         0, /* Ignored */
                         NULL, /* Ignored */
-                        8, /* Number of members */
-                        DroneScanRouteMsg_g_tc_members, /* Members */
+                        27, /* Number of members */
+                        MissionPlanMsg_g_tc_members, /* Members */
                         DDS_VM_NONE, /* Ignored */
                         RTICdrTypeCodeAnnotations_INITIALIZER,
                         DDS_BOOLEAN_TRUE, /* _isCopyable */
                         NULL, /* _sampleAccessInfo: assigned later */
                         NULL /* _typePlugin: assigned later */
-                    }}; /* Type code for DroneScanRouteMsg*/
+                    }}; /* Type code for MissionPlanMsg*/
 
                 if (is_initialized) {
-                    return &DroneScanRouteMsg_g_tc;
+                    return &MissionPlanMsg_g_tc;
                 }
 
-                DroneScanRouteMsg_g_tc_Waypoints_sequence = initialize_sequence_typecode< ::rti::core::bounded_sequence< dds_msgs::GeoPoint, 100L > >((100L));
+                MissionPlanMsg_g_tc_MissionName_string = initialize_string_typecode((256L));
+                MissionPlanMsg_g_tc_GeoPathJpegFiles_string = initialize_string_typecode((256L));
+                MissionPlanMsg_g_tc_GeoPathCurrModel_string = initialize_string_typecode((256L));
+                MissionPlanMsg_g_tc_GeoPathRefModel_string = initialize_string_typecode((256L));
+                MissionPlanMsg_g_tc_GeoPathDiffModel_string = initialize_string_typecode((256L));
+                MissionPlanMsg_g_tc_CloudUrlCurrModel_string = initialize_string_typecode((256L));
+                MissionPlanMsg_g_tc_CloudUrlRefModel_string = initialize_string_typecode((256L));
+                MissionPlanMsg_g_tc_CloudUrlDiffModel_string = initialize_string_typecode((256L));
 
-                DroneScanRouteMsg_g_tc._data._annotations._allowedDataRepresentationMask = 5;
+                MissionPlanMsg_g_tc._data._annotations._allowedDataRepresentationMask = 5;
 
-                DroneScanRouteMsg_g_tc_Waypoints_sequence._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::GeoPoint>::get().native();
-                DroneScanRouteMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)& DroneScanRouteMsg_g_tc_Waypoints_sequence;
-                DroneScanRouteMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                DroneScanRouteMsg_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                DroneScanRouteMsg_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
-                DroneScanRouteMsg_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                DroneScanRouteMsg_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                DroneScanRouteMsg_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
-                DroneScanRouteMsg_g_tc_members[7]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                MissionPlanMsg_g_tc_ScanArea_array._data._typeCode =(RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::GeoPoint>::get().native();
+                MissionPlanMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_MissionName_string;
+                MissionPlanMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumMission>::get().native();
+                MissionPlanMsg_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                MissionPlanMsg_g_tc_members[3]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumPlatform>::get().native();
+                MissionPlanMsg_g_tc_members[4]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                MissionPlanMsg_g_tc_members[5]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumScan>::get().native();
+                MissionPlanMsg_g_tc_members[6]._representation._typeCode = (RTICdrTypeCode *)& MissionPlanMsg_g_tc_ScanArea_array;
+                MissionPlanMsg_g_tc_members[7]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_short;
+                MissionPlanMsg_g_tc_members[8]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                MissionPlanMsg_g_tc_members[9]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_short;
+                MissionPlanMsg_g_tc_members[10]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                MissionPlanMsg_g_tc_members[11]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                MissionPlanMsg_g_tc_members[12]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                MissionPlanMsg_g_tc_members[13]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                MissionPlanMsg_g_tc_members[14]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                MissionPlanMsg_g_tc_members[15]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                MissionPlanMsg_g_tc_members[16]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                MissionPlanMsg_g_tc_members[17]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_short;
+                MissionPlanMsg_g_tc_members[18]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::GeoPoint>::get().native();
+                MissionPlanMsg_g_tc_members[19]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_ushort;
+                MissionPlanMsg_g_tc_members[20]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_GeoPathJpegFiles_string;
+                MissionPlanMsg_g_tc_members[21]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_GeoPathCurrModel_string;
+                MissionPlanMsg_g_tc_members[22]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_GeoPathRefModel_string;
+                MissionPlanMsg_g_tc_members[23]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_GeoPathDiffModel_string;
+                MissionPlanMsg_g_tc_members[24]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_CloudUrlCurrModel_string;
+                MissionPlanMsg_g_tc_members[25]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_CloudUrlRefModel_string;
+                MissionPlanMsg_g_tc_members[26]._representation._typeCode = (RTICdrTypeCode *)&MissionPlanMsg_g_tc_CloudUrlDiffModel_string;
 
                 /* Initialize the values for member annotations. */
+                MissionPlanMsg_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_STRING;
+                MissionPlanMsg_g_tc_members[0]._annotations._defaultValue._u.string_value = (DDS_Char *) "";
 
-                DroneScanRouteMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[1]._annotations._defaultValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[1]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[1]._annotations._minValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[1]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[1]._annotations._maxValue._u.ushort_value = 20000U;
+                MissionPlanMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
+                MissionPlanMsg_g_tc_members[1]._annotations._defaultValue._u.enumerated_value = 0;
 
-                DroneScanRouteMsg_g_tc_members[2]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[2]._annotations._defaultValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[2]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[2]._annotations._minValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[2]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[2]._annotations._maxValue._u.ushort_value = 20000U;
+                MissionPlanMsg_g_tc_members[2]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[2]._annotations._defaultValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[2]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[2]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
+                MissionPlanMsg_g_tc_members[2]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[2]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
 
-                DroneScanRouteMsg_g_tc_members[3]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                DroneScanRouteMsg_g_tc_members[3]._annotations._defaultValue._u.octet_value = 0;
-                DroneScanRouteMsg_g_tc_members[3]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                DroneScanRouteMsg_g_tc_members[3]._annotations._minValue._u.octet_value = 0;
-                DroneScanRouteMsg_g_tc_members[3]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                DroneScanRouteMsg_g_tc_members[3]._annotations._maxValue._u.octet_value = 100;
+                MissionPlanMsg_g_tc_members[3]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
+                MissionPlanMsg_g_tc_members[3]._annotations._defaultValue._u.enumerated_value = 0;
 
-                DroneScanRouteMsg_g_tc_members[4]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[4]._annotations._defaultValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[4]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[4]._annotations._minValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[4]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[4]._annotations._maxValue._u.ushort_value = 3000U;
+                MissionPlanMsg_g_tc_members[4]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[4]._annotations._defaultValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[4]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[4]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
+                MissionPlanMsg_g_tc_members[4]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[4]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
 
-                DroneScanRouteMsg_g_tc_members[5]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[5]._annotations._defaultValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[5]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[5]._annotations._minValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[5]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[5]._annotations._maxValue._u.ushort_value = 20000U;
+                MissionPlanMsg_g_tc_members[5]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
+                MissionPlanMsg_g_tc_members[5]._annotations._defaultValue._u.enumerated_value = 0;
 
-                DroneScanRouteMsg_g_tc_members[6]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[6]._annotations._defaultValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[6]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[6]._annotations._minValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[6]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[6]._annotations._maxValue._u.ushort_value = 3000U;
+                MissionPlanMsg_g_tc_members[7]._annotations._defaultValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[7]._annotations._defaultValue._u.short_value = 0;
+                MissionPlanMsg_g_tc_members[7]._annotations._minValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[7]._annotations._minValue._u.short_value = -432;
+                MissionPlanMsg_g_tc_members[7]._annotations._maxValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[7]._annotations._maxValue._u.short_value = 3000;
 
-                DroneScanRouteMsg_g_tc_members[7]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[7]._annotations._defaultValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[7]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[7]._annotations._minValue._u.ushort_value = 0U;
-                DroneScanRouteMsg_g_tc_members[7]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
-                DroneScanRouteMsg_g_tc_members[7]._annotations._maxValue._u.ushort_value = 20000U;
+                MissionPlanMsg_g_tc_members[8]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[8]._annotations._defaultValue._u.ushort_value = 0U;
+                MissionPlanMsg_g_tc_members[8]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[8]._annotations._minValue._u.ushort_value = 0U;
+                MissionPlanMsg_g_tc_members[8]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[8]._annotations._maxValue._u.ushort_value = 1500U;
 
-                DroneScanRouteMsg_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
+                MissionPlanMsg_g_tc_members[9]._annotations._defaultValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[9]._annotations._defaultValue._u.short_value = 0;
+                MissionPlanMsg_g_tc_members[9]._annotations._minValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[9]._annotations._minValue._u.short_value = -432;
+                MissionPlanMsg_g_tc_members[9]._annotations._maxValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[9]._annotations._maxValue._u.short_value = 3000;
 
-                DroneScanRouteMsg_g_tc._data._sampleAccessInfo = sample_access_info();
-                DroneScanRouteMsg_g_tc._data._typePlugin = type_plugin_info();    
+                MissionPlanMsg_g_tc_members[10]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[10]._annotations._defaultValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[10]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[10]._annotations._minValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[10]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[10]._annotations._maxValue._u.octet_value = 40;
+
+                MissionPlanMsg_g_tc_members[11]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[11]._annotations._defaultValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[11]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[11]._annotations._minValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[11]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[11]._annotations._maxValue._u.octet_value = 180;
+
+                MissionPlanMsg_g_tc_members[12]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[12]._annotations._defaultValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[12]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[12]._annotations._minValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[12]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[12]._annotations._maxValue._u.octet_value = 180;
+
+                MissionPlanMsg_g_tc_members[13]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[13]._annotations._defaultValue._u.ushort_value = 0U;
+                MissionPlanMsg_g_tc_members[13]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[13]._annotations._minValue._u.ushort_value = 0U;
+                MissionPlanMsg_g_tc_members[13]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[13]._annotations._maxValue._u.ushort_value = 15000U;
+
+                MissionPlanMsg_g_tc_members[14]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[14]._annotations._defaultValue._u.ushort_value = 0U;
+                MissionPlanMsg_g_tc_members[14]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[14]._annotations._minValue._u.ushort_value = 0U;
+                MissionPlanMsg_g_tc_members[14]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[14]._annotations._maxValue._u.ushort_value = 15000U;
+
+                MissionPlanMsg_g_tc_members[15]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[15]._annotations._defaultValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[15]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[15]._annotations._minValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[15]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[15]._annotations._maxValue._u.octet_value = 100;
+
+                MissionPlanMsg_g_tc_members[16]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[16]._annotations._defaultValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[16]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[16]._annotations._minValue._u.octet_value = 0;
+                MissionPlanMsg_g_tc_members[16]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                MissionPlanMsg_g_tc_members[16]._annotations._maxValue._u.octet_value = 100;
+
+                MissionPlanMsg_g_tc_members[17]._annotations._defaultValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[17]._annotations._defaultValue._u.short_value = 0;
+                MissionPlanMsg_g_tc_members[17]._annotations._minValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[17]._annotations._minValue._u.short_value = -9000;
+                MissionPlanMsg_g_tc_members[17]._annotations._maxValue._d = RTI_XCDR_TK_SHORT;
+                MissionPlanMsg_g_tc_members[17]._annotations._maxValue._u.short_value = 9000;
+
+                MissionPlanMsg_g_tc_members[19]._annotations._defaultValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[19]._annotations._defaultValue._u.ushort_value = 0U;
+                MissionPlanMsg_g_tc_members[19]._annotations._minValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[19]._annotations._minValue._u.ushort_value = 0U;
+                MissionPlanMsg_g_tc_members[19]._annotations._maxValue._d = RTI_XCDR_TK_USHORT;
+                MissionPlanMsg_g_tc_members[19]._annotations._maxValue._u.ushort_value = 5000U;
+
+                MissionPlanMsg_g_tc_members[21]._annotations._defaultValue._d = RTI_XCDR_TK_STRING;
+                MissionPlanMsg_g_tc_members[21]._annotations._defaultValue._u.string_value = (DDS_Char *) "";
+
+                MissionPlanMsg_g_tc_members[24]._annotations._defaultValue._d = RTI_XCDR_TK_STRING;
+                MissionPlanMsg_g_tc_members[24]._annotations._defaultValue._u.string_value = (DDS_Char *) "";
+
+                MissionPlanMsg_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
+
+                MissionPlanMsg_g_tc._data._sampleAccessInfo = sample_access_info();
+                MissionPlanMsg_g_tc._data._typePlugin = type_plugin_info();    
 
                 is_initialized = RTI_TRUE;
 
-                return &DroneScanRouteMsg_g_tc;
+                return &MissionPlanMsg_g_tc;
             }
 
             static RTIXCdrSampleAccessInfo * sample_access_info()
             {
                 static RTIBool is_initialized = RTI_FALSE;
 
-                dds_msgs::DroneScanRouteMsg *sample;
+                dds_msgs::MissionPlanMsg *sample;
 
-                static RTIXCdrMemberAccessInfo DroneScanRouteMsg_g_memberAccessInfos[8] =
+                static RTIXCdrMemberAccessInfo MissionPlanMsg_g_memberAccessInfos[27] =
                 {RTIXCdrMemberAccessInfo_INITIALIZER};
 
-                static RTIXCdrSampleAccessInfo DroneScanRouteMsg_g_sampleAccessInfo = 
+                static RTIXCdrSampleAccessInfo MissionPlanMsg_g_sampleAccessInfo = 
                 RTIXCdrSampleAccessInfo_INITIALIZER;
 
                 if (is_initialized) {
-                    return (RTIXCdrSampleAccessInfo*) &DroneScanRouteMsg_g_sampleAccessInfo;
+                    return (RTIXCdrSampleAccessInfo*) &MissionPlanMsg_g_sampleAccessInfo;
                 }
 
                 RTIXCdrHeap_allocateStruct(
                     &sample, 
-                    dds_msgs::DroneScanRouteMsg);
+                    dds_msgs::MissionPlanMsg);
                 if (sample == NULL) {
                     return NULL;
                 }
 
-                DroneScanRouteMsg_g_memberAccessInfos[0].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->Waypoints() - (char *)sample);
+                MissionPlanMsg_g_memberAccessInfos[0].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->MissionName() - (char *)sample);
 
-                DroneScanRouteMsg_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->ScanAreaLength() - (char *)sample);
+                MissionPlanMsg_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->MissionType() - (char *)sample);
 
-                DroneScanRouteMsg_g_memberAccessInfos[2].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->ScanAreaWidth() - (char *)sample);
+                MissionPlanMsg_g_memberAccessInfos[2].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->StationId() - (char *)sample);
 
-                DroneScanRouteMsg_g_memberAccessInfos[3].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->ModelGroundResolution() - (char *)sample);
+                MissionPlanMsg_g_memberAccessInfos[3].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformType() - (char *)sample);
 
-                DroneScanRouteMsg_g_memberAccessInfos[4].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->TimePeriodBetweenFrames() - (char *)sample);
+                MissionPlanMsg_g_memberAccessInfos[4].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->PlatformId() - (char *)sample);
 
-                DroneScanRouteMsg_g_memberAccessInfos[5].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->ShortLegLength() - (char *)sample);
+                MissionPlanMsg_g_memberAccessInfos[5].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->ScanType() - (char *)sample);
 
-                DroneScanRouteMsg_g_memberAccessInfos[6].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->NumOfFramesPerLongLeg() - (char *)sample);
+                MissionPlanMsg_g_memberAccessInfos[6].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->ScanArea() - (char *)sample);
 
-                DroneScanRouteMsg_g_memberAccessInfos[7].bindingMemberValueOffset[0] = 
-                (RTIXCdrUnsignedLong) ((char *)&sample->TotalNumOfFrames() - (char *)sample);
+                MissionPlanMsg_g_memberAccessInfos[7].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->ScanAreaGroundAvgAlt() - (char *)sample);
 
-                DroneScanRouteMsg_g_sampleAccessInfo.memberAccessInfos = 
-                DroneScanRouteMsg_g_memberAccessInfos;
+                MissionPlanMsg_g_memberAccessInfos[8].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->FlightAltAboveGroundAvgAlt() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[9].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->TakeoffAltAboveSeaLevel() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[10].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->FlightSpeed() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[11].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->CameraHorizontalFOV() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[12].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->CameraVerticalFOV() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[13].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->CameraHorizontalResolution() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[14].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->CameraVerticalResolution() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[15].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->OverlapInFlightDirection() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[16].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->OverlapInLateralDirection() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[17].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->GimbalPitchAngle() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[18].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->SquareCenter() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[19].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->SquareSide() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[20].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathJpegFiles() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[21].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathCurrModel() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[22].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathRefModel() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[23].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->GeoPathDiffModel() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[24].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->CloudUrlCurrModel() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[25].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->CloudUrlRefModel() - (char *)sample);
+
+                MissionPlanMsg_g_memberAccessInfos[26].bindingMemberValueOffset[0] = 
+                (RTIXCdrUnsignedLong) ((char *)&sample->CloudUrlDiffModel() - (char *)sample);
+
+                MissionPlanMsg_g_sampleAccessInfo.memberAccessInfos = 
+                MissionPlanMsg_g_memberAccessInfos;
 
                 {
-                    size_t candidateTypeSize = sizeof(dds_msgs::DroneScanRouteMsg);
+                    size_t candidateTypeSize = sizeof(dds_msgs::MissionPlanMsg);
 
                     if (candidateTypeSize > RTIXCdrLong_MAX) {
-                        DroneScanRouteMsg_g_sampleAccessInfo.typeSize[0] =
+                        MissionPlanMsg_g_sampleAccessInfo.typeSize[0] =
                         RTIXCdrLong_MAX;
                     } else {
-                        DroneScanRouteMsg_g_sampleAccessInfo.typeSize[0] =
+                        MissionPlanMsg_g_sampleAccessInfo.typeSize[0] =
                         (RTIXCdrUnsignedLong) candidateTypeSize;
                     }
                 }
 
-                DroneScanRouteMsg_g_sampleAccessInfo.useGetMemberValueOnlyWithRef =
+                MissionPlanMsg_g_sampleAccessInfo.useGetMemberValueOnlyWithRef =
                 RTI_XCDR_TRUE;
 
-                DroneScanRouteMsg_g_sampleAccessInfo.getMemberValuePointerFcn = 
-                interpreter::get_aggregation_value_pointer< dds_msgs::DroneScanRouteMsg >;
+                MissionPlanMsg_g_sampleAccessInfo.getMemberValuePointerFcn = 
+                interpreter::get_aggregation_value_pointer< dds_msgs::MissionPlanMsg >;
 
-                DroneScanRouteMsg_g_sampleAccessInfo.languageBinding = 
+                MissionPlanMsg_g_sampleAccessInfo.languageBinding = 
                 RTI_XCDR_TYPE_BINDING_CPP_11_STL ;
 
                 RTIXCdrHeap_freeStruct(sample);
                 is_initialized = RTI_TRUE;
-                return (RTIXCdrSampleAccessInfo*) &DroneScanRouteMsg_g_sampleAccessInfo;
+                return (RTIXCdrSampleAccessInfo*) &MissionPlanMsg_g_sampleAccessInfo;
             }
 
             static RTIXCdrTypePlugin * type_plugin_info()
             {
-                static RTIXCdrTypePlugin DroneScanRouteMsg_g_typePlugin = 
+                static RTIXCdrTypePlugin MissionPlanMsg_g_typePlugin = 
                 {
                     NULL, /* serialize */
                     NULL, /* serialize_key */
@@ -6281,16 +6655,16 @@ namespace rti {
                     NULL
                 };
 
-                return &DroneScanRouteMsg_g_typePlugin;
+                return &MissionPlanMsg_g_typePlugin;
             }
         }; // native_type_code
         #endif
 
-        const ::dds::core::xtypes::StructType& dynamic_type< dds_msgs::DroneScanRouteMsg >::get()
+        const ::dds::core::xtypes::StructType& dynamic_type< dds_msgs::MissionPlanMsg >::get()
         {
             return static_cast<const ::dds::core::xtypes::StructType&>(
                 ::rti::core::native_conversions::cast_from_native< ::dds::core::xtypes::DynamicType >(
-                    *(native_type_code< dds_msgs::DroneScanRouteMsg >::get())));
+                    *(native_type_code< dds_msgs::MissionPlanMsg >::get())));
         }
 
     }
@@ -6388,109 +6762,6 @@ namespace dds {
             RTIOsapiUtility_unusedParameter(sample);
         }
 
-        void topic_type_support< dds_msgs::MissionPlanMsg >:: register_type(
-            ::dds::domain::DomainParticipant& participant,
-            const std::string& type_name) 
-        {
-
-            ::rti::domain::register_type_plugin(
-                participant,
-                type_name,
-                dds_msgs::MissionPlanMsgPlugin_new,
-                dds_msgs::MissionPlanMsgPlugin_delete);
-        }
-
-        std::vector<char>& topic_type_support< dds_msgs::MissionPlanMsg >::to_cdr_buffer(
-            std::vector<char>& buffer, 
-            const dds_msgs::MissionPlanMsg& sample,
-            ::dds::core::policy::DataRepresentationId representation)
-        {
-            // First get the length of the buffer
-            unsigned int length = 0;
-            RTIBool ok = MissionPlanMsgPlugin_serialize_to_cdr_buffer(
-                NULL, 
-                &length,
-                &sample,
-                representation);
-            ::rti::core::check_return_code(
-                ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
-                "Failed to calculate cdr buffer size");
-
-            // Create a vector with that size and copy the cdr buffer into it
-            buffer.resize(length);
-            ok = MissionPlanMsgPlugin_serialize_to_cdr_buffer(
-                &buffer[0], 
-                &length, 
-                &sample,
-                representation);
-            ::rti::core::check_return_code(
-                ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
-                "Failed to copy cdr buffer");
-
-            return buffer;
-        }
-
-        void topic_type_support< dds_msgs::MissionPlanMsg >::from_cdr_buffer(dds_msgs::MissionPlanMsg& sample, 
-        const std::vector<char>& buffer)
-        {
-
-            RTIBool ok  = MissionPlanMsgPlugin_deserialize_from_cdr_buffer(
-                &sample, 
-                &buffer[0], 
-                static_cast<unsigned int>(buffer.size()));
-            ::rti::core::check_return_code(ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
-            "Failed to create dds_msgs::MissionPlanMsg from cdr buffer");
-        }
-
-        void topic_type_support< dds_msgs::MissionPlanMsg >::reset_sample(dds_msgs::MissionPlanMsg& sample) 
-        {
-            // Initialize base
-            topic_type_support< dds_msgs::BaseMsg >::reset_sample(sample);
-
-            sample.MissionName("");
-            sample.MissionType(dds_msgs::EnumMission::None);
-            sample.StationId(0);
-            sample.PlatformType(dds_msgs::EnumPlatform::None);
-            sample.PlatformId(0U);
-            sample.ScanType(dds_msgs::EnumScan::None);
-            ::rti::topic::reset_sample(sample.ScanArea());
-            sample.ScanAreaGroundAvgAlt(0);
-            sample.FlightAltAboveGroundAvgAlt(0U);
-            sample.TakeoffAltAboveSeaLevel(0);
-            sample.FlightSpeed(0);
-            sample.CameraHorizontalFOV(0);
-            sample.CameraVerticalFOV(0);
-            sample.CameraHorizontalResolution(0U);
-            sample.CameraVerticalResolution(0U);
-            sample.OverlapInFlightDirection(0);
-            sample.OverlapInLateralDirection(0);
-            sample.GimbalPitchAngle(0);
-            ::rti::topic::reset_sample(sample.SquareCenter());
-            sample.SquareSide(0U);
-            ::rti::topic::reset_sample(sample.GeoPathJpegFiles());
-            sample.GeoPathCurrModel("");
-            ::rti::topic::reset_sample(sample.GeoPathRefModel());
-            ::rti::topic::reset_sample(sample.GeoPathDiffModel());
-            sample.CloudUrlCurrModel("");
-            ::rti::topic::reset_sample(sample.CloudUrlRefModel());
-            ::rti::topic::reset_sample(sample.CloudUrlDiffModel());
-        }
-
-        void topic_type_support< dds_msgs::MissionPlanMsg >::allocate_sample(dds_msgs::MissionPlanMsg& sample, int, int) 
-        {
-            // Initialize base
-            topic_type_support< dds_msgs::BaseMsg >::allocate_sample(sample, -1, -1);
-
-            ::rti::topic::allocate_sample(sample.MissionName(),  -1, 256L);
-            ::rti::topic::allocate_sample(sample.MissionType(),  -1, -1);
-            ::rti::topic::allocate_sample(sample.PlatformType(),  -1, -1);
-            ::rti::topic::allocate_sample(sample.ScanType(),  -1, -1);
-            ::rti::topic::allocate_sample(sample.ScanArea(),  -1, -1);
-            ::rti::topic::allocate_sample(sample.SquareCenter(),  -1, -1);
-            ::rti::topic::allocate_sample(sample.GeoPathCurrModel(),  -1, 256L);
-            ::rti::topic::allocate_sample(sample.CloudUrlCurrModel(),  -1, 256L);
-        }
-
         void topic_type_support< dds_msgs::GetDroneScanRouteMsg >:: register_type(
             ::dds::domain::DomainParticipant& participant,
             const std::string& type_name) 
@@ -6575,6 +6846,83 @@ namespace dds {
             ::rti::topic::allocate_sample(sample.ScanType(),  -1, -1);
             ::rti::topic::allocate_sample(sample.ScanArea(),  3L, -1);
             ::rti::topic::allocate_sample(sample.SquareCenter(),  -1, -1);
+        }
+
+        void topic_type_support< dds_msgs::DroneScanRouteMsg >:: register_type(
+            ::dds::domain::DomainParticipant& participant,
+            const std::string& type_name) 
+        {
+
+            ::rti::domain::register_type_plugin(
+                participant,
+                type_name,
+                dds_msgs::DroneScanRouteMsgPlugin_new,
+                dds_msgs::DroneScanRouteMsgPlugin_delete);
+        }
+
+        std::vector<char>& topic_type_support< dds_msgs::DroneScanRouteMsg >::to_cdr_buffer(
+            std::vector<char>& buffer, 
+            const dds_msgs::DroneScanRouteMsg& sample,
+            ::dds::core::policy::DataRepresentationId representation)
+        {
+            // First get the length of the buffer
+            unsigned int length = 0;
+            RTIBool ok = DroneScanRouteMsgPlugin_serialize_to_cdr_buffer(
+                NULL, 
+                &length,
+                &sample,
+                representation);
+            ::rti::core::check_return_code(
+                ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
+                "Failed to calculate cdr buffer size");
+
+            // Create a vector with that size and copy the cdr buffer into it
+            buffer.resize(length);
+            ok = DroneScanRouteMsgPlugin_serialize_to_cdr_buffer(
+                &buffer[0], 
+                &length, 
+                &sample,
+                representation);
+            ::rti::core::check_return_code(
+                ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
+                "Failed to copy cdr buffer");
+
+            return buffer;
+        }
+
+        void topic_type_support< dds_msgs::DroneScanRouteMsg >::from_cdr_buffer(dds_msgs::DroneScanRouteMsg& sample, 
+        const std::vector<char>& buffer)
+        {
+
+            RTIBool ok  = DroneScanRouteMsgPlugin_deserialize_from_cdr_buffer(
+                &sample, 
+                &buffer[0], 
+                static_cast<unsigned int>(buffer.size()));
+            ::rti::core::check_return_code(ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
+            "Failed to create dds_msgs::DroneScanRouteMsg from cdr buffer");
+        }
+
+        void topic_type_support< dds_msgs::DroneScanRouteMsg >::reset_sample(dds_msgs::DroneScanRouteMsg& sample) 
+        {
+            // Initialize base
+            topic_type_support< dds_msgs::BaseMsg >::reset_sample(sample);
+
+            ::rti::topic::reset_sample(sample.Waypoints());
+            sample.ScanAreaLength(0U);
+            sample.ScanAreaWidth(0U);
+            sample.ModelGroundResolution(0);
+            sample.TimePeriodBetweenFrames(0U);
+            sample.ShortLegLength(0U);
+            sample.NumOfFramesPerLongLeg(0U);
+            sample.TotalNumOfFrames(0U);
+        }
+
+        void topic_type_support< dds_msgs::DroneScanRouteMsg >::allocate_sample(dds_msgs::DroneScanRouteMsg& sample, int, int) 
+        {
+            // Initialize base
+            topic_type_support< dds_msgs::BaseMsg >::allocate_sample(sample, -1, -1);
+
+            ::rti::topic::allocate_sample(sample.Waypoints(),  100L, -1);
         }
 
         void topic_type_support< dds_msgs::PlatformLocationMsg >:: register_type(
@@ -6713,6 +7061,7 @@ namespace dds {
             topic_type_support< dds_msgs::BaseMsg >::reset_sample(sample);
 
             sample.PlatformType(dds_msgs::EnumPlatform::None);
+            sample.PlatformId(0);
             sample.GeoPathJpegFiles("");
         }
 
@@ -6723,6 +7072,77 @@ namespace dds {
 
             ::rti::topic::allocate_sample(sample.PlatformType(),  -1, -1);
             ::rti::topic::allocate_sample(sample.GeoPathJpegFiles(),  -1, 256L);
+        }
+
+        void topic_type_support< dds_msgs::StopJpegGenerationMsg >:: register_type(
+            ::dds::domain::DomainParticipant& participant,
+            const std::string& type_name) 
+        {
+
+            ::rti::domain::register_type_plugin(
+                participant,
+                type_name,
+                dds_msgs::StopJpegGenerationMsgPlugin_new,
+                dds_msgs::StopJpegGenerationMsgPlugin_delete);
+        }
+
+        std::vector<char>& topic_type_support< dds_msgs::StopJpegGenerationMsg >::to_cdr_buffer(
+            std::vector<char>& buffer, 
+            const dds_msgs::StopJpegGenerationMsg& sample,
+            ::dds::core::policy::DataRepresentationId representation)
+        {
+            // First get the length of the buffer
+            unsigned int length = 0;
+            RTIBool ok = StopJpegGenerationMsgPlugin_serialize_to_cdr_buffer(
+                NULL, 
+                &length,
+                &sample,
+                representation);
+            ::rti::core::check_return_code(
+                ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
+                "Failed to calculate cdr buffer size");
+
+            // Create a vector with that size and copy the cdr buffer into it
+            buffer.resize(length);
+            ok = StopJpegGenerationMsgPlugin_serialize_to_cdr_buffer(
+                &buffer[0], 
+                &length, 
+                &sample,
+                representation);
+            ::rti::core::check_return_code(
+                ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
+                "Failed to copy cdr buffer");
+
+            return buffer;
+        }
+
+        void topic_type_support< dds_msgs::StopJpegGenerationMsg >::from_cdr_buffer(dds_msgs::StopJpegGenerationMsg& sample, 
+        const std::vector<char>& buffer)
+        {
+
+            RTIBool ok  = StopJpegGenerationMsgPlugin_deserialize_from_cdr_buffer(
+                &sample, 
+                &buffer[0], 
+                static_cast<unsigned int>(buffer.size()));
+            ::rti::core::check_return_code(ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
+            "Failed to create dds_msgs::StopJpegGenerationMsg from cdr buffer");
+        }
+
+        void topic_type_support< dds_msgs::StopJpegGenerationMsg >::reset_sample(dds_msgs::StopJpegGenerationMsg& sample) 
+        {
+            // Initialize base
+            topic_type_support< dds_msgs::BaseMsg >::reset_sample(sample);
+
+            sample.PlatformType(dds_msgs::EnumPlatform::None);
+            sample.PlatformId(0);
+        }
+
+        void topic_type_support< dds_msgs::StopJpegGenerationMsg >::allocate_sample(dds_msgs::StopJpegGenerationMsg& sample, int, int) 
+        {
+            // Initialize base
+            topic_type_support< dds_msgs::BaseMsg >::allocate_sample(sample, -1, -1);
+
+            ::rti::topic::allocate_sample(sample.PlatformType(),  -1, -1);
         }
 
         void topic_type_support< dds_msgs::ReportJpegGenerationLivenessMsg >:: register_type(
@@ -6784,6 +7204,8 @@ namespace dds {
             // Initialize base
             topic_type_support< dds_msgs::BaseMsg >::reset_sample(sample);
 
+            sample.PlatformType(dds_msgs::EnumPlatform::None);
+            sample.PlatformId(0);
             sample.NumOfJpegFiles(0U);
             sample.Status(dds_msgs::EnumJpegGenerationSts::None);
             sample.ErrorCode(0);
@@ -6794,6 +7216,7 @@ namespace dds {
             // Initialize base
             topic_type_support< dds_msgs::BaseMsg >::allocate_sample(sample, -1, -1);
 
+            ::rti::topic::allocate_sample(sample.PlatformType(),  -1, -1);
             ::rti::topic::allocate_sample(sample.Status(),  -1, -1);
         }
 
@@ -7009,7 +7432,7 @@ namespace dds {
             ::rti::topic::allocate_sample(sample.CloudUrl(),  -1, 256L);
         }
 
-        void topic_type_support< dds_msgs::DroneScanRouteMsg >:: register_type(
+        void topic_type_support< dds_msgs::MissionPlanMsg >:: register_type(
             ::dds::domain::DomainParticipant& participant,
             const std::string& type_name) 
         {
@@ -7017,18 +7440,18 @@ namespace dds {
             ::rti::domain::register_type_plugin(
                 participant,
                 type_name,
-                dds_msgs::DroneScanRouteMsgPlugin_new,
-                dds_msgs::DroneScanRouteMsgPlugin_delete);
+                dds_msgs::MissionPlanMsgPlugin_new,
+                dds_msgs::MissionPlanMsgPlugin_delete);
         }
 
-        std::vector<char>& topic_type_support< dds_msgs::DroneScanRouteMsg >::to_cdr_buffer(
+        std::vector<char>& topic_type_support< dds_msgs::MissionPlanMsg >::to_cdr_buffer(
             std::vector<char>& buffer, 
-            const dds_msgs::DroneScanRouteMsg& sample,
+            const dds_msgs::MissionPlanMsg& sample,
             ::dds::core::policy::DataRepresentationId representation)
         {
             // First get the length of the buffer
             unsigned int length = 0;
-            RTIBool ok = DroneScanRouteMsgPlugin_serialize_to_cdr_buffer(
+            RTIBool ok = MissionPlanMsgPlugin_serialize_to_cdr_buffer(
                 NULL, 
                 &length,
                 &sample,
@@ -7039,7 +7462,7 @@ namespace dds {
 
             // Create a vector with that size and copy the cdr buffer into it
             buffer.resize(length);
-            ok = DroneScanRouteMsgPlugin_serialize_to_cdr_buffer(
+            ok = MissionPlanMsgPlugin_serialize_to_cdr_buffer(
                 &buffer[0], 
                 &length, 
                 &sample,
@@ -7051,39 +7474,65 @@ namespace dds {
             return buffer;
         }
 
-        void topic_type_support< dds_msgs::DroneScanRouteMsg >::from_cdr_buffer(dds_msgs::DroneScanRouteMsg& sample, 
+        void topic_type_support< dds_msgs::MissionPlanMsg >::from_cdr_buffer(dds_msgs::MissionPlanMsg& sample, 
         const std::vector<char>& buffer)
         {
 
-            RTIBool ok  = DroneScanRouteMsgPlugin_deserialize_from_cdr_buffer(
+            RTIBool ok  = MissionPlanMsgPlugin_deserialize_from_cdr_buffer(
                 &sample, 
                 &buffer[0], 
                 static_cast<unsigned int>(buffer.size()));
             ::rti::core::check_return_code(ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
-            "Failed to create dds_msgs::DroneScanRouteMsg from cdr buffer");
+            "Failed to create dds_msgs::MissionPlanMsg from cdr buffer");
         }
 
-        void topic_type_support< dds_msgs::DroneScanRouteMsg >::reset_sample(dds_msgs::DroneScanRouteMsg& sample) 
+        void topic_type_support< dds_msgs::MissionPlanMsg >::reset_sample(dds_msgs::MissionPlanMsg& sample) 
         {
             // Initialize base
             topic_type_support< dds_msgs::BaseMsg >::reset_sample(sample);
 
-            ::rti::topic::reset_sample(sample.Waypoints());
-            sample.ScanAreaLength(0U);
-            sample.ScanAreaWidth(0U);
-            sample.ModelGroundResolution(0);
-            sample.TimePeriodBetweenFrames(0U);
-            sample.ShortLegLength(0U);
-            sample.NumOfFramesPerLongLeg(0U);
-            sample.TotalNumOfFrames(0U);
+            sample.MissionName("");
+            sample.MissionType(dds_msgs::EnumMission::None);
+            sample.StationId(0);
+            sample.PlatformType(dds_msgs::EnumPlatform::None);
+            sample.PlatformId(0);
+            sample.ScanType(dds_msgs::EnumScan::None);
+            ::rti::topic::reset_sample(sample.ScanArea());
+            sample.ScanAreaGroundAvgAlt(0);
+            sample.FlightAltAboveGroundAvgAlt(0U);
+            sample.TakeoffAltAboveSeaLevel(0);
+            sample.FlightSpeed(0);
+            sample.CameraHorizontalFOV(0);
+            sample.CameraVerticalFOV(0);
+            sample.CameraHorizontalResolution(0U);
+            sample.CameraVerticalResolution(0U);
+            sample.OverlapInFlightDirection(0);
+            sample.OverlapInLateralDirection(0);
+            sample.GimbalPitchAngle(0);
+            ::rti::topic::reset_sample(sample.SquareCenter());
+            sample.SquareSide(0U);
+            ::rti::topic::reset_sample(sample.GeoPathJpegFiles());
+            sample.GeoPathCurrModel("");
+            ::rti::topic::reset_sample(sample.GeoPathRefModel());
+            ::rti::topic::reset_sample(sample.GeoPathDiffModel());
+            sample.CloudUrlCurrModel("");
+            ::rti::topic::reset_sample(sample.CloudUrlRefModel());
+            ::rti::topic::reset_sample(sample.CloudUrlDiffModel());
         }
 
-        void topic_type_support< dds_msgs::DroneScanRouteMsg >::allocate_sample(dds_msgs::DroneScanRouteMsg& sample, int, int) 
+        void topic_type_support< dds_msgs::MissionPlanMsg >::allocate_sample(dds_msgs::MissionPlanMsg& sample, int, int) 
         {
             // Initialize base
             topic_type_support< dds_msgs::BaseMsg >::allocate_sample(sample, -1, -1);
 
-            ::rti::topic::allocate_sample(sample.Waypoints(),  100L, -1);
+            ::rti::topic::allocate_sample(sample.MissionName(),  -1, 256L);
+            ::rti::topic::allocate_sample(sample.MissionType(),  -1, -1);
+            ::rti::topic::allocate_sample(sample.PlatformType(),  -1, -1);
+            ::rti::topic::allocate_sample(sample.ScanType(),  -1, -1);
+            ::rti::topic::allocate_sample(sample.ScanArea(),  -1, -1);
+            ::rti::topic::allocate_sample(sample.SquareCenter(),  -1, -1);
+            ::rti::topic::allocate_sample(sample.GeoPathCurrModel(),  -1, 256L);
+            ::rti::topic::allocate_sample(sample.CloudUrlCurrModel(),  -1, 256L);
         }
 
     }

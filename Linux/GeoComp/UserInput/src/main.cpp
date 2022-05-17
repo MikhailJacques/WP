@@ -44,12 +44,12 @@ int main()
 
 	// Create new logger file for logging events	
 	stringstream ui_cmd_log_path;
-    ui_cmd_log_path << "/home/user/WP/logs/ui_cmd_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
+    ui_cmd_log_path << "/home/user/WP/Linux/GeoComp/logs/ui_cmd_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
 	m_event_logger.Start(ui_cmd_log_path.str(), "UI Service event logger is started");
 
 	// Open pre-defined DDS configuration file for reading DDS configuration information
 	stringstream config_dds_path;
-    config_dds_path << "/home/user/WP/config/config_dds.json";
+    config_dds_path << "/home/user/WP/Linux/GeoComp/config/config_dds.json";
 	config_file.open(config_dds_path.str(), ios::in);
 
 	// Read information from DDS configuration file in JSON format and store it in root
@@ -63,7 +63,7 @@ int main()
 		m_dds_comm_init_params.qos_default_library_name.assign(root["qos_default_library_name"].asString());	// "WorldPerceptionQoS";
 
 		stringstream config_qos_path;
-        config_qos_path << "/home/user/WP/config/USER_QOS_PROFILES.xml";
+        config_qos_path << "/home/user/WP/Linux/GeoComp/config/USER_QOS_PROFILES.xml";
 		m_dds_comm_init_params.qos_xml_uri.assign(config_qos_path.str());
 
 		// Initialize DDS communicator
