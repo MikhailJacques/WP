@@ -322,7 +322,8 @@ STATE_DEFINE(Manager, Mission_Plan_State, NoEventData)
 	else
 	{
 		m_event_queue.push("Mission_Plan_State error");
-		InternalEvent(FINALIZATION_STATE);
+		m_event_queue.push("Remaining in Mission_Plan_State");
+		InternalEvent(MISSION_PLAN_STATE);
 	}
 }
 
