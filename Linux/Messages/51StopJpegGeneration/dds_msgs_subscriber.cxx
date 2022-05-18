@@ -56,11 +56,16 @@ void run_subscriber_application(unsigned int domain_id, unsigned int sample_coun
     dds::domain::DomainParticipant participant(domain_id);
 
     // Create a Topic with a name and a datatype
-    dds::topic::Topic<dds_msgs::StopJpegGenerationMsg> topic(participant, "Example dds_msgs_StopJpegGenerationMsg");
+    dds::topic::Topic<dds_msgs::StopJpegGenerationMsg> topic(participant, "StopJpegGenerationMsg");
 
     // Create a Subscriber and DataReader with default Qos
     dds::sub::Subscriber subscriber(participant);
+
     dds::sub::DataReader<dds_msgs::StopJpegGenerationMsg> reader(subscriber, topic);
+
+    // Create a DataWriter with default QoS
+    //dds::core::QosProvider m_qos_provider = dds::core::QosProvider::Default();
+    //dds::sub::DataReader<dds_msgs::StopJpegGenerationMsg> reader(subscriber, topic, m_qos_provider.datawriter_qos("WorldPerceptionQoS::StopJpegGenerationMsg"));
 
     // Create a ReadCondition for any data received on this reader and set a
     // handler to process the data
@@ -85,7 +90,6 @@ void run_subscriber_application(unsigned int domain_id, unsigned int sample_coun
 
 int main(int argc, char *argv[])
 {
-
     using namespace application;
 
     // Parse arguments and handle control-C
@@ -99,6 +103,9 @@ int main(int argc, char *argv[])
 
     // Sets Connext verbosity to help debugging
     rti::config::Logger::instance().verbosity(arguments.verbosity);
+
+    arguments.domain_id = 66;
+    arguments.sample_count = 20;
 
     try {
         run_subscriber_application(arguments.domain_id, arguments.sample_count);

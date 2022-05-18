@@ -24,7 +24,6 @@
 #include "dds_comm.h"
 #include "dds_msgs.hpp"
 #include "reader_listener.h"
-#include "config_tcp.h"
 #include "state_machine.h"
 
 using namespace std;

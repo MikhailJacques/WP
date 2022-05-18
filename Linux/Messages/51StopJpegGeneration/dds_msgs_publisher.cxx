@@ -47,13 +47,11 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     dds::pub::DataWriter<dds_msgs::StopJpegGenerationMsg> writer(publisher, topic, m_qos_provider.datawriter_qos("WorldPerceptionQoS::StopJpegGenerationMsg"));
 
     dds_msgs::StopJpegGenerationMsg data;
-    for (unsigned int samples_written = 0; !application::shutdown_requested && samples_written < sample_count; samples_written++)
+    for (unsigned int samples_written = 0; !application::shutdown_requested && samples_written < sample_count; samples_written++) 
     {
         // Modify the data to be written here
-
-        std::cout << "Writing dds_msgs::StopJpegGenerationMsg, count " << samples_written << std::endl;
-
         writer.write(data);
+        std::cout << "Writing dds_msgs::StopJpegGenerationMsg, count " << samples_written << std::endl;
 
         // Send once every second
         rti::util::sleep(dds::core::Duration(2));
@@ -62,7 +60,6 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
 
 int main(int argc, char *argv[])
 {
-
     using namespace application;
 
     // Parse arguments and handle control-C
