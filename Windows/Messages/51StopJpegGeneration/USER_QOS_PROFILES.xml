@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.1.0/rti_dds_profiles.xsd" version="6.1.0">
+
+  <qos_library name="WorldPerceptionQoS">
+    <!--User.BestEffort-->
+    <qos_profile name="User.BestEffort" base_name="BuiltinQosLibExp::Generic.BestEffort">
+    </qos_profile>
+    <!--User.BestEffort.KeepLast-->
+    <qos_profile name="User.BestEffort.KeepLast" base_name="BuiltinQosLibExp::Generic.BestEffort">
+      <datareader_qos>
+        <reliability>
+          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+        </reliability>
+        <history>
+          <kind>KEEP_LAST_HISTORY_QOS</kind>
+          <depth>1</depth>
+        </history>
+      </datareader_qos>
+      <datawriter_qos>
+        <reliability>
+          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+        </reliability>
+        <history>
+          <kind>KEEP_LAST_HISTORY_QOS</kind>
+          <depth>1</depth>
+        </history>
+      </datawriter_qos>
+    </qos_profile>
+    <!--User.KeepLastReliable-->
+    <qos_profile name="User.KeepLastReliable" base_name="BuiltinQosLibExp::Generic.KeepLastReliable">
+    </qos_profile>
+    <!--User.BestEffort.Unbounded-->
+    <qos_profile name="User.BestEffort.Unbounded" base_name="BuiltinQosLibExp::Generic.BestEffort">
+      <datareader_qos>
+        <!-- This property is needed when using -unboundedSupport command-line option
+ 			    in order to configure the memory allocation policy for the buffers that are 
+ 			    used to keep the serialized keys for the instances -->
+        <property>
+          <value>
+            <element>
+              <name>dds.data_reader.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+              <value>4096</value>
+            </element>
+          </value>
+        </property>
+      </datareader_qos>
+      <datawriter_qos>
+        <!-- This property is needed when using -unboundedSupport command-line option
+                 in order to configure the memory allocation policy for the buffers that are
+                 used to serialize the samples -->
+        <property>
+          <value>
+            <element>
+              <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+              <value>4096</value>
+            </element>
+          </value>
+        </property>
+      </datawriter_qos>
+    </qos_profile>
+    <!--User.KeepLastReliable.Transient-->
+    <qos_profile name="User.KeepLastReliable.Transient" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.Transient">
+    </qos_profile>
+    <!--User.KeepLastReliable.Transient.Unbounded-->
+    <qos_profile name="User.KeepLastReliable.Transient.Unbounded" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.Transient">
+      <datareader_qos>
+        <!-- This property is needed when using -unboundedSupport command-line option
+ 			    in order to configure the memory allocation policy for the buffers that are 
+ 			    used to keep the serialized keys for the instances -->
+        <property>
+          <value>
+            <element>
+              <name>dds.data_reader.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+              <value>4096</value>
+            </element>
+          </value>
+        </property>
+      </datareader_qos>
+      <datawriter_qos>
+        <!-- This property is needed when using -unboundedSupport command-line option
+                 in order to configure the memory allocation policy for the buffers that are
+                 used to serialize the samples -->
+        <property>
+          <value>
+            <element>
+              <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+              <value>4096</value>
+            </element>
+          </value>
+        </property>
+      </datawriter_qos>
+    </qos_profile>
+    <!--User.KeepLastReliable.LargeData.FastFlow-->
+    <qos_profile name="User.KeepLastReliable.LargeData.FastFlow" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow">
+    </qos_profile>
+    <!--User.KeepLastReliable.LargeData.FastFlow.Transient-->
+    <qos_profile name="User.KeepLastReliable.LargeData.FastFlow.Transient" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow">
+      <datareader_qos>
+        <durability>
+          <kind>TRANSIENT_DURABILITY_QOS</kind>
+        </durability>
+      </datareader_qos>
+      <datawriter_qos>
+        <durability>
+          <!-- Transient durability requires the use of the
+				     Persistence Service -->
+          <kind>TRANSIENT_DURABILITY_QOS</kind>
+        </durability>
+        <durability_service>
+          <!-- The DurabilityServiceQosPolicy is used to
+					     configure how the persistence service manages its
+					     memory and local cache. When using Transient durability, the
+					     persistence service maintains an in-memory cache of
+					     stored data. These values, therefore, represent memory
+					     usage.  -->
+          <history_kind>KEEP_LAST_HISTORY_QOS</history_kind>
+          <history_depth>1</history_depth>
+          <max_samples>LENGTH_UNLIMITED</max_samples>
+          <max_instances>LENGTH_UNLIMITED</max_instances>
+          <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+        </durability_service>
+      </datawriter_qos>
+    </qos_profile>
+    <!--User.KeepLastReliable.LargeData.FastFlow.Unbounded-->
+    <qos_profile name="User.KeepLastReliable.LargeData.FastFlow.Unbounded" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow">
+      <datareader_qos>
+        <!-- This property is needed when using -unboundedSupport command-line option
+ 			    in order to configure the memory allocation policy for the buffers that are 
+ 			    used to keep the serialized keys for the instances -->
+        <property>
+          <value>
+            <element>
+              <name>dds.data_reader.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+              <value>4096</value>
+            </element>
+          </value>
+        </property>
+      </datareader_qos>
+      <datawriter_qos>
+        <!-- This property is needed when using -unboundedSupport command-line option
+                 in order to configure the memory allocation policy for the buffers that are
+                 used to serialize the samples -->
+        <property>
+          <value>
+            <element>
+              <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+              <value>4096</value>
+            </element>
+          </value>
+        </property>
+      </datawriter_qos>
+    </qos_profile>
+    <!--User.KeepLastReliable.LargeData.FastFlow.Transient.Unbounded-->
+    <qos_profile name="User.KeepLastReliable.LargeData.FastFlow.Transient.Unbounded" base_name="BuiltinQosLibExp::Generic.KeepLastReliable.LargeData.FastFlow">
+      <datareader_qos>
+        <durability>
+          <kind>TRANSIENT_DURABILITY_QOS</kind>
+        </durability>
+        <!-- This property is needed when using -unboundedSupport command-line option
+ 			    in order to configure the memory allocation policy for the buffers that are 
+ 			    used to keep the serialized keys for the instances -->
+        <property>
+          <value>
+            <element>
+              <name>dds.data_reader.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+              <value>4096</value>
+            </element>
+          </value>
+        </property>
+      </datareader_qos>
+      <datawriter_qos>
+        <durability>
+          <!-- Transient durability requires the use of the
+				   Persistence Service -->
+          <kind>TRANSIENT_DURABILITY_QOS</kind>
+        </durability>
+        <durability_service>
+          <!-- The DurabilityServiceQosPolicy is used to
+					   configure how the persistence service manages its
+					   memory and local cache. When using Transient durability, the
+					   persistence service maintains an in-memory cache of
+					   stored data. These values, therefore, represent memory
+					   usage.  -->
+          <history_kind>KEEP_LAST_HISTORY_QOS</history_kind>
+          <history_depth>1</history_depth>
+          <max_samples>LENGTH_UNLIMITED</max_samples>
+          <max_instances>LENGTH_UNLIMITED</max_instances>
+          <max_samples_per_instance>LENGTH_UNLIMITED</max_samples_per_instance>
+        </durability_service>
+        <!-- This property is needed when using -unboundedSupport command-line option
+                 in order to configure the memory allocation policy for the buffers that are
+                 used to serialize the samples -->
+        <property>
+          <value>
+            <element>
+              <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+              <value>4096</value>
+            </element>
+          </value>
+        </property>
+      </datawriter_qos>
+    </qos_profile>
+    <!--User.Participant.LargeData-->
+	  <qos_profile name="User.Participant.LargeData" base_name="BuiltinQosLibExp::Generic.Participant.LargeData" is_default_qos="true">
+	  </qos_profile>
+	  <qos_profile name="MissionPlanMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="GetDroneScanRouteMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="DroneScanRouteMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable.LargeData.FastFlow.Unbounded">
+	  </qos_profile>
+	  <qos_profile name="PlatformLocationMsg" base_name="WorldPerceptionQoS::User.BestEffort">
+	  </qos_profile>
+	  <qos_profile name="StartJpegGenerationMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="ReportJpegGenerationLivenessMsg" base_name="WorldPerceptionQoS::User.BestEffort">
+	  </qos_profile>
+	  <qos_profile name="StopJpegGenerationMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="LasFileTransmissionStsMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="EndMissionMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="UploadCurrModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="UploadDiffModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="LasFileCurrModelRxMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="LasFileDiffModelRxMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="VisualCurrModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="VisualDiffModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="RequestRefModelMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+	  <qos_profile name="UserInputMsg" base_name="WorldPerceptionQoS::User.KeepLastReliable">
+	  </qos_profile>
+  </qos_library>
+</dds>

@@ -217,3 +217,41 @@
 //	std::string geo_path_ref_model = root2["GeoPathRefModel"].asString();
 //	std::string geo_path_diff_model = root2["GeoPathDiffModel"].asString();
 //}
+
+
+//            char buff[MSG_BUFF_LEN];
+
+//            // Set message length in message header
+//            unsigned short payload_len = StartModelGenerationMsg.size();
+//            buff[0] = payload_len & 0xff;
+//            buff[1] = (payload_len >> 8) & 0xff;
+
+//            // Set message payload
+//            memcpy(&buff[2], StartModelGenerationMsg.c_str(), payload_len);
+
+//            std::string msg_to_server = "";
+
+//            for (int i = 0; i < payload_len + 2; i++)
+//            {
+//                msg_to_server = msg_to_server + buff[i];
+//            }
+
+    //buff[payload_len + 2] = '\0';
+    //std::string msg_to_server(buff);
+
+//                char msg_len[3];
+//                memset(msg_len, 0, 3);
+//                strncpy(msg_len, msg_buff, 2);
+
+//                char msg_payload[MSG_BUFF_LEN];
+//                memset(msg_payload, 0, MSG_BUFF_LEN);
+//                strncpy(msg_payload, &msg_buff[2], (num_of_rx_bytes - 2));
+
+//                unsigned short len = atoi(msg_len);
+
+//                if (len != (num_of_rx_bytes - 2))
+//                {
+//                    m_event_queue.push("Model_Generation_State error");
+//                    m_event_queue.push("ERROR: Wrong message length!");
+//                    comm_error_flag = true;
+//                }

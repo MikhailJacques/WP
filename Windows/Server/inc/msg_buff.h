@@ -12,3 +12,4 @@ typedef struct msg_buff_struct
 {
 	unsigned char payload_bptr[MSG_BUFF_LEN];
 } MSG_BUFF_STRUCT;
+

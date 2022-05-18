@@ -11,8 +11,6 @@ TCP_Server::TCP_Server(std::string server_ip, int server_port, RxMsgHandler rx_m
     m_rx_msg_handler(rx_msg_handler)
 { 
 	m_client_info = {};
-    //m_msg_to_client = {};
-	// memset(&m_client_info, 0, sizeof(m_client_info));
 
 	if (m_rx_msg_handler == NULL)
 	{

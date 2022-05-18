@@ -3,15 +3,14 @@
 // DOCUMENT:	None
 // DESCRIPTION: This file defines TCP server that accepts messages
 
-#include "tcp_server.h";
+#include "tcp_server.h"
 
 TCP_Server::TCP_Server(std::string server_ip, int server_port, RxMsgHandler rx_msg_handler) :
 	m_server_ip(server_ip),
 	m_server_port(server_port),
-	m_rx_msg_handler(rx_msg_handler)
+    m_rx_msg_handler(rx_msg_handler)
 { 
 	m_client_info = {};
-	// memset(&m_client_info, 0, sizeof(m_client_info));
 
 	if (m_rx_msg_handler == NULL)
 	{
@@ -86,7 +85,7 @@ SOCKET TCP_Server::CreateListeningSocket(void)
 // upon establishing the connection creates a connected client socket
 SOCKET TCP_Server::WaitForConnection(SOCKET listening_socket)
 {
-	int client_size = sizeof(m_client_info);
+    socklen_t client_size = sizeof(m_client_info);
 
 	// The accept function permits an incoming connection attempt on a socket.
 	SOCKET client_socket = accept(listening_socket, (sockaddr*)&m_client_info, &client_size);
@@ -121,12 +120,12 @@ void TCP_Server::GetClientInfo(void)
 	// The getnameinfo function is used to translate the contents of a socket address structure to a node name and/or a service name. 
 	if (getnameinfo((sockaddr*)&m_client_info, sizeof(m_client_info), host, NI_MAXHOST, client_port, NI_MAXHOST, 0) == 0)
 	{
-		cout << host << " connected on port " << client_port << endl;
+        cout << "TCP SERVER: Client " << host << " connected on port " << client_port << endl;
 	}
 	else
 	{
         inet_ntop(AF_INET, &m_client_info.sin_addr, host, NI_MAXHOST);
-		cout << host << " connected on port" << ntohs(m_client_info.sin_port) << endl;
+        cout << "TCP SERVER: Client " << host << " connected on port" << ntohs(m_client_info.sin_port) << endl;
 	}
 }
 
@@ -180,8 +179,9 @@ void TCP_Server::Run(void)
 				{
 					if (m_rx_msg_handler != NULL)
 					{
-						string rx_msg = std::string(rx_buff, 0, num_of_rx_bytes);
-						m_rx_msg_handler(this, client_socket, rx_msg);
+                        string rx_msg = std::string(rx_buff, 0, num_of_rx_bytes);
+
+                        m_rx_msg_handler(this, client_socket, rx_msg);
 					}
 				}
 			} while (num_of_rx_bytes > 0);

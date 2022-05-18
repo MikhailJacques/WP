@@ -46,6 +46,7 @@ void Logger::Close(const std::string& msg)
     std::stringstream ss;
     ss << Get_Timestamp() << ": " << msg << endl;
     m_outfile << ss.str();
+    m_outfile.flush();
     LOG(ss.str());
     m_outfile.close();
 }
@@ -55,4 +56,5 @@ void Logger::Print_Location(const std::string& msg)
     std::stringstream ss;
     ss << Get_Timestamp() << ": " << msg << endl;
     m_outfile << ss.str();
+    m_outfile.flush();
 }

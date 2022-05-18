@@ -53,6 +53,7 @@ Manager::Manager(std::string sentinel) :
 
 	// Read information from DDS configuration file in JSON format and store it in root
 	bool init_flag = reader.parse(config_file, root);
+    config_file.close();
 
 	if (init_flag)
 	{
@@ -85,6 +86,7 @@ Manager::Manager(std::string sentinel) :
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<DroneScanRouteMsg>("DroneScanRouteMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<PlatformLocationMsg>("PlatformLocationMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<StartJpegGenerationMsg>("StartJpegGenerationMsg") != nullptr)) ? true : false;
+    init_flag = ((init_flag) && (m_dds_comm.CreateWriter<StopJpegGenerationMsg>("StopJpegGenerationMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<DoubleUrlMsg>("UploadCurrModelMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<DoubleUrlMsg>("UploadDiffModelMsg") != nullptr)) ? true : false;
 	init_flag = ((init_flag) && (m_dds_comm.CreateWriter<DoubleUrlMsg>("RequestRefModelMsg") != nullptr)) ? true : false;
@@ -172,40 +174,46 @@ void Manager::Stop(void)
 
 void Manager::LogEvent(std::string sentinel)
 {
-	std::string msg;
-
 	while (true)
 	{
+        std::string msg;
+
 		msg.assign(m_event_queue.pop());
 
-		if (msg.compare(sentinel) == 0)
+        if (msg.compare(sentinel) != 0)
 		{
-			m_event_logger.Close("Geo Comp Manager event logger is closed");
-			break;
+            m_event_logger.Print(msg);
 		}
+        else
+        {
+            m_event_logger.Close("Geo Comp Manager event logger is closed");
+            break;
+        }
 
-		m_event_logger.Print(msg);
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(200));
 	}
 }
 
 void Manager::LogPlatformLocation(std::string sentinel)
 {
-	std::string msg;
+    while (true)
+    {
+        std::string msg;
 
-	while (true)
-	{
-		msg.assign(m_platform_location_queue.pop());
+        msg.assign(m_platform_location_queue.pop());
 
-		if (msg.compare(sentinel) == 0)
-		{
-			m_platform_location_logger.Close("Platform Location event logger is closed");
-			break;
-		}
+        if (msg.compare(sentinel) != 0)
+        {
+            m_platform_location_logger.Print_Location(msg);
+        }
+        else
+        {
+            m_platform_location_logger.Close("Platform Location event logger is closed");
+            break;
+        }
 
-		m_platform_location_logger.Print_Location(msg);
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
-	}
+        //std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
 }
 
 // AirBuild/AirDiff sequences
@@ -333,7 +341,7 @@ STATE_DEFINE(Manager, Get_Drone_Scan_Route_State, NoEventData)
 
 	m_get_drone_scan_route_msg.ScanArea().clear();
 	m_get_drone_scan_route_msg.ScanArea().shrink_to_fit();
-	for (int ii = 0; ii < m_mission_plan_msg.ScanArea().size(); ii++)
+    for (unsigned int ii = 0; ii < m_mission_plan_msg.ScanArea().size(); ii++)
 		m_get_drone_scan_route_msg.ScanArea().push_back(m_mission_plan_msg.ScanArea().at(ii));
 
 	m_get_drone_scan_route_msg.ScanAreaGroundAvgAlt(m_mission_plan_msg.ScanAreaGroundAvgAlt());
@@ -357,6 +365,7 @@ STATE_DEFINE(Manager, Get_Drone_Scan_Route_State, NoEventData)
         ss << "Send GetDroneScanRouteMsg (2) (DDS) to Geo Comp Flight Plan Service (Elta): "
 			<< m_get_drone_scan_route_msg.MsgCount();
 		m_event_queue.push(ss.str());
+
 		m_event_queue.push("Get_Drone_Scan_Route_State exit");
 		InternalEvent(DRONE_SCAN_ROUTE_STATE);
 	}
@@ -379,20 +388,13 @@ STATE_DEFINE(Manager, Drone_Scan_Route_State, NoEventData)
 	// Wait to receive a new DroneScanRouteMsg
 	m_drone_scan_route_msg = m_drone_scan_route_queue.pop();
 
-    if (m_dds_comm.Write<DroneScanRouteMsg>("DroneScanRouteMsg", m_drone_scan_route_msg))
-    {
-        std::stringstream ss;
-        ss << "Send DroneScanRouteMsg (3) (DDS) to Geo Comp Mission Broadcaster (COMMIT) and Geo Comp JPEG Generator (TES): "
-           << m_drone_scan_route_msg.MsgCount();
-        m_event_queue.push(ss.str());
-		m_event_queue.push("Drone_Scan_Route_State exit");
-		InternalEvent(START_JPEG_GENERATION_STATE);
-	}
-	else
-	{
-		m_event_queue.push("Drone_Scan_Route_State error");
-		InternalEvent(FINALIZATION_STATE);
-	}
+    std::stringstream ss;
+    ss << "Receive DroneScanRouteMsg (3) (DDS) from Geo Comp Flight Plan Service (Elta): "
+       << m_drone_scan_route_msg.MsgCount();
+    m_event_queue.push(ss.str());
+
+    m_event_queue.push("Drone_Scan_Route_State exit");
+    InternalEvent(START_JPEG_GENERATION_STATE);
 }
 
 // AirBuild/AirDiff sequences
@@ -419,6 +421,7 @@ STATE_DEFINE(Manager, Start_Jpeg_Generation_State, NoEventData)
         ss << "Send StartJpegGenerationMsg (5) to (DDS) Geo Comp JPEG Generator (TES): "
 			<< m_start_jpeg_generation_msg.MsgCount();
 		m_event_queue.push(ss.str());
+
 		m_event_queue.push("Start_Jpeg_Generation_State exit");
 		InternalEvent(STOP_JPEG_GENERATION_STATE);
 	}
@@ -445,12 +448,13 @@ STATE_DEFINE(Manager, Stop_Jpeg_Generation_State, NoEventData)
 	m_stop_jpeg_generation_msg.MissionId(m_mission_plan_msg.MissionId());
 
 	// Send DDS message
-	if (m_dds_comm.Write<BaseMsg>("StopJpegGenerationMsg", m_stop_jpeg_generation_msg))
+    if (m_dds_comm.Write<StopJpegGenerationMsg>("StopJpegGenerationMsg", m_stop_jpeg_generation_msg))
 	{
 		std::stringstream ss;
         ss << "Send StopJpegGenerationMsg (51) (DDS) to Geo Comp JPEG Generator (TES): "
 			<< m_stop_jpeg_generation_msg.MsgCount();
 		m_event_queue.push(ss.str());
+
 		m_event_queue.push("Stop_Jpeg_Generation_State exit");
 		InternalEvent(MODEL_GENERATION_STATE);
 	}
@@ -524,7 +528,7 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
 
 		if (valid_param_flag == true)
 		{
-			// Compose StartModelGenerationMsg (7) in JSON format
+            // Compose StartModelGenerationMsg (7) payload in JSON format
 			Json::Value root;
 			root["MsgId"] = 7;
 			root["MsgCount"] = ++m_start_model_generation_msg_cnt;
@@ -541,21 +545,20 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
 			//Json::StyledWriter styled_writer;
 			//std::string StartModelGenerationMsg = styled_writer.write(root);
 
-			if (m_tcp_client_sightec.Send(StartModelGenerationMsg) == true)
+            if (m_tcp_client_sightec.Send(StartModelGenerationMsg) == true)
 			{
 				m_event_queue.push("Send StartModelGenerationMsg (7) to Geo Comp DSM App (Sightec) (TCP)");
 			}
 			else
 			{
-				m_event_queue.push("Send StartModelGenerationMsg (7) to Geo Comp DSM App (Sightec) (TCP) - FAILED");
+                m_event_queue.push("ERROR: Failed to send StartModelGenerationMsg (7) to Geo Comp DSM App (Sightec) (TCP)");
 			}
 
-			std::string rx_msg, status;
+            std::string rx_msg, status;
 
 			do
 			{
-				// MJ TODO: Discuss with Sightec message arrival frequency
-				int num_of_rx_bytes = m_tcp_client_sightec.Receive(rx_msg);
+                int num_of_rx_bytes = m_tcp_client_sightec.Receive(rx_msg);
 
 				// MJ TODO: Confirm with Sightec status and termination procedure / keywords
 				if (num_of_rx_bytes < 0)
@@ -576,28 +579,28 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
 				{
 					m_event_queue.push("Receive ReportModelGenerationMsg (8) from Geo Comp DSM App (Sightec) (TCP)");
 
-					Json::Value root;
-					Json::Reader reader;
-					bool parse_flag = reader.parse(rx_msg, root);
-					
-					if (parse_flag == true)
-					{
-						//unsigned short msg_id = root["MsgId"].asUInt();
-						//unsigned short msg_cnt = root["MsgCount"].asUInt();
-						//unsigned short mission_id = root["MissionId"].asUInt();
-						status = root["Status"].asString();
-						//unsigned short error_code = root["ErrorCode"].asUInt();
+                    Json::Value root;
+                    Json::Reader reader;
+                    bool parse_flag = reader.parse(rx_msg, root);
 
-						stringstream ss;
-						ss << "ReportModelGenerationMsg (8) status: " << status;
-						m_event_queue.push(ss.str());
-					}
-					else
-					{
-						stringstream ss;
-						ss << "ERROR: ReportModelGenerationMsg (8) bad format";
-						m_event_queue.push(ss.str());
-					}
+                    if (parse_flag == true)
+                    {
+                        //unsigned short msg_id = root["MsgId"].asUInt();
+                        //unsigned short msg_cnt = root["MsgCount"].asUInt();
+                        //unsigned short mission_id = root["MissionId"].asUInt();
+                        status = root["Status"].asString();
+                        //unsigned short error_code = root["ErrorCode"].asUInt();
+
+                        stringstream ss;
+                        ss << "ReportModelGenerationMsg (8) status: " << status;
+                        m_event_queue.push(ss.str());
+                    }
+                    else
+                    {
+                        stringstream ss;
+                        ss << "ERROR: ReportModelGenerationMsg (8) bad format";
+                        m_event_queue.push(ss.str());
+                    }
 				}
 
 			} while (status.compare(m_sentinel) != 0);
@@ -661,6 +664,7 @@ STATE_DEFINE(Manager, Model_Upload_State, NoEventData)
                 ss << "Send UploadCurrModelMsg (91) (DDS) to Geo Comp LAS Service (COMMIT): "
 					<< m_upload_model_to_cloud_msg.MsgCount();
 				m_event_queue.push(ss.str());
+
 				m_event_queue.push("Model_Upload_State exit");
 				InternalEvent(MISSION_END_STATE);
 			}
@@ -696,6 +700,7 @@ STATE_DEFINE(Manager, Model_Upload_State, NoEventData)
                         ss << "Send UploadCurrModelMsg (91) (DDS) to Geo Comp LAS Service (COMMIT): "
 							<< m_upload_model_to_cloud_msg.MsgCount();
 						m_event_queue.push(ss.str());
+
 						m_event_queue.push("Model_Upload_State exit");
 						InternalEvent(MODEL_REFERENCE_STATE);
 					}
@@ -723,6 +728,7 @@ STATE_DEFINE(Manager, Model_Upload_State, NoEventData)
                         ss << "Send UploadDiffModelMsg (92) (DDS) to Geo Comp LAS Service (COMMIT): "
 							<< m_upload_model_to_cloud_msg.MsgCount();
 						m_event_queue.push(ss.str());
+
 						m_event_queue.push("Model_Upload_State exit");
 						InternalEvent(MISSION_END_STATE);
 					}
@@ -735,8 +741,10 @@ STATE_DEFINE(Manager, Model_Upload_State, NoEventData)
 					break;
 
 				default:
+
 					m_event_queue.push("Model_Upload_State error");
 					InternalEvent(FINALIZATION_STATE);
+
 					break;
 			}
 
@@ -788,6 +796,7 @@ STATE_DEFINE(Manager, Model_Reference_State, NoEventData)
             ss << "Send RequestRefModelMsg (14) (DDS) to Geo Comp LAS Service (COMMIT): "
 				<< m_request_ref_model_msg.MsgCount();
 			m_event_queue.push(ss.str());
+
 			m_event_queue.push("Model_Reference_State exit");
 			InternalEvent(MODEL_GENERATION_STATE);
 		}
@@ -810,7 +819,9 @@ STATE_DEFINE(Manager, Model_Reference_State, NoEventData)
 STATE_DEFINE(Manager, Mission_End_State, NoEventData)
 {
 	m_event_queue.push("Mission_End_State entry");
+
 	m_mission_end_queue.pop();
+
 	m_event_queue.push("Mission_End_State exit");
 	InternalEvent(INITIALIZATION_STATE);
 }
@@ -821,12 +832,12 @@ STATE_DEFINE(Manager, Finalization_State, NoEventData)
 	m_event_queue.push("Finalization_State entry");
 
 	stringstream ss;
-	ss << "Thank you for using Michael's Geo Computer Manager Service";
+    ss << "Thank you for using Michael's Geo Computer Manager";
 	m_event_queue.push(ss.str());
 	m_event_queue.push(m_sentinel);
 	m_platform_location_queue.push(m_sentinel);
 	
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    // std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	m_event_thread.join();
 	m_platform_location_thread.join();
@@ -856,6 +867,7 @@ void Manager::MissionPlanMsgCb(std::vector<MissionPlanMsg> updated_data, std::ve
 		std::stringstream ss;
         ss << "Receive MissionPlanMsg (1) (DDS) from Geo Comp Mission Broadcaster (COMMIT): "
 			<< mission_plan_msg.MsgCount();
+
 		m_event_queue.push(ss.str());
 		m_mission_plan_queue.push(mission_plan_msg);
 	}	
@@ -876,6 +888,7 @@ void Manager::DroneScanRouteMsgCb(std::vector<DroneScanRouteMsg> updated_data, s
 		std::stringstream ss;
         ss << "Receive DroneScanRouteMsg (3) (DDS) from Geo Comp Flight Plan Service (Elta): "
 			<< drone_scan_route_msg.MsgCount();
+
 		m_event_queue.push(ss.str());
 		m_drone_scan_route_queue.push(drone_scan_route_msg);
 	}
@@ -898,6 +911,7 @@ void Manager::PlatformLocationMsgCb(std::vector<PlatformLocationMsg> updated_dat
 	coordinates << m_platform_location_msg.PlatformLocation().Lat() << "\t" 
 		<< m_platform_location_msg.PlatformLocation().Lon() << "\t" 
 		<< m_platform_location_msg.PlatformLocation().Alt();
+
 	m_platform_location_queue.push(coordinates.str());
 }
 
@@ -935,6 +949,7 @@ void Manager::EndMissionMsgCb(std::vector<BaseMsg> updated_data, std::vector<Bas
 		std::stringstream ss;
         ss << "Receive EndMissionMsg (15) (DDS) from Geo Comp Mission Broadcaster (COMMIT): "
 			<< m_mission_end_msg.MsgCount();
+
 		m_event_queue.push(ss.str());
 		m_mission_end_queue.push(true);
 	}

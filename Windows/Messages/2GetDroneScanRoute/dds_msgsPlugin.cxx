@@ -3,7 +3,7 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from WorldPerception.idl
+This file was generated from dds_msgs.idl
 using RTI Code Generator (rtiddsgen) version 3.1.0.
 The rtiddsgen tool is part of the RTI Connext DDS distribution.
 For more information, type 'rtiddsgen -help' at a command shell
@@ -5072,18 +5072,18 @@ namespace dds_msgs {
     } 
 
     /* ----------------------------------------------------------------------------
-    *  Type StopJpegGeneration
+    *  Type StopJpegGenerationMsg
     * -------------------------------------------------------------------------- */
 
     /* -----------------------------------------------------------------------------
     Support functions:
     * -------------------------------------------------------------------------- */
 
-    StopJpegGeneration *
-    StopJpegGenerationPluginSupport_create_data(void)
+    StopJpegGenerationMsg *
+    StopJpegGenerationMsgPluginSupport_create_data(void)
     {
         try {
-            StopJpegGeneration *sample = new StopJpegGeneration();
+            StopJpegGenerationMsg *sample = new StopJpegGenerationMsg();
             ::rti::topic::allocate_sample(*sample);
             return sample;
         } catch (...) {
@@ -5092,16 +5092,16 @@ namespace dds_msgs {
     }
 
     void 
-    StopJpegGenerationPluginSupport_destroy_data(
-        StopJpegGeneration *sample) 
+    StopJpegGenerationMsgPluginSupport_destroy_data(
+        StopJpegGenerationMsg *sample) 
     {
         delete sample;
     }
 
     RTIBool 
-    StopJpegGenerationPluginSupport_copy_data(
-        StopJpegGeneration *dst,
-        const StopJpegGeneration *src)
+    StopJpegGenerationMsgPluginSupport_copy_data(
+        StopJpegGenerationMsg *dst,
+        const StopJpegGenerationMsg *src)
     {
         try {
             *dst = *src;
@@ -5112,17 +5112,17 @@ namespace dds_msgs {
         return RTI_TRUE;
     }
 
-    StopJpegGeneration *
-    StopJpegGenerationPluginSupport_create_key(void)
+    StopJpegGenerationMsg *
+    StopJpegGenerationMsgPluginSupport_create_key(void)
     {
-        return StopJpegGenerationPluginSupport_create_data();
+        return StopJpegGenerationMsgPluginSupport_create_data();
     }
 
     void 
-    StopJpegGenerationPluginSupport_destroy_key(
-        StopJpegGenerationKeyHolder *key) 
+    StopJpegGenerationMsgPluginSupport_destroy_key(
+        StopJpegGenerationMsgKeyHolder *key) 
     {
-        StopJpegGenerationPluginSupport_destroy_data(key);
+        StopJpegGenerationMsgPluginSupport_destroy_data(key);
     }
 
     /* ----------------------------------------------------------------------------
@@ -5130,7 +5130,7 @@ namespace dds_msgs {
     * ---------------------------------------------------------------------------- */
 
     PRESTypePluginParticipantData 
-    StopJpegGenerationPlugin_on_participant_attached(
+    StopJpegGenerationMsgPlugin_on_participant_attached(
         void *registration_data,
         const struct PRESTypePluginParticipantInfo *participant_info,
         RTIBool top_level_registration,
@@ -5162,7 +5162,7 @@ namespace dds_msgs {
 
         programs = DDS_TypeCodeFactory_assert_programs_in_global_list(
             DDS_TypeCodeFactory_get_instance(),
-            (DDS_TypeCode *) (RTIXCdrTypeCode *)&::rti::topic::dynamic_type< StopJpegGeneration >::get().native()
+            (DDS_TypeCode *) (RTIXCdrTypeCode *)&::rti::topic::dynamic_type< StopJpegGenerationMsg >::get().native()
             ,
             &programProperty,
             RTI_XCDR_PROGRAM_MASK_TYPEPLUGIN);
@@ -5178,7 +5178,7 @@ namespace dds_msgs {
     }
 
     void 
-    StopJpegGenerationPlugin_on_participant_detached(
+    StopJpegGenerationMsgPlugin_on_participant_detached(
         PRESTypePluginParticipantData participant_data)
     {
         if (participant_data != NULL) {
@@ -5196,7 +5196,7 @@ namespace dds_msgs {
     }
 
     PRESTypePluginEndpointData
-    StopJpegGenerationPlugin_on_endpoint_attached(
+    StopJpegGenerationMsgPlugin_on_endpoint_attached(
         PRESTypePluginParticipantData participant_data,
         const struct PRESTypePluginEndpointInfo *endpoint_info,
         RTIBool top_level_registration, 
@@ -5220,20 +5220,20 @@ namespace dds_msgs {
                 participant_data,
                 endpoint_info,
                 (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-                StopJpegGenerationPluginSupport_create_data,
+                StopJpegGenerationMsgPluginSupport_create_data,
                 (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-                StopJpegGenerationPluginSupport_destroy_data,
+                StopJpegGenerationMsgPluginSupport_destroy_data,
                 (PRESTypePluginDefaultEndpointDataCreateKeyFunction)
-                dds_msgs::StopJpegGenerationPluginSupport_create_key ,                (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
-                dds_msgs::StopJpegGenerationPluginSupport_destroy_key);
+                dds_msgs::StopJpegGenerationMsgPluginSupport_create_key ,                (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
+                dds_msgs::StopJpegGenerationMsgPluginSupport_destroy_key);
 
             if (epd == NULL) {
                 return NULL;
             } 
 
-            serializedKeyMaxSize =  dds_msgs::StopJpegGenerationPlugin_get_serialized_key_max_size(
+            serializedKeyMaxSize =  dds_msgs::StopJpegGenerationMsgPlugin_get_serialized_key_max_size(
                 epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
-            serializedKeyMaxSizeV2 = StopJpegGenerationPlugin_get_serialized_key_max_size_for_keyhash(
+            serializedKeyMaxSizeV2 = StopJpegGenerationMsgPlugin_get_serialized_key_max_size_for_keyhash(
                 epd,
                 RTI_CDR_ENCAPSULATION_ID_CDR2_BE,
                 0);
@@ -5249,7 +5249,7 @@ namespace dds_msgs {
             }
 
             if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
-                serializedSampleMaxSize = dds_msgs::StopJpegGenerationPlugin_get_serialized_sample_max_size(
+                serializedSampleMaxSize = dds_msgs::StopJpegGenerationMsgPlugin_get_serialized_sample_max_size(
                     epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
                 PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
 
@@ -5257,7 +5257,7 @@ namespace dds_msgs {
                     epd,
                     endpoint_info,
                     (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-                    dds_msgs::StopJpegGenerationPlugin_get_serialized_sample_max_size, epd,
+                    dds_msgs::StopJpegGenerationMsgPlugin_get_serialized_sample_max_size, epd,
                     (PRESTypePluginGetSerializedSampleSizeFunction)
                     PRESTypePlugin_interpretedGetSerializedSampleSize,
                     epd) == RTI_FALSE) {
@@ -5273,16 +5273,16 @@ namespace dds_msgs {
     }
 
     void 
-    StopJpegGenerationPlugin_on_endpoint_detached(
+    StopJpegGenerationMsgPlugin_on_endpoint_detached(
         PRESTypePluginEndpointData endpoint_data)
     {  
         PRESTypePluginDefaultEndpointData_delete(endpoint_data);
     }
 
     void    
-    StopJpegGenerationPlugin_return_sample(
+    StopJpegGenerationMsgPlugin_return_sample(
         PRESTypePluginEndpointData endpoint_data,
-        StopJpegGeneration *sample,
+        StopJpegGenerationMsg *sample,
         void *handle)
     {
         try {
@@ -5290,7 +5290,7 @@ namespace dds_msgs {
         } catch(const std::exception& ex) {
             RTICdrLog_logWithFunctionName(
                 RTI_LOG_BIT_EXCEPTION,
-                "StopJpegGenerationPlugin_return_sample",
+                "StopJpegGenerationMsgPlugin_return_sample",
                 &RTI_LOG_ANY_FAILURE_ss,
                 "exception: ",
                 ex.what());
@@ -5301,29 +5301,29 @@ namespace dds_msgs {
     }
 
     RTIBool 
-    StopJpegGenerationPlugin_copy_sample(
+    StopJpegGenerationMsgPlugin_copy_sample(
         PRESTypePluginEndpointData,
-        StopJpegGeneration *dst,
-        const StopJpegGeneration *src)
+        StopJpegGenerationMsg *dst,
+        const StopJpegGenerationMsg *src)
     {
-        return dds_msgs::StopJpegGenerationPluginSupport_copy_data(dst,src);
+        return dds_msgs::StopJpegGenerationMsgPluginSupport_copy_data(dst,src);
     }
 
     /* ----------------------------------------------------------------------------
     (De)Serialize functions:
     * ------------------------------------------------------------------------- */
     unsigned int 
-    StopJpegGenerationPlugin_get_serialized_sample_max_size(
+    StopJpegGenerationMsgPlugin_get_serialized_sample_max_size(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool include_encapsulation,
         RTIEncapsulationId encapsulation_id,
         unsigned int current_alignment);
 
     RTIBool
-    StopJpegGenerationPlugin_serialize_to_cdr_buffer(
+    StopJpegGenerationMsgPlugin_serialize_to_cdr_buffer(
         char * buffer,
         unsigned int * length,
-        const StopJpegGeneration *sample,
+        const StopJpegGenerationMsg *sample,
         ::dds::core::policy::DataRepresentationId representation)
     {
         using namespace ::dds::core::policy;
@@ -5348,10 +5348,10 @@ namespace dds_msgs {
             epd.typePlugin = &plugin;
             epd.programContext.endpointPluginData = &epd;
             plugin.typeCode = (struct RTICdrTypeCode *)
-            (RTIXCdrTypeCode *)&::rti::topic::dynamic_type< StopJpegGeneration >::get().native()
+            (RTIXCdrTypeCode *)&::rti::topic::dynamic_type< StopJpegGenerationMsg >::get().native()
             ;
             pd.programs = ::rti::topic::interpreter::get_cdr_serialization_programs<
-            StopJpegGeneration, 
+            StopJpegGenerationMsg, 
             true, true, true>();
 
             encapsulationId = DDS_TypeCode_get_native_encapsulation(
@@ -5363,7 +5363,7 @@ namespace dds_msgs {
             }
 
             epd._maxSizeSerializedSample =
-            StopJpegGenerationPlugin_get_serialized_sample_max_size(
+            StopJpegGenerationMsgPlugin_get_serialized_sample_max_size(
                 (PRESTypePluginEndpointData)&epd, 
                 RTI_TRUE, 
                 encapsulationId,
@@ -5405,8 +5405,8 @@ namespace dds_msgs {
     }
 
     RTIBool
-    StopJpegGenerationPlugin_deserialize_from_cdr_buffer(
-        StopJpegGeneration *sample,
+    StopJpegGenerationMsgPlugin_deserialize_from_cdr_buffer(
+        StopJpegGenerationMsg *sample,
         const char * buffer,
         unsigned int length)
     {
@@ -5425,10 +5425,10 @@ namespace dds_msgs {
         epd.typePlugin = &plugin;
         epd.programContext.endpointPluginData = &epd;
         plugin.typeCode = (struct RTICdrTypeCode *)
-        (struct RTICdrTypeCode *)(RTIXCdrTypeCode *)&::rti::topic::dynamic_type< StopJpegGeneration >::get().native()
+        (struct RTICdrTypeCode *)(RTIXCdrTypeCode *)&::rti::topic::dynamic_type< StopJpegGenerationMsg >::get().native()
         ;
         pd.programs = ::rti::topic::interpreter::get_cdr_serialization_programs<
-        StopJpegGeneration, 
+        StopJpegGenerationMsg, 
         true, true, true>();
 
         epd._assignabilityProperty.acceptUnknownEnumValue = RTI_XCDR_TRUE;
@@ -5445,7 +5445,7 @@ namespace dds_msgs {
     }
 
     unsigned int 
-    StopJpegGenerationPlugin_get_serialized_sample_max_size(
+    StopJpegGenerationMsgPlugin_get_serialized_sample_max_size(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool include_encapsulation,
         RTIEncapsulationId encapsulation_id,
@@ -5473,14 +5473,14 @@ namespace dds_msgs {
     * -------------------------------------------------------------------------------------- */
 
     PRESTypePluginKeyKind 
-    StopJpegGenerationPlugin_get_key_kind(void)
+    StopJpegGenerationMsgPlugin_get_key_kind(void)
     {
         return PRES_TYPEPLUGIN_USER_KEY;
     }
 
-    RTIBool StopJpegGenerationPlugin_deserialize_key(
+    RTIBool StopJpegGenerationMsgPlugin_deserialize_key(
         PRESTypePluginEndpointData endpoint_data,
-        StopJpegGeneration **sample, 
+        StopJpegGenerationMsg **sample, 
         RTIBool * drop_sample,
         struct RTICdrStream *stream,
         RTIBool deserialize_encapsulation,
@@ -5506,7 +5506,7 @@ namespace dds_msgs {
     }
 
     unsigned int
-    StopJpegGenerationPlugin_get_serialized_key_max_size(
+    StopJpegGenerationMsgPlugin_get_serialized_key_max_size(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool include_encapsulation,
         RTIEncapsulationId encapsulation_id,
@@ -5529,7 +5529,7 @@ namespace dds_msgs {
     }
 
     unsigned int
-    StopJpegGenerationPlugin_get_serialized_key_max_size_for_keyhash(
+    StopJpegGenerationMsgPlugin_get_serialized_key_max_size_for_keyhash(
         PRESTypePluginEndpointData endpoint_data,
         RTIEncapsulationId encapsulation_id,
         unsigned int current_alignment)
@@ -5550,10 +5550,10 @@ namespace dds_msgs {
     }
 
     RTIBool 
-    StopJpegGenerationPlugin_instance_to_key(
+    StopJpegGenerationMsgPlugin_instance_to_key(
         PRESTypePluginEndpointData endpoint_data,
-        StopJpegGenerationKeyHolder *dst, 
-        const StopJpegGeneration *src)
+        StopJpegGenerationMsgKeyHolder *dst, 
+        const StopJpegGenerationMsg *src)
     {
         try {
             if (!dds_msgs::BaseMsgPlugin_instance_to_key(endpoint_data,(dds_msgs::BaseMsg *)dst,(const dds_msgs::BaseMsg*)src)) {
@@ -5567,10 +5567,10 @@ namespace dds_msgs {
     }
 
     RTIBool 
-    StopJpegGenerationPlugin_key_to_instance(
+    StopJpegGenerationMsgPlugin_key_to_instance(
         PRESTypePluginEndpointData endpoint_data,
-        StopJpegGeneration *dst, const
-        StopJpegGenerationKeyHolder *src)
+        StopJpegGenerationMsg *dst, const
+        StopJpegGenerationMsgKeyHolder *src)
     {
         try {
             if (!dds_msgs::BaseMsgPlugin_key_to_instance(endpoint_data,(dds_msgs::BaseMsg*)dst,(const dds_msgs::BaseMsg*)src)) {
@@ -5583,15 +5583,15 @@ namespace dds_msgs {
     }
 
     RTIBool 
-    StopJpegGenerationPlugin_serialized_sample_to_keyhash(
+    StopJpegGenerationMsgPlugin_serialized_sample_to_keyhash(
         PRESTypePluginEndpointData endpoint_data,
         struct RTICdrStream *stream, 
         DDS_KeyHash_t *keyhash,
         RTIBool deserialize_encapsulation,
         void *endpoint_plugin_qos)
     {
-        StopJpegGeneration * sample = NULL;
-        sample = (StopJpegGeneration *)
+        StopJpegGenerationMsg * sample = NULL;
+        sample = (StopJpegGenerationMsg *)
         PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
         if (sample == NULL) {
             return RTI_FALSE;
@@ -5618,7 +5618,7 @@ namespace dds_msgs {
     /* ------------------------------------------------------------------------
     * Plug-in Installation Methods
     * ------------------------------------------------------------------------ */
-    struct PRESTypePlugin *StopJpegGenerationPlugin_new(void) 
+    struct PRESTypePlugin *StopJpegGenerationMsgPlugin_new(void) 
     { 
         struct PRESTypePlugin *plugin = NULL;
         const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -5635,26 +5635,26 @@ namespace dds_msgs {
         /* set up parent's function pointers */
         plugin->onParticipantAttached =
         (PRESTypePluginOnParticipantAttachedCallback)
-        dds_msgs::StopJpegGenerationPlugin_on_participant_attached;
+        dds_msgs::StopJpegGenerationMsgPlugin_on_participant_attached;
         plugin->onParticipantDetached =
         (PRESTypePluginOnParticipantDetachedCallback)
-        dds_msgs::StopJpegGenerationPlugin_on_participant_detached;
+        dds_msgs::StopJpegGenerationMsgPlugin_on_participant_detached;
         plugin->onEndpointAttached =
         (PRESTypePluginOnEndpointAttachedCallback)
-        dds_msgs::StopJpegGenerationPlugin_on_endpoint_attached;
+        dds_msgs::StopJpegGenerationMsgPlugin_on_endpoint_attached;
         plugin->onEndpointDetached =
         (PRESTypePluginOnEndpointDetachedCallback)
-        dds_msgs::StopJpegGenerationPlugin_on_endpoint_detached;
+        dds_msgs::StopJpegGenerationMsgPlugin_on_endpoint_detached;
 
         plugin->copySampleFnc =
         (PRESTypePluginCopySampleFunction)
-        dds_msgs::StopJpegGenerationPlugin_copy_sample;
+        dds_msgs::StopJpegGenerationMsgPlugin_copy_sample;
         plugin->createSampleFnc =
         (PRESTypePluginCreateSampleFunction)
-        StopJpegGenerationPlugin_create_sample;
+        StopJpegGenerationMsgPlugin_create_sample;
         plugin->destroySampleFnc =
         (PRESTypePluginDestroySampleFunction)
-        StopJpegGenerationPlugin_destroy_sample;
+        StopJpegGenerationMsgPlugin_destroy_sample;
 
         plugin->serializeFnc = 
         (PRESTypePluginSerializeFunction) PRESTypePlugin_interpretedSerialize;
@@ -5662,30 +5662,30 @@ namespace dds_msgs {
         (PRESTypePluginDeserializeFunction) PRESTypePlugin_interpretedDeserializeWithAlloc;
         plugin->getSerializedSampleMaxSizeFnc =
         (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-        dds_msgs::StopJpegGenerationPlugin_get_serialized_sample_max_size;
+        dds_msgs::StopJpegGenerationMsgPlugin_get_serialized_sample_max_size;
         plugin->getSerializedSampleMinSizeFnc =
         (PRESTypePluginGetSerializedSampleMinSizeFunction)
         PRESTypePlugin_interpretedGetSerializedSampleMinSize;
         plugin->getDeserializedSampleMaxSizeFnc = NULL; 
         plugin->getSampleFnc =
         (PRESTypePluginGetSampleFunction)
-        StopJpegGenerationPlugin_get_sample;
+        StopJpegGenerationMsgPlugin_get_sample;
         plugin->returnSampleFnc =
         (PRESTypePluginReturnSampleFunction)
-        StopJpegGenerationPlugin_return_sample;
+        StopJpegGenerationMsgPlugin_return_sample;
         plugin->getKeyKindFnc =
         (PRESTypePluginGetKeyKindFunction)
-        dds_msgs::StopJpegGenerationPlugin_get_key_kind;
+        dds_msgs::StopJpegGenerationMsgPlugin_get_key_kind;
 
         plugin->getSerializedKeyMaxSizeFnc =   
         (PRESTypePluginGetSerializedKeyMaxSizeFunction)
-        dds_msgs::StopJpegGenerationPlugin_get_serialized_key_max_size;
+        dds_msgs::StopJpegGenerationMsgPlugin_get_serialized_key_max_size;
         plugin->serializeKeyFnc =
         (PRESTypePluginSerializeKeyFunction)
         PRESTypePlugin_interpretedSerializeKey;
         plugin->deserializeKeyFnc =
         (PRESTypePluginDeserializeKeyFunction)
-        dds_msgs::StopJpegGenerationPlugin_deserialize_key;
+        dds_msgs::StopJpegGenerationMsgPlugin_deserialize_key;
         plugin->deserializeKeySampleFnc =
         (PRESTypePluginDeserializeKeySampleFunction)
         PRESTypePlugin_interpretedDeserializeKey;
@@ -5695,37 +5695,37 @@ namespace dds_msgs {
         PRESTypePlugin_interpretedInstanceToKeyHash;
         plugin->serializedSampleToKeyHashFnc = 
         (PRESTypePluginSerializedSampleToKeyHashFunction)
-        dds_msgs::StopJpegGenerationPlugin_serialized_sample_to_keyhash;
+        dds_msgs::StopJpegGenerationMsgPlugin_serialized_sample_to_keyhash;
 
         plugin->getKeyFnc =
         (PRESTypePluginGetKeyFunction)
-        StopJpegGenerationPlugin_get_key;
+        StopJpegGenerationMsgPlugin_get_key;
         plugin->returnKeyFnc =
         (PRESTypePluginReturnKeyFunction)
-        StopJpegGenerationPlugin_return_key;
+        StopJpegGenerationMsgPlugin_return_key;
 
         plugin->instanceToKeyFnc =
         (PRESTypePluginInstanceToKeyFunction)
-        dds_msgs::StopJpegGenerationPlugin_instance_to_key;
+        dds_msgs::StopJpegGenerationMsgPlugin_instance_to_key;
         plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
-        dds_msgs::StopJpegGenerationPlugin_key_to_instance;
+        dds_msgs::StopJpegGenerationMsgPlugin_key_to_instance;
         plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
         #ifdef NDDS_STANDALONE_TYPE
         plugin->typeCode = NULL; 
         #else
         plugin->typeCode = (struct RTICdrTypeCode *) 
-        &::rti::topic::dynamic_type< dds_msgs::StopJpegGeneration >::get().native();
+        &::rti::topic::dynamic_type< dds_msgs::StopJpegGenerationMsg >::get().native();
         #endif
         plugin->languageKind = PRES_TYPEPLUGIN_CPPSTL_LANG;
 
         /* Serialized buffer */
         plugin->getBuffer = 
         (PRESTypePluginGetBufferFunction)
-        StopJpegGenerationPlugin_get_buffer;
+        StopJpegGenerationMsgPlugin_get_buffer;
         plugin->returnBuffer = 
         (PRESTypePluginReturnBufferFunction)
-        StopJpegGenerationPlugin_return_buffer;
+        StopJpegGenerationMsgPlugin_return_buffer;
         plugin->getBufferWithParams = NULL;
         plugin->returnBufferWithParams = NULL;
         plugin->getSerializedSampleSizeFnc =
@@ -5738,14 +5738,14 @@ namespace dds_msgs {
         plugin->validateWriterLoanedSampleFnc = NULL;
         plugin->setWriterLoanedSampleSerializedStateFnc = NULL;
 
-        static const char * TYPE_NAME = "dds_msgs::StopJpegGeneration";
+        static const char * TYPE_NAME = "dds_msgs::StopJpegGenerationMsg";
         plugin->endpointTypeName = TYPE_NAME;
         plugin->isMetpType = RTI_FALSE;
         return plugin;
     }
 
     void
-    StopJpegGenerationPlugin_delete(struct PRESTypePlugin *plugin)
+    StopJpegGenerationMsgPlugin_delete(struct PRESTypePlugin *plugin)
     {
         RTIOsapiHeap_freeStructure(plugin);
     } 

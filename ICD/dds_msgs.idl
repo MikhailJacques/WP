@@ -245,12 +245,6 @@ module dds_msgs {
     string<256> GeoPathJpegFiles;
   };
   
-  struct StopJpegGenerationMsg : dds_msgs::BaseMsg {
-    dds_msgs::EnumPlatform PlatformType;
-    @default(0)
-    uint8 PlatformId;
-  };
-
   struct ReportJpegGenerationLivenessMsg : dds_msgs::BaseMsg {
     dds_msgs::EnumPlatform PlatformType;
     @default(0)
@@ -274,5 +268,12 @@ module dds_msgs {
     string<256> GeoPath;
     string<256> CloudUrl;
   };
+  
+    struct StopJpegGenerationMsg : dds_msgs::BaseMsg {
+    dds_msgs::EnumPlatform PlatformType;
+    @default(0)
+    uint8 PlatformId;
+  };
+
 };
 

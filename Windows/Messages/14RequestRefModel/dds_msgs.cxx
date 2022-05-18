@@ -3,7 +3,7 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from WorldPerception.idl
+This file was generated from dds_msgs.idl
 using RTI Code Generator (rtiddsgen) version 3.1.0.
 The rtiddsgen tool is part of the RTI Connext DDS distribution.
 For more information, type 'rtiddsgen -help' at a command shell
@@ -1180,14 +1180,14 @@ namespace dds_msgs {
         return o;
     }
 
-    // ---- StopJpegGeneration: 
+    // ---- StopJpegGenerationMsg: 
 
-    StopJpegGeneration::StopJpegGeneration() :
+    StopJpegGenerationMsg::StopJpegGenerationMsg() :
         m_PlatformType_(dds_msgs::EnumPlatform::None) ,
         m_PlatformId_ (0)  {
     }   
 
-    StopJpegGeneration::StopJpegGeneration (
+    StopJpegGenerationMsg::StopJpegGenerationMsg (
         uint8_t MsgId,
         uint32_t MsgCount,
         uint16_t MissionId,
@@ -1201,7 +1201,7 @@ namespace dds_msgs {
 
     #ifdef RTI_CXX11_RVALUE_REFERENCES
     #ifdef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-    StopJpegGeneration::StopJpegGeneration(StopJpegGeneration&& other_) OMG_NOEXCEPT  : 
+    StopJpegGenerationMsg::StopJpegGenerationMsg(StopJpegGenerationMsg&& other_) OMG_NOEXCEPT  : 
     dds_msgs::BaseMsg(std::move(other_)),
     m_PlatformType_ (std::move(other_.m_PlatformType_))
     ,
@@ -1209,15 +1209,15 @@ namespace dds_msgs {
     {
     } 
 
-    StopJpegGeneration& StopJpegGeneration::operator=(StopJpegGeneration&&  other_) OMG_NOEXCEPT {
-        StopJpegGeneration tmp(std::move(other_));
+    StopJpegGenerationMsg& StopJpegGenerationMsg::operator=(StopJpegGenerationMsg&&  other_) OMG_NOEXCEPT {
+        StopJpegGenerationMsg tmp(std::move(other_));
         swap(tmp); 
         return *this;
     }
     #endif
     #endif   
 
-    void StopJpegGeneration::swap(StopJpegGeneration& other_)  OMG_NOEXCEPT 
+    void StopJpegGenerationMsg::swap(StopJpegGenerationMsg& other_)  OMG_NOEXCEPT 
     {
         using std::swap;
         dds_msgs::BaseMsg::swap(other_);
@@ -1225,7 +1225,7 @@ namespace dds_msgs {
         swap(m_PlatformId_, other_.m_PlatformId_);
     }  
 
-    bool StopJpegGeneration::operator == (const StopJpegGeneration& other_) const {
+    bool StopJpegGenerationMsg::operator == (const StopJpegGenerationMsg& other_) const {
         if (!dds_msgs::BaseMsg::operator == (other_)){
             return false;
         }
@@ -1237,11 +1237,11 @@ namespace dds_msgs {
         }
         return true;
     }
-    bool StopJpegGeneration::operator != (const StopJpegGeneration& other_) const {
+    bool StopJpegGenerationMsg::operator != (const StopJpegGenerationMsg& other_) const {
         return !this->operator ==(other_);
     }
 
-    std::ostream& operator << (std::ostream& o,const StopJpegGeneration& sample)
+    std::ostream& operator << (std::ostream& o,const StopJpegGenerationMsg& sample)
     {
         ::rti::util::StreamFlagSaver flag_saver (o);
         o <<"[";
@@ -5693,14 +5693,14 @@ namespace rti {
 
         #ifndef NDDS_STANDALONE_TYPE
         template<>
-        struct native_type_code< dds_msgs::StopJpegGeneration > {
+        struct native_type_code< dds_msgs::StopJpegGenerationMsg > {
             static DDS_TypeCode * get()
             {
                 using namespace ::rti::topic::interpreter;
 
                 static RTIBool is_initialized = RTI_FALSE;
 
-                static DDS_TypeCode_Member StopJpegGeneration_g_tc_members[2]=
+                static DDS_TypeCode_Member StopJpegGenerationMsg_g_tc_members[2]=
                 {
 
                     {
@@ -5741,116 +5741,116 @@ namespace rti {
                     }
                 };
 
-                static DDS_TypeCode StopJpegGeneration_g_tc =
+                static DDS_TypeCode StopJpegGenerationMsg_g_tc =
                 {{
                         DDS_TK_VALUE, /* Kind */
                         DDS_BOOLEAN_FALSE, /* Ignored */
                         -1, /*Ignored*/
-                        (char *)"dds_msgs::StopJpegGeneration", /* Name */
+                        (char *)"dds_msgs::StopJpegGenerationMsg", /* Name */
                         NULL, /* Ignored */      
                         0, /* Ignored */
                         0, /* Ignored */
                         NULL, /* Ignored */
                         2, /* Number of members */
-                        StopJpegGeneration_g_tc_members, /* Members */
+                        StopJpegGenerationMsg_g_tc_members, /* Members */
                         DDS_VM_NONE, /* Ignored */
                         RTICdrTypeCodeAnnotations_INITIALIZER,
                         DDS_BOOLEAN_TRUE, /* _isCopyable */
                         NULL, /* _sampleAccessInfo: assigned later */
                         NULL /* _typePlugin: assigned later */
-                    }}; /* Type code for StopJpegGeneration*/
+                    }}; /* Type code for StopJpegGenerationMsg*/
 
                 if (is_initialized) {
-                    return &StopJpegGeneration_g_tc;
+                    return &StopJpegGenerationMsg_g_tc;
                 }
 
-                StopJpegGeneration_g_tc._data._annotations._allowedDataRepresentationMask = 5;
+                StopJpegGenerationMsg_g_tc._data._annotations._allowedDataRepresentationMask = 5;
 
-                StopJpegGeneration_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumPlatform>::get().native();
-                StopJpegGeneration_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
+                StopJpegGenerationMsg_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::EnumPlatform>::get().native();
+                StopJpegGenerationMsg_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_octet;
 
                 /* Initialize the values for member annotations. */
-                StopJpegGeneration_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
-                StopJpegGeneration_g_tc_members[0]._annotations._defaultValue._u.enumerated_value = 0;
+                StopJpegGenerationMsg_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_ENUM;
+                StopJpegGenerationMsg_g_tc_members[0]._annotations._defaultValue._u.enumerated_value = 0;
 
-                StopJpegGeneration_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
-                StopJpegGeneration_g_tc_members[1]._annotations._defaultValue._u.octet_value = 0;
-                StopJpegGeneration_g_tc_members[1]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
-                StopJpegGeneration_g_tc_members[1]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
-                StopJpegGeneration_g_tc_members[1]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
-                StopJpegGeneration_g_tc_members[1]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._defaultValue._d = RTI_XCDR_TK_OCTET;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._defaultValue._u.octet_value = 0;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._minValue._d = RTI_XCDR_TK_OCTET;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._minValue._u.octet_value = RTIXCdrOctet_MIN;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._maxValue._d = RTI_XCDR_TK_OCTET;
+                StopJpegGenerationMsg_g_tc_members[1]._annotations._maxValue._u.octet_value = RTIXCdrOctet_MAX;
 
-                StopJpegGeneration_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
+                StopJpegGenerationMsg_g_tc._data._typeCode = (RTICdrTypeCode *)&::rti::topic::dynamic_type< dds_msgs::BaseMsg >::get().native(); /* Base class */
 
-                StopJpegGeneration_g_tc._data._sampleAccessInfo = sample_access_info();
-                StopJpegGeneration_g_tc._data._typePlugin = type_plugin_info();    
+                StopJpegGenerationMsg_g_tc._data._sampleAccessInfo = sample_access_info();
+                StopJpegGenerationMsg_g_tc._data._typePlugin = type_plugin_info();    
 
                 is_initialized = RTI_TRUE;
 
-                return &StopJpegGeneration_g_tc;
+                return &StopJpegGenerationMsg_g_tc;
             }
 
             static RTIXCdrSampleAccessInfo * sample_access_info()
             {
                 static RTIBool is_initialized = RTI_FALSE;
 
-                dds_msgs::StopJpegGeneration *sample;
+                dds_msgs::StopJpegGenerationMsg *sample;
 
-                static RTIXCdrMemberAccessInfo StopJpegGeneration_g_memberAccessInfos[2] =
+                static RTIXCdrMemberAccessInfo StopJpegGenerationMsg_g_memberAccessInfos[2] =
                 {RTIXCdrMemberAccessInfo_INITIALIZER};
 
-                static RTIXCdrSampleAccessInfo StopJpegGeneration_g_sampleAccessInfo = 
+                static RTIXCdrSampleAccessInfo StopJpegGenerationMsg_g_sampleAccessInfo = 
                 RTIXCdrSampleAccessInfo_INITIALIZER;
 
                 if (is_initialized) {
-                    return (RTIXCdrSampleAccessInfo*) &StopJpegGeneration_g_sampleAccessInfo;
+                    return (RTIXCdrSampleAccessInfo*) &StopJpegGenerationMsg_g_sampleAccessInfo;
                 }
 
                 RTIXCdrHeap_allocateStruct(
                     &sample, 
-                    dds_msgs::StopJpegGeneration);
+                    dds_msgs::StopJpegGenerationMsg);
                 if (sample == NULL) {
                     return NULL;
                 }
 
-                StopJpegGeneration_g_memberAccessInfos[0].bindingMemberValueOffset[0] = 
+                StopJpegGenerationMsg_g_memberAccessInfos[0].bindingMemberValueOffset[0] = 
                 (RTIXCdrUnsignedLong) ((char *)&sample->PlatformType() - (char *)sample);
 
-                StopJpegGeneration_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
+                StopJpegGenerationMsg_g_memberAccessInfos[1].bindingMemberValueOffset[0] = 
                 (RTIXCdrUnsignedLong) ((char *)&sample->PlatformId() - (char *)sample);
 
-                StopJpegGeneration_g_sampleAccessInfo.memberAccessInfos = 
-                StopJpegGeneration_g_memberAccessInfos;
+                StopJpegGenerationMsg_g_sampleAccessInfo.memberAccessInfos = 
+                StopJpegGenerationMsg_g_memberAccessInfos;
 
                 {
-                    size_t candidateTypeSize = sizeof(dds_msgs::StopJpegGeneration);
+                    size_t candidateTypeSize = sizeof(dds_msgs::StopJpegGenerationMsg);
 
                     if (candidateTypeSize > RTIXCdrLong_MAX) {
-                        StopJpegGeneration_g_sampleAccessInfo.typeSize[0] =
+                        StopJpegGenerationMsg_g_sampleAccessInfo.typeSize[0] =
                         RTIXCdrLong_MAX;
                     } else {
-                        StopJpegGeneration_g_sampleAccessInfo.typeSize[0] =
+                        StopJpegGenerationMsg_g_sampleAccessInfo.typeSize[0] =
                         (RTIXCdrUnsignedLong) candidateTypeSize;
                     }
                 }
 
-                StopJpegGeneration_g_sampleAccessInfo.useGetMemberValueOnlyWithRef =
+                StopJpegGenerationMsg_g_sampleAccessInfo.useGetMemberValueOnlyWithRef =
                 RTI_XCDR_TRUE;
 
-                StopJpegGeneration_g_sampleAccessInfo.getMemberValuePointerFcn = 
-                interpreter::get_aggregation_value_pointer< dds_msgs::StopJpegGeneration >;
+                StopJpegGenerationMsg_g_sampleAccessInfo.getMemberValuePointerFcn = 
+                interpreter::get_aggregation_value_pointer< dds_msgs::StopJpegGenerationMsg >;
 
-                StopJpegGeneration_g_sampleAccessInfo.languageBinding = 
+                StopJpegGenerationMsg_g_sampleAccessInfo.languageBinding = 
                 RTI_XCDR_TYPE_BINDING_CPP_11_STL ;
 
                 RTIXCdrHeap_freeStruct(sample);
                 is_initialized = RTI_TRUE;
-                return (RTIXCdrSampleAccessInfo*) &StopJpegGeneration_g_sampleAccessInfo;
+                return (RTIXCdrSampleAccessInfo*) &StopJpegGenerationMsg_g_sampleAccessInfo;
             }
 
             static RTIXCdrTypePlugin * type_plugin_info()
             {
-                static RTIXCdrTypePlugin StopJpegGeneration_g_typePlugin = 
+                static RTIXCdrTypePlugin StopJpegGenerationMsg_g_typePlugin = 
                 {
                     NULL, /* serialize */
                     NULL, /* serialize_key */
@@ -5868,16 +5868,16 @@ namespace rti {
                     NULL
                 };
 
-                return &StopJpegGeneration_g_typePlugin;
+                return &StopJpegGenerationMsg_g_typePlugin;
             }
         }; // native_type_code
         #endif
 
-        const ::dds::core::xtypes::StructType& dynamic_type< dds_msgs::StopJpegGeneration >::get()
+        const ::dds::core::xtypes::StructType& dynamic_type< dds_msgs::StopJpegGenerationMsg >::get()
         {
             return static_cast<const ::dds::core::xtypes::StructType&>(
                 ::rti::core::native_conversions::cast_from_native< ::dds::core::xtypes::DynamicType >(
-                    *(native_type_code< dds_msgs::StopJpegGeneration >::get())));
+                    *(native_type_code< dds_msgs::StopJpegGenerationMsg >::get())));
         }
 
         #ifndef NDDS_STANDALONE_TYPE
@@ -7177,7 +7177,7 @@ namespace dds {
             ::rti::topic::allocate_sample(sample.GeoPathJpegFiles(),  -1, 256L);
         }
 
-        void topic_type_support< dds_msgs::StopJpegGeneration >:: register_type(
+        void topic_type_support< dds_msgs::StopJpegGenerationMsg >:: register_type(
             ::dds::domain::DomainParticipant& participant,
             const std::string& type_name) 
         {
@@ -7185,18 +7185,18 @@ namespace dds {
             ::rti::domain::register_type_plugin(
                 participant,
                 type_name,
-                dds_msgs::StopJpegGenerationPlugin_new,
-                dds_msgs::StopJpegGenerationPlugin_delete);
+                dds_msgs::StopJpegGenerationMsgPlugin_new,
+                dds_msgs::StopJpegGenerationMsgPlugin_delete);
         }
 
-        std::vector<char>& topic_type_support< dds_msgs::StopJpegGeneration >::to_cdr_buffer(
+        std::vector<char>& topic_type_support< dds_msgs::StopJpegGenerationMsg >::to_cdr_buffer(
             std::vector<char>& buffer, 
-            const dds_msgs::StopJpegGeneration& sample,
+            const dds_msgs::StopJpegGenerationMsg& sample,
             ::dds::core::policy::DataRepresentationId representation)
         {
             // First get the length of the buffer
             unsigned int length = 0;
-            RTIBool ok = StopJpegGenerationPlugin_serialize_to_cdr_buffer(
+            RTIBool ok = StopJpegGenerationMsgPlugin_serialize_to_cdr_buffer(
                 NULL, 
                 &length,
                 &sample,
@@ -7207,7 +7207,7 @@ namespace dds {
 
             // Create a vector with that size and copy the cdr buffer into it
             buffer.resize(length);
-            ok = StopJpegGenerationPlugin_serialize_to_cdr_buffer(
+            ok = StopJpegGenerationMsgPlugin_serialize_to_cdr_buffer(
                 &buffer[0], 
                 &length, 
                 &sample,
@@ -7219,19 +7219,19 @@ namespace dds {
             return buffer;
         }
 
-        void topic_type_support< dds_msgs::StopJpegGeneration >::from_cdr_buffer(dds_msgs::StopJpegGeneration& sample, 
+        void topic_type_support< dds_msgs::StopJpegGenerationMsg >::from_cdr_buffer(dds_msgs::StopJpegGenerationMsg& sample, 
         const std::vector<char>& buffer)
         {
 
-            RTIBool ok  = StopJpegGenerationPlugin_deserialize_from_cdr_buffer(
+            RTIBool ok  = StopJpegGenerationMsgPlugin_deserialize_from_cdr_buffer(
                 &sample, 
                 &buffer[0], 
                 static_cast<unsigned int>(buffer.size()));
             ::rti::core::check_return_code(ok ? DDS_RETCODE_OK : DDS_RETCODE_ERROR,
-            "Failed to create dds_msgs::StopJpegGeneration from cdr buffer");
+            "Failed to create dds_msgs::StopJpegGenerationMsg from cdr buffer");
         }
 
-        void topic_type_support< dds_msgs::StopJpegGeneration >::reset_sample(dds_msgs::StopJpegGeneration& sample) 
+        void topic_type_support< dds_msgs::StopJpegGenerationMsg >::reset_sample(dds_msgs::StopJpegGenerationMsg& sample) 
         {
             // Initialize base
             topic_type_support< dds_msgs::BaseMsg >::reset_sample(sample);
@@ -7240,7 +7240,7 @@ namespace dds {
             sample.PlatformId(0);
         }
 
-        void topic_type_support< dds_msgs::StopJpegGeneration >::allocate_sample(dds_msgs::StopJpegGeneration& sample, int, int) 
+        void topic_type_support< dds_msgs::StopJpegGenerationMsg >::allocate_sample(dds_msgs::StopJpegGenerationMsg& sample, int, int) 
         {
             // Initialize base
             topic_type_support< dds_msgs::BaseMsg >::allocate_sample(sample, -1, -1);

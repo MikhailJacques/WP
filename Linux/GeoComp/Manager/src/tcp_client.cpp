@@ -122,9 +122,6 @@ bool TCP_Client::Send(std::string msg)
 		return false;
 	}
 
-	// Fill in the buffer with the outgoing message
-    // memcpy(m_client_msg_buff, msg, msg_len);
-
 	// ssize_t write(int fd, const void *buf, size_t count);
 	// ssize_t send(int sockfd, const void *buf, size_t len, int flags);
 	// sendto(m_client_socket, m_client_msg_buff, strlen(m_client_msg_buff), 0, (sockaddr*)&m_server_info, sizeof(m_server_info));
@@ -169,30 +166,6 @@ int TCP_Client::Receive(std::string& rx_msg)
 
 	return num_of_rx_bytes;
 }
-
-//int TCP_Client::Receive(std::string& rx_msg)
-//{
-//	stringstream ss;
-
-//	// int bytes_received = read(m_client_socket, m_server_msg_buff, MSG_BUFF_LEN);
-//	// If no error occurs, recv returns the number of bytes received and the buffer pointed to by the buf parameter
-//	// will contain this data received. If the connection has been gracefully closed, the return value is zero.
-//    int num_of_rx_bytes = recv(m_client_socket, m_server_msg_buff, MSG_BUFF_LEN, 0);
-
-//	if (num_of_rx_bytes < 0)
-//	{
-//        ss << "TCP CLIENT: recv() failed!"; // << WSAGetLastError();
-//		m_event_logger.Print(ss.str());
-//	}
-
-//	if (num_of_rx_bytes > 0)
-//	{
-//		rx_msg.clear();
-//		rx_msg.assign(m_server_msg_buff, num_of_rx_bytes);
-//	}
-
-//	return num_of_rx_bytes;
-//}
 
 void TCP_Client::Close(void)
 {

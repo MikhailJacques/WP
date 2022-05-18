@@ -3,15 +3,15 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from WorldPerception.idl
+This file was generated from dds_msgs.idl
 using RTI Code Generator (rtiddsgen) version 3.1.0.
 The rtiddsgen tool is part of the RTI Connext DDS distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the Code Generator User's Manual.
 */
 
-#ifndef WorldPerception_964110566_hpp
-#define WorldPerception_964110566_hpp
+#ifndef dds_msgs_1583855963_hpp
+#define dds_msgs_1583855963_hpp
 
 #include <iosfwd>
 
@@ -1418,12 +1418,12 @@ namespace dds_msgs {
 
     NDDSUSERDllExport std::ostream& operator<<(std::ostream& o, const StartJpegGenerationMsg& sample);
 
-    class NDDSUSERDllExport StopJpegGeneration
+    class NDDSUSERDllExport StopJpegGenerationMsg
     : public dds_msgs::BaseMsg {
       public:
-        StopJpegGeneration();
+        StopJpegGenerationMsg();
 
-        StopJpegGeneration(
+        StopJpegGenerationMsg(
             uint8_t MsgId,
             uint32_t MsgCount,
             uint16_t MissionId,
@@ -1432,13 +1432,13 @@ namespace dds_msgs {
 
         #ifdef RTI_CXX11_RVALUE_REFERENCES
         #ifndef RTI_CXX11_NO_IMPLICIT_MOVE_OPERATIONS
-        StopJpegGeneration (StopJpegGeneration&&) = default;
-        StopJpegGeneration& operator=(StopJpegGeneration&&) = default;
-        StopJpegGeneration& operator=(const StopJpegGeneration&) = default;
-        StopJpegGeneration(const StopJpegGeneration&) = default;
+        StopJpegGenerationMsg (StopJpegGenerationMsg&&) = default;
+        StopJpegGenerationMsg& operator=(StopJpegGenerationMsg&&) = default;
+        StopJpegGenerationMsg& operator=(const StopJpegGenerationMsg&) = default;
+        StopJpegGenerationMsg(const StopJpegGenerationMsg&) = default;
         #else
-        StopJpegGeneration(StopJpegGeneration&& other_) OMG_NOEXCEPT;  
-        StopJpegGeneration& operator=(StopJpegGeneration&&  other_) OMG_NOEXCEPT;
+        StopJpegGenerationMsg(StopJpegGenerationMsg&& other_) OMG_NOEXCEPT;  
+        StopJpegGenerationMsg& operator=(StopJpegGenerationMsg&&  other_) OMG_NOEXCEPT;
         #endif
         #endif 
 
@@ -1469,10 +1469,10 @@ namespace dds_msgs {
             m_PlatformId_ = value;
         }
 
-        bool operator == (const StopJpegGeneration& other_) const;
-        bool operator != (const StopJpegGeneration& other_) const;
+        bool operator == (const StopJpegGenerationMsg& other_) const;
+        bool operator != (const StopJpegGenerationMsg& other_) const;
 
-        void swap(StopJpegGeneration& other_) OMG_NOEXCEPT ;
+        void swap(StopJpegGenerationMsg& other_) OMG_NOEXCEPT ;
 
       private:
 
@@ -1481,12 +1481,12 @@ namespace dds_msgs {
 
     };
 
-    inline void swap(StopJpegGeneration& a, StopJpegGeneration& b)  OMG_NOEXCEPT 
+    inline void swap(StopJpegGenerationMsg& a, StopJpegGenerationMsg& b)  OMG_NOEXCEPT 
     {
         a.swap(b);
     }
 
-    NDDSUSERDllExport std::ostream& operator<<(std::ostream& o, const StopJpegGeneration& sample);
+    NDDSUSERDllExport std::ostream& operator<<(std::ostream& o, const StopJpegGenerationMsg& sample);
 
     class NDDSUSERDllExport ReportJpegGenerationLivenessMsg
     : public dds_msgs::BaseMsg {
@@ -2057,17 +2057,17 @@ namespace dds {
         };
 
         template<>
-        struct topic_type_name< dds_msgs::StopJpegGeneration > {
+        struct topic_type_name< dds_msgs::StopJpegGenerationMsg > {
             NDDSUSERDllExport static std::string value() {
-                return "dds_msgs::StopJpegGeneration";
+                return "dds_msgs::StopJpegGenerationMsg";
             }
         };
 
         template<>
-        struct is_topic_type< dds_msgs::StopJpegGeneration > : public ::dds::core::true_type {};
+        struct is_topic_type< dds_msgs::StopJpegGenerationMsg > : public ::dds::core::true_type {};
 
         template<>
-        struct topic_type_support< dds_msgs::StopJpegGeneration > {
+        struct topic_type_support< dds_msgs::StopJpegGenerationMsg > {
             NDDSUSERDllExport 
             static void register_type(
                 ::dds::domain::DomainParticipant& participant,
@@ -2076,17 +2076,17 @@ namespace dds {
             NDDSUSERDllExport 
             static std::vector<char>& to_cdr_buffer(
                 std::vector<char>& buffer, 
-                const dds_msgs::StopJpegGeneration& sample,
+                const dds_msgs::StopJpegGenerationMsg& sample,
                 ::dds::core::policy::DataRepresentationId representation 
                 = ::dds::core::policy::DataRepresentation::auto_id());
 
             NDDSUSERDllExport 
-            static void from_cdr_buffer(dds_msgs::StopJpegGeneration& sample, const std::vector<char>& buffer);
+            static void from_cdr_buffer(dds_msgs::StopJpegGenerationMsg& sample, const std::vector<char>& buffer);
             NDDSUSERDllExport 
-            static void reset_sample(dds_msgs::StopJpegGeneration& sample);
+            static void reset_sample(dds_msgs::StopJpegGenerationMsg& sample);
 
             NDDSUSERDllExport 
-            static void allocate_sample(dds_msgs::StopJpegGeneration& sample, int, int);
+            static void allocate_sample(dds_msgs::StopJpegGenerationMsg& sample, int, int);
 
             static const ::rti::topic::TypePluginKind::type type_plugin_kind = 
             ::rti::topic::TypePluginKind::STL;
@@ -2470,14 +2470,14 @@ namespace rti {
 
         #ifndef NDDS_STANDALONE_TYPE
         template<>
-        struct dynamic_type< dds_msgs::StopJpegGeneration > {
+        struct dynamic_type< dds_msgs::StopJpegGenerationMsg > {
             typedef ::dds::core::xtypes::StructType type;
             NDDSUSERDllExport static const ::dds::core::xtypes::StructType& get();
         };
         #endif
 
         template <>
-        struct extensibility< dds_msgs::StopJpegGeneration > {
+        struct extensibility< dds_msgs::StopJpegGenerationMsg > {
             static const ::dds::core::xtypes::ExtensibilityKind::type kind =
             ::dds::core::xtypes::ExtensibilityKind::EXTENSIBLE;                
         };
@@ -2548,5 +2548,5 @@ namespace rti {
 #define NDDSUSERDllExport
 #endif
 
-#endif // WorldPerception_964110566_hpp
+#endif // dds_msgs_1583855963_hpp
 

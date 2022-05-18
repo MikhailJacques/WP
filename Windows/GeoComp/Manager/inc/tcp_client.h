@@ -47,10 +47,10 @@ public:
 	~TCP_Client();
 	void Set_Server_IP(std::string server_ip);			// Sets server IP address
 	void Set_Server_Port(unsigned short server_port);	// Sets server port number
-	bool Init(void);				// Initializes socket and connects to client; returns true on success; false otherwise
+    bool Init(void);                                    // Initializes socket and connects to client; returns true on success; false otherwise
 	bool IsInit(void);									// Returns client initialization status
-	bool Send(std::string msg);							// Sends a message to the specified server
-	int Receive(std::string& rx_msg);					// Receives a message from the specified server
+    bool Send(std::string msg);                         // Sends a message to the specified server
+    int Receive(std::string& rx_msg);                   // Receives a message from the specified server
 	void Close(void);									// Cleans up after using the winsock service
 
 private:
@@ -60,7 +60,7 @@ private:
 	unsigned short m_server_port;			// Server port
 	sockaddr_in m_server_info;				// Server metadata
 	SOCKET m_client_socket;					// Client socket descriptor
-	char m_client_msg_buff[MSG_BUFF_LEN];	// Buffer to store outgoing message to the server
-	char m_server_msg_buff[MSG_BUFF_LEN];	// Buffer to store incoming message from the server
+    char m_client_msg_buff[MSG_BUFF_LEN];	// Buffer to store outgoing message to the server
+    char m_server_msg_buff[MSG_BUFF_LEN];	// Buffer to store incoming message from the server
 	Logger m_event_logger;					// Logger object that writes event occurences to a text log file
 };

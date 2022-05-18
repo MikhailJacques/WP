@@ -43,17 +43,19 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     dds::pub::Publisher publisher(participant);
 
     // Create a DataWriter with default QoS
-    //dds::pub::DataWriter<dds_msgs::PlatformLocationMsg> writer(publisher, topic);
     dds::core::QosProvider m_qos_provider = dds::core::QosProvider::Default();
     dds::pub::DataWriter<dds_msgs::PlatformLocationMsg> writer(publisher, topic, m_qos_provider.datawriter_qos("WorldPerceptionQoS::PlatformLocationMsg"));
 
+    bool flag = true;
+    double lat = 15.3, lon = 20.5, alt = 300;
+
     dds_msgs::PlatformLocationMsg data;
 
-    data.PlatformId(333);
+    data.PlatformId(25);
     dds_msgs::GeoPoint geo_point;
-    geo_point.Lat(33.30);
-    geo_point.Lon(45.50);
-    geo_point.Alt(100);
+    geo_point.Lat(lat);
+    geo_point.Lon(lon);
+    geo_point.Alt(alt);
     data.PlatformLocation(geo_point);
 
     for (unsigned int samples_written = 0; !application::shutdown_requested && samples_written < sample_count; samples_written++)
@@ -66,13 +68,28 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
         data.PlatformId(7);
         data.PlatformSpeed(40);
         data.PlatformHeading(0);
-        data.PlatformLocation(dds_msgs::GeoPoint(33.5, 36.5, 300));
+
+        lat += 0.1;
+        lon += 0.1;
+
+        flag ^= true;
+
+        if (flag)
+            alt += 5;
+        else
+            alt -= 10;
+
+        geo_point.Lat(lat);
+        geo_point.Lon(lon);
+        geo_point.Alt(alt);
+        data.PlatformLocation(geo_point);
+
         writer.write(data);
 
         std::cout << "Writing PlatformLocationMsg, count " << samples_written << std::endl;
 
         // Send once every second
-        rti::util::sleep(dds::core::Duration(1));
+        rti::util::sleep(dds::core::Duration(4));
     }
 }
 
@@ -93,7 +110,7 @@ int main(int argc, char *argv[])
     rti::config::Logger::instance().verbosity(arguments.verbosity);
 
     arguments.domain_id = 66;
-    arguments.sample_count = 20;
+    arguments.sample_count = 30;
 
     try {
         run_publisher_application(arguments.domain_id, arguments.sample_count);

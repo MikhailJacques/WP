@@ -9,7 +9,6 @@
 
 #include <stdio.h>
 #include <string.h>
-
 using namespace std;
 using namespace dds_msgs;
 

@@ -81,25 +81,25 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     data.SquareCenter(dds_msgs::GeoPoint(33.5, 36.5, 300));
     data.SquareSide(0);
 
-    std::string geo_path_jpeg_files("D:\\WP\\Tests");
+    std::string geo_path_jpeg_files("/home/amit/jpeg_test");
     data.GeoPathJpegFiles(geo_path_jpeg_files);
 
-    std::string geo_path_curr_model("D:\\WP\\Tests");
+    std::string geo_path_curr_model("/home/bob");
     data.GeoPathCurrModel(geo_path_curr_model);
 
-    std::string geo_path_ref_model("D:\\WP\\Tests");
+    std::string geo_path_ref_model("/home/bob");
     data.GeoPathRefModel(geo_path_ref_model);
 
-    std::string geo_path_diff_model("D:\\WP\\Tests");
+    std::string geo_path_diff_model("/home/bob");
     data.GeoPathDiffModel(geo_path_diff_model);
 
-    std::string cloud_url_curr_model("D:\\WP\\Tests");
+    std::string cloud_url_curr_model("/home/bob");
     data.CloudUrlCurrModel(cloud_url_curr_model);
 
-    std::string cloud_url_ref_model("D:\\WP\\Tests");
+    std::string cloud_url_ref_model("/home/bob");
     data.CloudUrlRefModel(cloud_url_ref_model);
 
-    std::string cloud_url_diff_model("D:\\WP\\Tests");
+    std::string cloud_url_diff_model("/home/bob");
     data.CloudUrlDiffModel(cloud_url_diff_model);
 
     for (unsigned int samples_written = 0; !application::shutdown_requested && samples_written < sample_count; samples_written++)
@@ -115,6 +115,7 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
 
 int main(int argc, char *argv[])
 {
+
     using namespace application;
 
     // Parse arguments and handle control-C
@@ -130,7 +131,7 @@ int main(int argc, char *argv[])
     rti::config::Logger::instance().verbosity(arguments.verbosity);
 
     arguments.domain_id = 66;
-    arguments.sample_count = 300;
+    arguments.sample_count = 30;
 
     try {
         run_publisher_application(arguments.domain_id, arguments.sample_count);
