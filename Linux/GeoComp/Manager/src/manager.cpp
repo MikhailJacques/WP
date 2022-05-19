@@ -435,7 +435,7 @@ STATE_DEFINE(Manager, Stop_Jpeg_Generation_State, NoEventData)
 	m_event_queue.push("Stop_Jpeg_Generation_State entry");
 
 	// Wait for a UI command to stop JPEG generation and start model generation
-	m_model_generation_queue.pop();
+	m_stop_jpeg_generation_queue.pop();
 
 	// Compose DDS message
 	m_stop_jpeg_generation_msg.MsgId(51);
@@ -859,6 +859,11 @@ void Manager::MissionPlanMsgCb(std::vector<MissionPlanMsg> updated_data, std::ve
 			mission_plan_msg = item;
 		}
 
+		for (auto& item : deleted_data)
+		{
+			mission_plan_msg = item;
+		}
+
 		std::stringstream ss;
         ss << "Receive MissionPlanMsg (1) (DDS) from Geo Comp Mission Broadcaster (COMMIT): "
 			<< mission_plan_msg.MsgCount();
@@ -892,43 +897,51 @@ void Manager::DroneScanRouteMsgCb(std::vector<DroneScanRouteMsg> updated_data, s
 // Receives PlatformLocationMsg (4) (DDS) from Geo Comp JPEG Generator (TES)
 void Manager::PlatformLocationMsgCb(std::vector<PlatformLocationMsg> updated_data, std::vector<PlatformLocationMsg> deleted_data)
 {
-	for (auto& item : updated_data)
+	// MJ TODO: Confirm with Hai that PlatformLocationMsg can arrive only during this state
+	if (GetCurrentState() == START_JPEG_GENERATION_STATE)
 	{
-		m_platform_location_msg = item;
+		for (auto& item : updated_data)
+		{
+			m_platform_location_msg = item;
+		}
+
+		std::stringstream ss;
+		ss << "Receive PlatformLocationMsg (4) (DDS) from Geo Comp JPEG Generator (TES): "
+			<< m_platform_location_msg.MsgCount();
+		m_event_queue.push(ss.str());
+
+		std::stringstream coordinates;
+		coordinates << m_platform_location_msg.PlatformLocation().Lat() << "\t"
+			<< m_platform_location_msg.PlatformLocation().Lon() << "\t"
+			<< m_platform_location_msg.PlatformLocation().Alt();
+
+		m_platform_location_queue.push(coordinates.str());
 	}
-
-    std::stringstream ss;
-    ss << "Receive PlatformLocationMsg (4) (DDS) from Geo Comp JPEG Generator (TES): "
-       << m_platform_location_msg.MsgCount();
-    m_event_queue.push(ss.str());
-
-	std::stringstream coordinates;
-	coordinates << m_platform_location_msg.PlatformLocation().Lat() << "\t" 
-		<< m_platform_location_msg.PlatformLocation().Lon() << "\t" 
-		<< m_platform_location_msg.PlatformLocation().Alt();
-
-	m_platform_location_queue.push(coordinates.str());
 }
 
 // Receives ReportJpegGenerationLivenessMsg (6) (DDS) from Geo Comp JPEG Generator (TES)
 void Manager::ReportJpegGenerationLivenessMsgCb(std::vector<ReportJpegGenerationLivenessMsg> updated_data, 
 	std::vector<ReportJpegGenerationLivenessMsg> deleted_data)
 {
-	for (auto& item : updated_data)
+	// MJ TODO: Confirm with Hai that ReportJpegGenerationLivenessMsg can arrive only during this state
+	if (GetCurrentState() == STOP_JPEG_GENERATION_STATE)
 	{
-		m_report_jpeg_generation_liveness_msg = item;
-	}
+		for (auto& item : updated_data)
+		{
+			m_report_jpeg_generation_liveness_msg = item;
+		}
 
-	m_jpeg_generation_liveness_msg_cnt++;
+		m_jpeg_generation_liveness_msg_cnt++;
 
-	// if ((m_report_jpeg_generation_liveness_msg.MsgCount() % 600) == 0) // 600 = once a minute
-//	if ((m_jpeg_generation_liveness_msg_cnt % 600) == 0) // 600 = once a minute
-//	{
+		// if ((m_report_jpeg_generation_liveness_msg.MsgCount() % 600) == 0) // 600 = once a minute
+	//	if ((m_jpeg_generation_liveness_msg_cnt % 600) == 0) // 600 = once a minute
+	//	{
 		std::stringstream ss;
-        ss << "Receive ReportJpegGenerationLivenessMsg (6) (DDS) from Geo Comp JPEG Generator (TES): "
+		ss << "Receive ReportJpegGenerationLivenessMsg (6) (DDS) from Geo Comp JPEG Generator (TES): "
 			<< m_report_jpeg_generation_liveness_msg.MsgCount();
 		m_event_queue.push(ss.str());
-//	}
+		//	}
+	}
 }
 
 // Geo Comp Manager receives EndMissionMsg (15) (DDS) from Geo Comp Mission Broadcaster (COMMIT)
@@ -953,35 +966,40 @@ void Manager::EndMissionMsgCb(std::vector<BaseMsg> updated_data, std::vector<Bas
 // Geo Comp Manager receives UserInputMsg (?) (DDS) from UserInput Service (Elta)
 void Manager::UserInputMsgCb(std::vector<BaseMsg> updated_data, std::vector<BaseMsg> deleted_data)
 {
-	for (auto& item : updated_data)
+	if ((GetCurrentState() == START_JPEG_GENERATION_STATE) ||
+		(GetCurrentState() == STOP_JPEG_GENERATION_STATE) ||
+		(GetCurrentState() == MODEL_REFERENCE_STATE))
 	{
-		m_user_input_msg = item;
-	}
+		for (auto& item : updated_data)
+		{
+			m_user_input_msg = item;
+		}
 
-	m_ui_cmd_cnt++;
+		m_ui_cmd_cnt++;
 
-	if (m_user_input_msg.MissionId() == 1)
-	{
-		m_start_jpeg_generation_queue.push(true);
-	}
-	else if (m_user_input_msg.MissionId() == 2)
-	{
-		m_model_generation_queue.push(true);
-	}
-	else if (m_user_input_msg.MissionId() == 3)
-	{
-		m_diff_analysis_queue.push(true);
-	}
-	else if (m_user_input_msg.MissionId() == 4)
-	{
-		std::stringstream ss;
-		ss << "Total number of UI commands: " << m_ui_cmd_cnt;
-		m_event_queue.push(ss.str());
+		if (m_user_input_msg.MissionId() == 1)
+		{
+			m_start_jpeg_generation_queue.push(true);
+		}
+		else if (m_user_input_msg.MissionId() == 2)
+		{
+			m_stop_jpeg_generation_queue.push(true);
+		}
+		else if (m_user_input_msg.MissionId() == 3)
+		{
+			m_diff_analysis_queue.push(true);
+		}
+		else if (m_user_input_msg.MissionId() == 4)
+		{
+			std::stringstream ss;
+			ss << "Total number of UI commands: " << m_ui_cmd_cnt;
+			m_event_queue.push(ss.str());
 
-		Stop();
-	}
-	else
-	{
-		// nothing
+			Stop();
+		}
+		else
+		{
+			// nothing
+		}
 	}
 }

@@ -203,7 +203,7 @@ private:
     bool m_constructor_success_flag;
 
 	Queue<bool> m_start_jpeg_generation_queue;
-	Queue<bool> m_model_generation_queue;
+	Queue<bool> m_stop_jpeg_generation_queue;
 	Queue<bool> m_diff_analysis_queue;
 
 	Queue<MissionPlanMsg> m_mission_plan_queue;

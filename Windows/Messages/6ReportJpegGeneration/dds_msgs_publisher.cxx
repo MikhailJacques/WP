@@ -55,7 +55,7 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
         std::cout << "Writing ReportJpegGenerationLivenessMsg, count " << samples_written << std::endl;
 
         // Send once every second
-        rti::util::sleep(dds::core::Duration(1));
+        rti::util::sleep(dds::core::Duration(4));
     }
 }
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     rti::config::Logger::instance().verbosity(arguments.verbosity);
 
     arguments.domain_id = 66;
-    arguments.sample_count = 20;
+    arguments.sample_count = 30;
 
     try {
         run_publisher_application(arguments.domain_id, arguments.sample_count);

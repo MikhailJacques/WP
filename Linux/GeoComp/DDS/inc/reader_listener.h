@@ -2,6 +2,7 @@
 
 #include <dds/dds.hpp>
 #include <map>
+#include <thread>
 #include <mutex>
 #include <functional>
 //#include <ppltasks.h>
@@ -30,6 +31,7 @@ namespace DDS
 				std::map<int, EventAction> m_callbacks_map;
 				int m_last_ind = 0;
 				std::mutex m_mutex;
+				std::thread m_event_thread;
 		};
 	}
 }
@@ -79,17 +81,16 @@ void DDS::Comm::ReaderListener<T>::on_data_available(dds::sub::DataReader<T>& re
 		}
 	}
 
+	// EventAction is a callback
 	std::map<int, EventAction> temp(m_callbacks_map);
 	for (std::pair<int, EventAction> item : temp)
 	{
 		if (item.second != nullptr)
 		{
-			// MJ: What is concurrency doing here? Is not it Microsoft technology only?
             //concurrency::create_task([item, updated_data, deleted_data]() { return item.second(updated_data, deleted_data); });
-            return item.second(updated_data, deleted_data);
-			// MJ: Why is this line of code commented out?
-			// EventAction is a callback
-			// item.second(updated_data, deleted_data);
+			//return item.second(updated_data, deleted_data);
+			m_event_thread = std::thread([item, updated_data, deleted_data]() { return item.second(updated_data, deleted_data); });
+			m_event_thread.join();
 		}
 	}
 }
