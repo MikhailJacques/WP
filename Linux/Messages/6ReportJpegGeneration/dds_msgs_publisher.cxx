@@ -55,7 +55,7 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
         std::cout << "Writing ReportJpegGenerationLivenessMsg, count " << samples_written << std::endl;
 
         // Send once every second
-        rti::util::sleep(dds::core::Duration(1));
+        rti::util::sleep(dds::core::Duration(4));
     }
 }
 
