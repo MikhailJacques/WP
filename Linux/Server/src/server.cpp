@@ -109,7 +109,7 @@ void Rx_Msg_Handler(TCP_Server* server, SOCKET client_socket, std::string msg)
                 cout << ReportModelGenerationMsg_styled << endl;
             }
 
-		} while (status.compare("done") != 0);
+        } while ((status.compare("Success") != 0) || ((status.compare("Failure") != 0)));
 	}
 }
 
