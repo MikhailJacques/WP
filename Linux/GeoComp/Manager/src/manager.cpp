@@ -290,13 +290,39 @@ STATE_DEFINE(Manager, Mission_Plan_State, NoEventData)
 		m_event_queue.push("ERROR: Platform type is invalid!");
 	}
 
-	if (m_mission_plan_msg.ScanArea().size() != 3)
-	{
-		valid_param_flag = false;
-		m_event_queue.push("ERROR: Scan area is invalid!");
+				if ((geo_point.Lon() < -180.0) || (geo_point.Lon() > 180.0))
+				{
+					valid_param_flag = false;
+					m_event_queue.push("ERROR: Scan area geo point longitude is invalid!");
+				}
 
-		// MJ TODO: Consider validating each object parameter in the array of 3 GeoPoint objects
-		//::dds::core::array< dds_msgs::GeoPoint, 3L> ScanArea;
+				if ((geo_point.Alt() < -432.0) || (geo_point.Alt() > 1500.0))
+				{
+					valid_param_flag = false;
+					m_event_queue.push("ERROR: Scan area geo point altitude is invalid!");
+				}
+			}
+
+			// Validate second geo point data
+			if (ii == 1)
+			{
+				double radius = geo_point.Lat();
+				unsigned short num_of_points = geo_point.Lon();
+
+				if ((radius < 20.0) || (radius > 200.0))
+				{
+					valid_param_flag = false;
+					m_event_queue.push("ERROR: Scan area radius is invalid!");
+				}
+
+				if ((num_of_points < 40) || (num_of_points > 360) || ((num_of_points % 4) != 0))
+				{
+					valid_param_flag = false;
+					m_event_queue.push("ERROR: Scan area number of points value is invalid!");
+				}
+
+			}
+		}
 	}
 
 	if (m_mission_plan_msg.GeoPathCurrModel().empty())

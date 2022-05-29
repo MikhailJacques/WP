@@ -3,6 +3,22 @@
 // DOCUMENT:	
 // DESCRIPTION: This file declares a state machine where clients can induce changes via invocation of external events
 
+/// FlightPlan class uses the StateMachine. 
+/// FlightPlan class design relies upon macros that greatly simplify usage by hiding the required source machinery.
+/// 
+/// FlightPlan implements a landing-control state machine, where clients can induce state changes via an invocation of external events.
+///
+/// When the FlightPlan class is created, its initial state is Initialization_State.
+/// Once the initialization is complete it transfers to the Mission_Plan_State.
+/// 
+/// Creating a new state machine requires a few basic high-level steps:
+/// 1. Inherit from the StateMachine base class
+/// 2. Create a States enumeration with one entry per state function
+/// 3. Create state functions using the STATE macros
+/// 4. Optionally create Guard/Entry/Exit functions for each state using the GUARD, ENTRY and EXIT macros
+/// 5. Create one state map lookup table using the STATE_MAP macros
+/// 6. Create one transition map lookup table for each external event using the TRANSITION_MAP macros
+
 #pragma once
 
 #include <cmath>
@@ -35,21 +51,9 @@ using namespace dds::topic;
 using namespace dds::pub;
 using namespace DDS::Comm;
 
-/// FlightPlan class uses the StateMachine. 
-/// FlightPlan class design relies upon macros that greatly simplify usage by hiding the required source machinery.
-/// 
-/// FlightPlan implements a landing-control state machine, where clients can induce state changes via an invocation of external events.
-///
-/// When the FlightPlan class is created, its initial state is Initialization_State.
-/// Once the initialization is complete it transfers to the Mission_Plan_State.
-/// 
-/// Creating a new state machine requires a few basic high-level steps:
-/// 1. Inherit from the StateMachine base class
-/// 2. Create a States enumeration with one entry per state function
-/// 3. Create state functions using the STATE macros
-/// 4. Optionally create Guard/Entry/Exit functions for each state using the GUARD, ENTRY and EXIT macros
-/// 5. Create one state map lookup table using the STATE_MAP macros
-/// 6. Create one transition map lookup table for each external event using the TRANSITION_MAP macros
+#define M_PI       3.14159265358979323846   // pi
+#define RAD2DEG(r) ((r) * (180.0 / M_PI)) // Radians to Degrees
+#define DEG2RAD(d) ((d) * (M_PI / 180.0)) // Degrees to Radians
 
 class CounterData : public EventData
 {

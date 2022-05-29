@@ -258,6 +258,36 @@ STATE_DEFINE(Manager, Mission_Plan_State, NoEventData)
 		valid_param_flag = false;
 		m_event_queue.push("ERROR: Mission type is invalid!");
 	}
+    else
+    {
+        switch (m_mission_plan_msg.MissionType())
+        {
+            case dds_msgs::EnumMission::AirBuild:
+            case dds_msgs::EnumMission::AirDiff:
+
+                if ((m_mission_plan_msg.ScanType() < dds_msgs::EnumScan::Rectangular) ||
+                    (m_mission_plan_msg.ScanType() > dds_msgs::EnumScan::LocalSquare))
+                {
+                    valid_param_flag = false;
+                    m_event_queue.push("ERROR: Scan type is invalid!");
+                }
+
+            case dds_msgs::EnumMission::GroundBuild:
+            case dds_msgs::EnumMission::GroundDiff:
+
+                if (m_mission_plan_msg.ScanType() != dds_msgs::EnumScan::None)
+                {
+                    valid_param_flag = false;
+                    m_event_queue.push("ERROR: Scan type is invalid!");
+                }
+
+            default:
+
+                // Cannot happen due to error checking above
+                break;
+
+        }
+    }
 
 	if ((m_mission_plan_msg.PlatformType() < dds_msgs::EnumPlatform::Drone) ||
 		(m_mission_plan_msg.PlatformType() > dds_msgs::EnumPlatform::UGV))
@@ -265,54 +295,6 @@ STATE_DEFINE(Manager, Mission_Plan_State, NoEventData)
 		valid_param_flag = false;
 		m_event_queue.push("ERROR: Platform type is invalid!");
 	}
-
-	switch (m_mission_plan_msg.MissionType())
-	{
-		case dds_msgs::EnumMission::AirBuild:
-		case dds_msgs::EnumMission::AirDiff:
-
-			if ((m_mission_plan_msg.ScanType() < dds_msgs::EnumScan::Rectangular) ||
-				(m_mission_plan_msg.ScanType() > dds_msgs::EnumScan::LocalSquare))
-			{
-				valid_param_flag = false;
-				m_event_queue.push("ERROR: Scan type is invalid!");
-			}
-
-		case dds_msgs::EnumMission::GroundBuild:
-		case dds_msgs::EnumMission::GroundDiff:
-
-			if (m_mission_plan_msg.ScanType() != dds_msgs::EnumScan::None)
-			{
-				valid_param_flag = false;
-				m_event_queue.push("ERROR: Scan type is invalid!");
-			}
-
-		default:
-
-			// Cannot happen due to error checking above 
-			break;
-	}
-
-	if ((m_mission_plan_msg.ScanArea().size() < 3) || (m_mission_plan_msg.ScanArea().size() > 3))
-	{
-		valid_param_flag = false;
-		m_event_queue.push("ERROR: Scan area size is invalid!");
-	}
-	else if (m_mission_plan_msg.ScanArea().size() == 3)
-	{
-		// Validate each object parameter in the array of 3 GeoPoint objects
-		for (unsigned int ii = 0; ii < m_mission_plan_msg.ScanArea().size(); ii++)
-		{
-			dds_msgs::GeoPoint geo_point = m_mission_plan_msg.ScanArea().at(ii);
-
-			// Validate first geo point data
-			if (ii == 0)
-			{
-				if ((geo_point.Lat() < -90.0) || (geo_point.Lat() > 90.0))
-				{
-					valid_param_flag = false;
-					m_event_queue.push("ERROR: Scan area geo point latitude is invalid!");
-				}
 
 				if ((geo_point.Lon() < -180.0) || (geo_point.Lon() > 180.0))
 				{
@@ -456,6 +438,11 @@ STATE_DEFINE(Manager, Drone_Scan_Route_State, NoEventData)
 	// Wait to receive a new DroneScanRouteMsg
 	m_drone_scan_route_msg = m_drone_scan_route_queue.pop();
 
+    std::stringstream ss;
+    ss << "Receive DroneScanRouteMsg (3) (DDS) from Geo Comp Flight Plan Service (Elta): "
+       << m_drone_scan_route_msg.MsgCount();
+    m_event_queue.push(ss.str());
+
     m_event_queue.push("Drone_Scan_Route_State exit");
     InternalEvent(START_JPEG_GENERATION_STATE);
 }
@@ -527,6 +514,7 @@ STATE_DEFINE(Manager, Stop_Jpeg_Generation_State, NoEventData)
 		InternalEvent(FINALIZATION_STATE);
 	}
 }
+
 
 // AirBuild/AirDiff sequences
 //  - Sends StartModelGenerationMsg (7) to Geo Comp DSM App (Sightec) (TCP)
@@ -952,11 +940,6 @@ void Manager::DroneScanRouteMsgCb(std::vector<DroneScanRouteMsg> updated_data, s
 			drone_scan_route_msg = item;
 		}
 
-		std::stringstream ss;
-        ss << "Receive DroneScanRouteMsg (3) (DDS) from Geo Comp Flight Plan Service (Elta): "
-			<< drone_scan_route_msg.MsgCount();
-
-		m_event_queue.push(ss.str());
 		m_drone_scan_route_queue.push(drone_scan_route_msg);
 	}
 }
@@ -965,7 +948,7 @@ void Manager::DroneScanRouteMsgCb(std::vector<DroneScanRouteMsg> updated_data, s
 void Manager::PlatformLocationMsgCb(std::vector<PlatformLocationMsg> updated_data, std::vector<PlatformLocationMsg> deleted_data)
 {
 	// MJ TODO: Confirm with Hai that PlatformLocationMsg can arrive only during this state
-	if ((GetCurrentState() == START_JPEG_GENERATION_STATE) || (GetCurrentState() == STOP_JPEG_GENERATION_STATE))
+    if ((GetCurrentState() == START_JPEG_GENERATION_STATE) || (GetCurrentState() == STOP_JPEG_GENERATION_STATE))
 	{
 		for (auto& item : updated_data)
 		{
