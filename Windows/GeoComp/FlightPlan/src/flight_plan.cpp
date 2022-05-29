@@ -145,30 +145,84 @@ STATE_DEFINE(FlightPlan, Calculate_Drone_Scan_Route_State, NoEventData)
 	//	1. Extract information from m_get_drone_scan_route_msg
 	//	2. Calculate drone scan route based on the retrieved information
 	//  3. Fill out the m_drone_scan_route_msg
+
+	int ii = 0;
+	const unsigned int denom = 100000;      // 
 	
-	// std::vector<GeoPoint> geo_points;
-	dds_msgs::GeoPoint geo_points[8] =
+	double latitude = m_get_drone_scan_route_msg.ScanArea().at(0).Lat();		// [-90.0, 90.0] degrees        
+	double longitude = m_get_drone_scan_route_msg.ScanArea().at(0).Lon();		// [-180.0, 180.0] degrees   
+	double altitude = m_get_drone_scan_route_msg.ScanArea().at(0).Alt();		// [-432.0, 1500.0] meters 
+	double radius = m_get_drone_scan_route_msg.ScanArea().at(1).Lat();			// [20.0, 200.0] meters
+	unsigned short num_of_points = m_get_drone_scan_route_msg.ScanArea().at(1).Lon();	// [40, 360] meters, must be a multiple of 4
+
+	unsigned short num_of_degrees_per_section = 360 / num_of_points;
+	
+	radius /= denom;	// Normalize radius
+
+	// MJ TODO: Advise Hai that in light of the new demand to develop and implement circular-navigation algorithm
+	// 100L nees to be updated to 360L and that necessitates change of ICD
+	// std::vector<dds_msgs::GeoPoint> flight_path;          // Stores navigation points around circular flight path
+	::rti::core::bounded_sequence<dds_msgs::GeoPoint, 100L> flight_path;
+
+	// First quadrant
+	for (; ii < 90; ii += num_of_degrees_per_section)
 	{
-		{32.634203, 35.046665, 470},
-		{32.635200, 35.046665, 470},
-		{32.635200, 35.046700, 470},
-		{32.634200, 35.046700, 470},
-		{32.634200, 35.046735, 470},
-		{32.635200, 35.046735, 470},
-		{32.635200, 35.046700, 470},
-		{32.634200, 35.046700, 470}
-	};
+		dds_msgs::GeoPoint geo_point((latitude + radius * cos(RAD2DEG(ii))), (longitude + radius * sin(RAD2DEG(ii))), altitude);
+		flight_path.push_back(geo_point);
+	}
 
-	::rti::core::bounded_sequence<dds_msgs::GeoPoint, 100L> waypoints;
+	// Second quadrant
+	for (; ii < 180; ii += num_of_degrees_per_section)
+	{
+		dds_msgs::GeoPoint geo_point((latitude - radius * cos(RAD2DEG(180.0 - ii))), (longitude + radius * sin(RAD2DEG(180.0 - ii))), altitude);
+		flight_path.push_back(geo_point);
+	}
 
-	for (int ii = 0; ii < 8; ii++)
-		waypoints.push_back(geo_points[ii]);
+	// Third quadrant
+	for (; ii < 270; ii += num_of_degrees_per_section)
+	{
+		dds_msgs::GeoPoint geo_point((latitude - radius * cos(RAD2DEG(ii - 180.0))), (longitude - radius * sin(RAD2DEG(ii - 180.0))), altitude);
+		flight_path.push_back(geo_point);
+	}
+
+	// Fourth quadrant
+	for (; ii < 360; ii += num_of_degrees_per_section)
+	{
+		dds_msgs::GeoPoint geo_point((latitude + radius * cos(RAD2DEG(360.0 - ii))), (longitude - radius * sin(RAD2DEG(360.0 - ii))), altitude);
+		flight_path.push_back(geo_point);
+	}
+
+	//dds_msgs::GeoPoint geo_points[8] =
+	//{
+	//	{32.634203, 35.046665, 470},
+	//	{32.635200, 35.046665, 470},
+	//	{32.635200, 35.046700, 470},
+	//	{32.634200, 35.046700, 470},
+	//	{32.634200, 35.046735, 470},
+	//	{32.635200, 35.046735, 470},
+	//	{32.635200, 35.046700, 470},
+	//	{32.634200, 35.046700, 470}
+	//};
+
+	//for (int ii = 0; ii < flight_path.size(); ii++)
+	//{
+	//	dds_msgs::GeoPoint point = flight_path[ii];
+	//	waypoints.push_back(flight_path[ii]);
+	//}
+
+	//for (auto rit = std::rbegin(flight_path); rit != std::rend(flight_path); ++rit) 
+	//{
+	//	dds_msgs::GeoPoint point = *rit;
+	//	waypoints.push_back(*rit);
+	//}
 
 	// Compose message
 	m_drone_scan_route_msg.MsgId(3);
 	m_drone_scan_route_msg.MsgCount(++m_drone_scan_route_msg_cnt);		// 200
 	m_drone_scan_route_msg.MissionId(150);								// m_get_drone_scan_route_msg.MissionId()
-	m_drone_scan_route_msg.Waypoints(waypoints);
+	m_drone_scan_route_msg.Waypoints(flight_path);
+
+	// MJ TODO: Discuss with Hai the absense of need in these parameters in light of the new circular-path navigation algorithm
 	m_drone_scan_route_msg.ScanAreaLength(1000);
 	m_drone_scan_route_msg.ScanAreaWidth(105);
 	m_drone_scan_route_msg.ModelGroundResolution(8);
@@ -191,12 +245,12 @@ STATE_DEFINE(FlightPlan, Calculate_Drone_Scan_Route_State, NoEventData)
 	}
 }
 
-// This state sends DroneScanRouteMsg (3) (DDS) to Geo Comp Manager (Elta)
+// This state sends DroneScanRouteMsg (3) (DDS) to Geo Comp JPEG Generator (TES) and Geo Comp Mission Broadcaster (COMMIT)
 STATE_DEFINE(FlightPlan, Send_Drone_Scan_Route_State, NoEventData)
 {
 	m_event_logger.Print("Send_Drone_Scan_Route_State entry");
 
-    m_event_logger.Print("Send DroneScanRouteMsg (3) (DDS) to Geo Comp Manager (Elta)");
+    m_event_logger.Print("Send DroneScanRouteMsg (3) (DDS) to Geo Comp JPEG Generator (TES)\n and Geo Comp Mission Broadcaster (COMMIT)");
 	if (m_dds_comm.Write<DroneScanRouteMsg>("DroneScanRouteMsg", m_drone_scan_route_msg))
 	{
 		m_event_logger.Print("Send_Drone_Scan_Route_State exit");

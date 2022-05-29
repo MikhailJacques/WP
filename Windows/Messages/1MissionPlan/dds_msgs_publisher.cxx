@@ -62,9 +62,16 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     data.ScanType(dds_msgs::EnumScan::Rectangular);
 
     ::dds::core::array< dds_msgs::GeoPoint, 3L> waypoints;
-    waypoints[0] = dds_msgs::GeoPoint(32.634203, 35.046665, 470);
-    waypoints[1] = dds_msgs::GeoPoint(32.635200, 35.046665, 470);
-    waypoints[2] = dds_msgs::GeoPoint(32.635200, 35.046770, 470);
+
+    // Comb-style flight pattern
+    //waypoints[0] = dds_msgs::GeoPoint(32.634203, 35.046665, 470);
+    //waypoints[1] = dds_msgs::GeoPoint(32.635200, 35.046665, 470);
+    //waypoints[2] = dds_msgs::GeoPoint(32.635200, 35.046770, 470);
+
+    // Circular flight pattern
+    waypoints[0] = dds_msgs::GeoPoint(32.6363504, 35.0475073, 470);
+    waypoints[1] = dds_msgs::GeoPoint(100.0, 60, 0);
+    waypoints[2] = dds_msgs::GeoPoint(0, 0, 0);
 
     data.ScanArea(waypoints);
     data.ScanAreaGroundAvgAlt(170);
