@@ -157,17 +157,21 @@ int TCP_Client::Receive(std::string& rx_msg)
 	// will contain this data received. If the connection has been gracefully closed, the return value is zero.
     int num_of_rx_bytes = recv(m_client_socket, m_server_msg_buff, MSG_BUFF_LEN, 0);
 
-	if (num_of_rx_bytes < 0)
-	{
-        ss << "TCP CLIENT: recv() failed!"; // << WSAGetLastError();
-		m_event_logger.Print(ss.str());
-	}
-
-	if (num_of_rx_bytes > 0)
-	{
-        rx_msg.clear();
+//	if (num_of_rx_bytes < 0)
+//	{
+//        ss << "TCP CLIENT: recv() failed!";
+//		m_event_logger.Print(ss.str());
+//	}
+//    else if (num_of_rx_bytes == 0)
+//    {
+//        ss << "TCP CLIENT: Communication has been terminated!";
+//		m_event_logger.Print(ss.str());
+//    }
+//    else if (num_of_rx_bytes > 0)
+//	{
+//        rx_msg.clear();
         rx_msg.assign(m_server_msg_buff, num_of_rx_bytes);
-	}
+//	}
 
 	return num_of_rx_bytes;
 }
