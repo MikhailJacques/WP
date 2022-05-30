@@ -296,40 +296,42 @@ STATE_DEFINE(Manager, Mission_Plan_State, NoEventData)
 		m_event_queue.push("ERROR: Platform type is invalid!");
 	}
 
-				if ((geo_point.Lon() < -180.0) || (geo_point.Lon() > 180.0))
-				{
-					valid_param_flag = false;
-					m_event_queue.push("ERROR: Scan area geo point longitude is invalid!");
-				}
 
-				if ((geo_point.Alt() < -432.0) || (geo_point.Alt() > 1500.0))
-				{
-					valid_param_flag = false;
-					m_event_queue.push("ERROR: Scan area geo point altitude is invalid!");
-				}
-			}
+	//double latitude = m_mission_plan_msg.ScanArea().at(0).Lat();		// [-90.0, 90.0] degrees        
+	//double longitude = m_mission_plan_msg.ScanArea().at(0).Lon();		// [-180.0, 180.0] degrees   
+	//double altitude = m_mission_plan_msg.ScanArea().at(0).Alt();		// [-432.0, 1500.0] meters 
+	//double radius = m_mission_plan_msg.ScanArea().at(1).Lat();			// [20.0, 200.0] meters
+	//unsigned short num_of_points = m_mission_plan_msg.ScanArea().at(1).Lon();	// [40, 360] meters, must be a multiple of 4
 
-			// Validate second geo point data
-			if (ii == 1)
-			{
-				double radius = geo_point.Lat();
-				unsigned short num_of_points = geo_point.Lon();
+	//if ((latitude < -90.0) || (latitude > 90.0))
+	//{
+	//	valid_param_flag = false;
+	//	m_event_queue.push("ERROR: Scan area geo point latitude is invalid!");
+	//}
 
-				if ((radius < 20.0) || (radius > 200.0))
-				{
-					valid_param_flag = false;
-					m_event_queue.push("ERROR: Scan area radius is invalid!");
-				}
+	//if ((longitude < -180.0) || (longitude > 180.0))
+	//{
+	//	valid_param_flag = false;
+	//	m_event_queue.push("ERROR: Scan area geo point longitude is invalid!");
+	//}
 
-				if ((num_of_points < 40) || (num_of_points > 360) || ((num_of_points % 4) != 0))
-				{
-					valid_param_flag = false;
-					m_event_queue.push("ERROR: Scan area number of points value is invalid!");
-				}
+	//if ((altitude < -432.0) || (altitude > 1500.0))
+	//{
+	//	valid_param_flag = false;
+	//	m_event_queue.push("ERROR: Scan area geo point altitude is invalid!");
+	//}
 
-			}
-		}
-	}
+	//if ((radius < 20.0) || (radius > 200.0))
+	//{
+	//	valid_param_flag = false;
+	//	m_event_queue.push("ERROR: Scan area radius is invalid!");
+	//}
+
+	//if ((num_of_points < 40) || (num_of_points > 360) || ((num_of_points % 4) != 0))
+	//{
+	//	valid_param_flag = false;
+	//	m_event_queue.push("ERROR: Scan area number of points value is invalid!");
+	//}
 
 	if (m_mission_plan_msg.GeoPathCurrModel().empty())
 	{

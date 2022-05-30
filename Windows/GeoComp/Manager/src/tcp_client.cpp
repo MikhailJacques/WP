@@ -128,7 +128,12 @@ bool TCP_Client::Send(std::string msg)
 	// ssize_t send(int sockfd, const void *buf, size_t len, int flags);
 	// sendto(m_client_socket, m_client_msg_buff, strlen(m_client_msg_buff), 0, (sockaddr*)&m_server_info, sizeof(m_server_info));
 
-    int num_of_tx_bytes = send(m_client_socket, msg.c_str(), (int)msg.size(), 0);
+    char msg_to_send[MSG_BUFF_LEN];
+    memset(msg_to_send, 0, MSG_BUFF_LEN);
+    memcpy(msg_to_send, msg.c_str(), msg.size());
+
+    int num_of_tx_bytes = send(m_client_socket, msg_to_send, (msg.size() + 1), 0);
+	//int num_of_tx_bytes = send(m_client_socket, msg.c_str(), (int)msg.size(), 0);
 	
 	if (num_of_tx_bytes == SOCKET_ERROR)
 	{

@@ -131,6 +131,7 @@ bool TCP_Client::Send(std::string msg)
     memcpy(msg_to_send, msg.c_str(), msg.size());
 
     int num_of_tx_bytes = send(m_client_socket, msg_to_send, (msg.size() + 1), 0);
+	//int num_of_tx_bytes = send(m_client_socket, msg.c_str(), (int)msg.size(), 0);
 	
 	if (num_of_tx_bytes == SOCKET_ERROR)
 	{
