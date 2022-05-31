@@ -309,6 +309,7 @@ STATE_DEFINE(FlightPlan, Calculate_Drone_Scan_Route_State, NoEventData)
 	//	waypoints.push_back(flight_path[ii]);
 	//}
 
+
 	//for (auto rit = std::rbegin(flight_path); rit != std::rend(flight_path); ++rit) 
 	//{
 	//	dds_msgs::GeoPoint point = *rit;
