@@ -294,11 +294,11 @@ STATE_DEFINE(FlightPlan, Calculate_Drone_Scan_Route_State, NoEventData)
 		{32.63684, 35.04760, 470},
 		{32.63684, 35.04757, 470},
 		{32.63684, 35.04754, 470}
-		};
+    };
 
 	::rti::core::bounded_sequence<dds_msgs::GeoPoint, 100L> geo_points;
 
-	for (int jj = 0; jj < 8; jj++)
+    for (int jj = 0; jj < 100; jj++)
 	{
 		geo_points.push_back(flight_path[jj]);
 	}
@@ -309,6 +309,7 @@ STATE_DEFINE(FlightPlan, Calculate_Drone_Scan_Route_State, NoEventData)
 	//	waypoints.push_back(flight_path[ii]);
 	//}
 
+
 	//for (auto rit = std::rbegin(flight_path); rit != std::rend(flight_path); ++rit) 
 	//{
 	//	dds_msgs::GeoPoint point = *rit;
@@ -318,7 +319,7 @@ STATE_DEFINE(FlightPlan, Calculate_Drone_Scan_Route_State, NoEventData)
 	// Compose message
 	m_drone_scan_route_msg.MsgId(3);
 	m_drone_scan_route_msg.MsgCount(++m_drone_scan_route_msg_cnt);		// 200
-	m_drone_scan_route_msg.MissionId(150);								// m_get_drone_scan_route_msg.MissionId()
+    m_drone_scan_route_msg.MissionId(m_get_drone_scan_route_msg.MissionId());
 	m_drone_scan_route_msg.Waypoints(geo_points);
 
 	// MJ TODO: Discuss with Hai the absense of need in these parameters in light of the new circular-path navigation algorithm

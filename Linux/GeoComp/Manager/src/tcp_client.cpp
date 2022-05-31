@@ -68,7 +68,7 @@ bool TCP_Client::Init(void)
 		// Check to see whether socket creation succeeded
 		if (m_client_socket == INVALID_SOCKET)
 		{
-            ss << "TCP CLIENT: socket() failed!"; // << WSAGetLastError();
+            ss << "TCP CLIENT: socket() failed!";
 			m_event_logger.Print(ss.str());
 		}
 		else
@@ -82,7 +82,7 @@ bool TCP_Client::Init(void)
 			// Validate network address
 			if (inet_pton(AF_INET, m_server_ip.c_str(), &m_server_info.sin_addr) <= 0)
 			{
-                ss << "TCP CLIENT: inet_pton() failed!"; // << WSAGetLastError();
+                ss << "TCP CLIENT: inet_pton() failed!";
 				m_event_logger.Print(ss.str());
 			}
 			else
@@ -92,7 +92,7 @@ bool TCP_Client::Init(void)
 
 				if (connect_sts == SOCKET_ERROR)
 				{
-                    ss << "TCP CLIENT: connect() failed!"; // << WSAGetLastError();
+                    ss << "TCP CLIENT: connect() failed!";
 					m_event_logger.Print(ss.str());
 				}
 				else
@@ -135,7 +135,7 @@ bool TCP_Client::Send(std::string msg)
 	
 	if (num_of_tx_bytes == SOCKET_ERROR)
 	{
-        ss << "TCP CLIENT: send() failed!"; // << WSAGetLastError();
+        ss << "TCP CLIENT: send() failed!";
 		m_event_logger.Print(ss.str());
 		ret_val = false;
 	}

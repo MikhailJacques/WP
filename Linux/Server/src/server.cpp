@@ -109,7 +109,7 @@ void Rx_Msg_Handler(TCP_Server* server, SOCKET client_socket, std::string msg)
                 cout << ReportModelGenerationMsg_styled << endl;
             }
 
-        } while ((status.compare("Success") != 0) || ((status.compare("Failure") != 0)));
+		} while (true);
 	}
 }
 
@@ -122,15 +122,15 @@ string GetUserInput(void)
 		cout << "TCP SERVER: Message to send: ";
 		getline(cin, ui_msg);
 
-		if ((ui_msg.compare("start") == 0) || (ui_msg.compare("progress") == 0) || 
-			(ui_msg.compare("done") == 0) || (ui_msg.compare("kill") == 0))
+		if ((ui_msg.compare("Start") == 0) || (ui_msg.compare("Progress") == 0) || 
+			(ui_msg.compare("Success") == 0) || (ui_msg.compare("Failure") == 0) || (ui_msg.compare("Kill") == 0))
 		{
 			break;
 		}
 		else
 		{
 			cout << "TCP SERVER: Invalid entry! Please try again.\n"
-				<< "Valid entries are: start, progress, done, kill" << endl;
+				<< "Valid entries are: Start, Progress, Success, Failure, Kill" << endl;
 		}
 	} while (true);
 

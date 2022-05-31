@@ -53,14 +53,17 @@ void run_subscriber_application(unsigned int domain_id, unsigned int sample_coun
     // (see https://community.rti.com/best-practices/use-modern-c-types-correctly)
 
     // Start communicating in a domain, usually one participant per application
-    dds::domain::DomainParticipant participant(domain_id);
+    dds::domain::DomainParticipant participant(66);
 
     // Create a Topic with a name and a datatype
-    dds::topic::Topic<dds_msgs::MissionPlanMsg> topic(participant, "Example dds_msgs_MissionPlanMsg");
+    dds::topic::Topic<dds_msgs::MissionPlanMsg> topic(participant, "MissionPlanMsg");
 
     // Create a Subscriber and DataReader with default Qos
     dds::sub::Subscriber subscriber(participant);
-    dds::sub::DataReader<dds_msgs::MissionPlanMsg> reader(subscriber, topic);
+    
+    //dds::sub::DataReader<dds_msgs::MissionPlanMsg> reader(subscriber, topic);
+    dds::core::QosProvider m_qos_provider = dds::core::QosProvider::Default();
+    dds::sub::DataReader<dds_msgs::MissionPlanMsg>reader(subscriber, topic, m_qos_provider.datareader_qos("WorldPerceptionQoS::MissionPlanMsg"));
 
     // Create a ReadCondition for any data received on this reader and set a
     // handler to process the data
@@ -85,7 +88,6 @@ void run_subscriber_application(unsigned int domain_id, unsigned int sample_coun
 
 int main(int argc, char *argv[])
 {
-
     using namespace application;
 
     // Parse arguments and handle control-C

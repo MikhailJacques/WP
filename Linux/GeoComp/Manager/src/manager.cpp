@@ -657,6 +657,7 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
             } while ((status.compare("Success") != 0) && ((status.compare("Failure") != 0)));
 
 			m_tcp_client_sightec.Close();
+			m_event_queue.push("Communication with Sightec has been closed");
 
 			if (comm_error_flag == true)
 			{

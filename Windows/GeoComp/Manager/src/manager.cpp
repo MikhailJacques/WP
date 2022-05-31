@@ -272,6 +272,8 @@ STATE_DEFINE(Manager, Mission_Plan_State, NoEventData)
                     m_event_queue.push("ERROR: Scan type is invalid!");
                 }
 
+                break;
+
             case dds_msgs::EnumMission::GroundBuild:
             case dds_msgs::EnumMission::GroundDiff:
 
@@ -280,6 +282,8 @@ STATE_DEFINE(Manager, Mission_Plan_State, NoEventData)
                     valid_param_flag = false;
                     m_event_queue.push("ERROR: Scan type is invalid!");
                 }
+
+                break;
 
             default:
 
@@ -617,14 +621,12 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
 				{
 					m_event_queue.push("Model_Generation_State error");
 					m_event_queue.push("ERROR: Communication with Geo Comp DSM App (Sightec) (TCP) failed");
-					status.assign(m_sentinel);
 					comm_error_flag = true;
 				}
 				else if (num_of_rx_bytes == 0)
 				{
 					m_event_queue.push("Model_Generation_State error");
 					m_event_queue.push("ERROR: Communication with Geo Comp DSM App (Sightec) (TCP) has been terminated");
-					status.assign(m_sentinel);
 					comm_error_flag = true;
 				}
 				else
@@ -646,6 +648,9 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
                         stringstream ss;
                         ss << "ReportModelGenerationMsg (8) status: " << status;
                         m_event_queue.push(ss.str());
+
+                        if ((status.compare("Success") == 0) || (status.compare("Failure") == 0))
+                            break;
                     }
                     else
                     {
@@ -655,9 +660,10 @@ STATE_DEFINE(Manager, Model_Generation_State, NoEventData)
                     }
 				}
 
-			} while (status.compare(m_sentinel) != 0);
+            } while ((status.compare("Success") != 0) && ((status.compare("Failure") != 0)));
 
 			m_tcp_client_sightec.Close();
+			m_event_queue.push("Communication with Sightec has been closed");
 
 			if (comm_error_flag == true)
 			{

@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     rti::config::Logger::instance().verbosity(arguments.verbosity);
 
     arguments.domain_id = 66;
-    arguments.sample_count = 20;
+    arguments.sample_count = 30;
 
     try {
         run_publisher_application(arguments.domain_id, arguments.sample_count);
