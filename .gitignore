@@ -438,3 +438,6 @@ objs/
 *.exe.recipe
 *.FileListAbsolute.txt
 /GeoComp/build/
+**/build
+makefile_*
+*_log*

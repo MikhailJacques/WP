@@ -52,14 +52,15 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     data.MsgId(1);
     data.MissionId(150);
     data.MissionName("Elyakim_1_Diff");
-    //data.MissionType(dds_msgs::EnumMission::AirBuild);
-    data.MissionType(dds_msgs::EnumMission::AirDiff);
+    data.MissionType(dds_msgs::EnumMission::AirBuild);
+    //data.MissionType(dds_msgs::EnumMission::AirDiff);
     //data.MissionType(dds_msgs::EnumMission::GroundBuild);
     //data.MissionType(dds_msgs::EnumMission::GroundDiff);
     data.StationId(5);
     data.PlatformType(dds_msgs::EnumPlatform::Drone);
     data.PlatformId(25);
     data.ScanType(dds_msgs::EnumScan::Rectangular);
+    //data.ScanType(dds_msgs::EnumScan::None);
 
     ::dds::core::array< dds_msgs::GeoPoint, 3L> waypoints;
 
@@ -88,16 +89,16 @@ void run_publisher_application(unsigned int domain_id, unsigned int sample_count
     data.SquareCenter(dds_msgs::GeoPoint(33.5, 36.5, 300));
     data.SquareSide(0);
 
-    std::string geo_path_jpeg_files("/home/amit/jpeg_test");
+    std::string geo_path_jpeg_files("/home/user/viewpoint/samples/curr/DJI_S.MP4");
     data.GeoPathJpegFiles(geo_path_jpeg_files);
 
-    std::string geo_path_curr_model("/home/bob");
+    std::string geo_path_curr_model("/home/user/integration/curr_model");
     data.GeoPathCurrModel(geo_path_curr_model);
 
-    std::string geo_path_ref_model("/home/bob");
+    std::string geo_path_ref_model("/home/user/viewpoint/samples/ref/ref_cropped.ply");
     data.GeoPathRefModel(geo_path_ref_model);
 
-    std::string geo_path_diff_model("/home/bob");
+    std::string geo_path_diff_model("/home/user/integration/diff_model");
     data.GeoPathDiffModel(geo_path_diff_model);
 
     std::string cloud_url_curr_model("/home/bob");
