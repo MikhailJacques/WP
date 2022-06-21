@@ -1,12 +1,26 @@
 // AUTHOR:		Mikhail Jacques
 // PROJECT:		WorldPerception
-// DOCUMENT:	
-// DESCRIPTION: This file implements comb flight path algorithm
+// DOCUMENT:	Drone Scan Route Specifications (22-06-21)
+// DESCRIPTION: This module implements comb flight path algorithm
 
+#include <cmath>
+#include <array>
+#include <string>
+#include <chrono>
+#include <thread>
+#include <iomanip>
+#include <sstream>
+#include <fstream>
+#include <iostream>
+#include <algorithm>
+#include <time.h>
+
+#include "queue.h"
+#include "logger.h"
 #include "earth_distance.h"
 
 // Algorithm: Given 3 points
-// Calculate great circle line geo distance between the first two points (RSAL/LLL)
+// Calculate great circle geo distance between the first two points (RSAL/LLL)
 // Calculate bearing of the great circle geo line between the first two points
 // Calculate perpendicular geo distance from the geo line between the first two points and the third point
 // Perform intermediary calculations
@@ -30,7 +44,7 @@ int main()
     unsigned short drone_turning_time = 3;          // (DTT) Seconds [0, 30], default 3
 
     // User input parameters 
-    GeoCoord coord[3];                              // (RSA) Decimal degrees, meters [-90.0, 90.0], [-180.0, 180.0], [-432, 1,500]
+    //GeoCoord coord[3];                              // (RSA) Decimal degrees, meters [-90.0, 90.0], [-180.0, 180.0], [-432, 1,500]
     unsigned short ground_avg_alt_level = 100;      // (GAAL) Meters, [-432, 1,500], default 100
     unsigned short flight_alt_above_ground_avg_level = 150; // (FAAGAL) Meters, [5, 1,500], default 150
     unsigned short take_off_alt_above_sea_level = 100;      // (TAASL) Meters, [-432, 1,500], default 100
@@ -73,12 +87,13 @@ int main()
     //coord[2].lon = 34.8776919;
 
     //// Omer's set 3
-    coord[0].lat = 32.2931005;
-    coord[0].lon = 34.8761684;
-    coord[1].lat = 32.2916992;
-    coord[1].lon = 34.8775470;
-    coord[2].lat = 32.2910009;
-    coord[2].lon = 34.8763937;
+    GeoCoord coord[3] = { {32.2931005, 34.8761684}, {32.2916992, 34.8775470}, {32.2910009, 34.8763937} };
+    //coord[0].lat = 32.2931005;
+    //coord[0].lon = 34.8761684;
+    //coord[1].lat = 32.2916992;
+    //coord[1].lon = 34.8775470;
+    //coord[2].lat = 32.2910009;
+    //coord[2].lon = 34.8763937;
 
     // Omer's set 3
     // The distance between [32.2931005, 34.8761684] and [32.2916992, 34.8775470] is: 0.2025 km or 0.1258 mile
@@ -87,81 +102,211 @@ int main()
     //    wp2 = { DEG2RAD(32.2916992), DEG2RAD(34.8775470) },
     //    point3 = { DEG2RAD(32.2910009), DEG2RAD(34.8763937) };
 
-    // Calculations
+     // Create new logger file for logging all events	
+    Logger m_event_logger;					// Logger object that writes event occurences to a text log file
+    stringstream log_path;
+    log_path << SolutionDir << "logs\\event_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
+    m_event_logger.Start(log_path.str(), "Event logger is started");
 
-    // Calculate bearing between WP1 and WP2
-    double bearing_1 = Earth_Distance::EarthBearingBetweenTwoGeoCoord_1(coord);
-    double bearing_2 = Earth_Distance::EarthBearingBetweenTwoGeoCoord_2(coord);
-    double bearing_3 = Earth_Distance::EarthBearingBetweenTwoGeoCoord_3(coord[0].lat, coord[0].lon, coord[1].lat, coord[1].lon);
-    double bearing = bearing_2;
+    // Calculations --------------------
 
-    // Calculate rectangular scan area length (RSAL) (geo distance between WP1 and WP2)
+    // Calculate rectangular scan area length (RSAL/LLL), which is great circle geo distance between WP1 and WP2
     double rsal_1 = Earth_Distance::GreatCircleDistanceBetweenTwoGeoCoord_1(coord);
     double rsal_2 = Earth_Distance::GreatCircleDistanceBetweenTwoGeoCoord_2(coord);
     double rsal_3 = Earth_Distance::GreatCircleDistanceBetweenTwoGeoCoord_3(coord);
     double rsal_4 = Earth_Distance::GreatCircleDistanceBetweenTwoGeoCoord_4(coord);
     double rsal_5 = Earth_Distance::GreatCircleDistanceBetweenTwoGeoCoord_5(coord[0].lat, coord[0].lon, coord[1].lat, coord[1].lon);
     double rectangular_scan_area_length = rsal_4;
+    double long_leg_length = rectangular_scan_area_length;
 
-    // Calculate rectangular scan area minimum width (shortest geo distance between a line (WP1, WP2) and a point3)
+    std::stringstream ss;
+    ss << "Rectangular scan area length (RSAL/LLL) (meters): " << rectangular_scan_area_length;
+    m_event_logger.Print(ss.str());
+    ss.str(""); ss.clear();
+
+    // Calculate bearing of the great circle geo line between WP1 and WP2
+    double bearing_1 = Earth_Distance::EarthBearingBetweenTwoGeoCoord_1(coord);
+    double bearing_2 = Earth_Distance::EarthBearingBetweenTwoGeoCoord_2(coord);
+    double bearing_3 = Earth_Distance::EarthBearingBetweenTwoGeoCoord_3(coord[0].lat, coord[0].lon, coord[1].lat, coord[1].lon);
+    double long_leg_bearing = bearing_2;
+
+    ss << "Bearing of the first long leg (degrees): " << long_leg_bearing;
+    m_event_logger.Print(ss.str());
+    ss.str(""); ss.clear();
+
+    double integral_part, fractional_part, short_leg_bearing, opposite_long_leg_bearing;
+
+    // Calculate bearing of the first short leg
+    fractional_part = modf(long_leg_bearing + 90.0, &integral_part);
+    short_leg_bearing = ((int)integral_part + 360) % 360 + fractional_part;
+
+    ss << "Bearing of the first short leg (degrees) : " << short_leg_bearing;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    // Calculate bearing of the opposite long leg
+    fractional_part = modf(long_leg_bearing + 180.0, &integral_part);
+    opposite_long_leg_bearing = ((int)integral_part + 360) % 360 + fractional_part;
+
+    ss << "Bearing of the second long leg (degrees) : " << opposite_long_leg_bearing;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    // Calculate rectangular scan area minimum width (shortest geo distance between a line formed by WP1 and WP2 and point3)
     double min_width_1 = Earth_Distance::GreatCircleDistanceBetweenLineAndPoint_1(coord);
     double min_width_2 = Earth_Distance::GreatCircleDistanceBetweenLineAndPoint_3(coord);
     double min_width_3 = Earth_Distance::GreatCircleDistanceBetweenLineAndPoint_3(coord);
     double rectangular_scan_area_minimum_width = min_width_3;
 
+    ss << "Rectangular scan area minimum width (meters): " << rectangular_scan_area_minimum_width;
+    m_event_logger.Print(ss.str());
+    ss.str(""); ss.clear();
 
+    // MJ TODO: Confirm with Hai
     // Calculate flight altitude above sea level
-    double flight_alt_above_sea_level = flight_alt_above_ground_avg_level - take_off_alt_above_sea_level;
+    double flight_alt_above_sea_level = ground_avg_alt_level + flight_alt_above_ground_avg_level - take_off_alt_above_sea_level;
+
+    ss << "Flight altitude above sea level (meters): " << flight_alt_above_sea_level;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
 
     // Calculate ground horizontal projection of camera's horizontal field of view
     double ground_horizontal_projection_of_camera_horizontal_fov = camera_horizontal_fov * DEG2miniRAD * flight_alt_above_ground_avg_level / 1000.0;
 
+    ss << "Ground horizontal projection of camera's horizontal field of view: " << ground_horizontal_projection_of_camera_horizontal_fov;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
     // Calculate ground vertical projection of camera's vertical field of view
     double ground_vertical_projection_of_camera_vertical_fov = camera_vertical_fov * DEG2miniRAD * flight_alt_above_ground_avg_level / 1000.0;
+
+    ss << "Ground vertical projection of camera's vertical field of view: " << ground_vertical_projection_of_camera_vertical_fov;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
 
     // Calculate model ground resolution in the vertical camera orientation
     double model_ground_resolution = ground_vertical_projection_of_camera_vertical_fov / camera_vertical_resolution * 100.0;
 
+    ss << "Model ground resolution in the vertical camera orientation: " << model_ground_resolution;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
     // Calculate distance between the centers of the adjacent frames in flight direction
     double distance_between_adjacent_frames = ground_vertical_projection_of_camera_vertical_fov *
-        (1 - overlap_between_adjacent_frames_in_flight_direction);
+        (100 - overlap_between_adjacent_frames_in_flight_direction) / 100.0;
+
+    ss << "Distance between the centers of the adjacent frames in flight direction (meters): " << distance_between_adjacent_frames;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
 
     // Calculate maximum time period between taking adjacent frames in flight direction
     double max_time_period_between_taking_adjacent_frames_in_flight_direction = distance_between_adjacent_frames / flight_speed;
 
+    ss << "Maximum time period between taking adjacent frames in flight direction (seconds): " << max_time_period_between_taking_adjacent_frames_in_flight_direction;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
     // Calculate short leg length based on the overlap required between adjacent ground horizontal projections 
     // of the camera horizontal field of view orientation
     double short_leg_length = ground_horizontal_projection_of_camera_horizontal_fov * 
-        (1 - overlap_between_opposite_frames_in_lateral_direction);
+        (100 - overlap_between_opposite_frames_in_lateral_direction) / 100.0;
 
-    // Scan route flight duration calculations
+    ss << "Short leg length (meters): " << short_leg_length;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    
+    // Scan route flight duration calculations --------------------
 
     // Calculate the number of long legs necessary to cover the entire scan area
     double num_of_long_legs = ceil(rectangular_scan_area_minimum_width / short_leg_length) + 1;
 
+    ss << "Number of long legs necessary to cover the entire scan area : " << num_of_long_legs;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    // Calculate the number of short legs necessary to cover the entire scan area
     double num_of_short_legs = num_of_long_legs - 1;
+
+    ss << "Number of short legs necessary to cover the entire scan area : " << num_of_short_legs;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
 
     // Calculate the actual rectangular scan area width
     double rectangular_scan_area_width = num_of_short_legs * short_leg_length;
 
-    // Calculate long leg flight time
+    ss << "Actual rectangular scan area width (meters): " << rectangular_scan_area_width;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    // Calculate long leg flight time (seconds)
     double long_leg_flight_time = rectangular_scan_area_length / flight_speed;
 
-    // Calculate long legs total flight time
+    ss << "Long leg flight time (seconds): " << long_leg_flight_time;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    // Calculate long legs total flight time (seconds)
     double long_legs_total_flight_time = long_leg_flight_time * num_of_long_legs;
 
-    // Calculate short leg flight time
+    ss << "Long legs total flight time (seconds): " << long_legs_total_flight_time;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    // Calculate short leg flight time (seconds)
     double short_leg_flight_time = short_leg_length / flight_speed + (drone_turning_time * 2);
 
-    // Calculate short legs total flight time
+    ss << "Short leg flight time (seconds): " << short_leg_flight_time;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    // Calculate short legs total flight time (seconds)
     double short_legs_total_flight_time = short_leg_flight_time * num_of_short_legs;
 
-    // Calculate scan route total flight time (in minutes)
+    ss << "Short legs total flight time (seconds): " << short_legs_total_flight_time;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    // Calculate scan route total flight time (seconds)
     double scan_route_total_flight_time = (long_legs_total_flight_time + short_legs_total_flight_time) / 60.0;
+
+    ss << "Scan route total flight time (seconds) : " << scan_route_total_flight_time;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
 
     // Calculate the number of frames per long leg
     double number_of_frames_per_long_leg = ceil(rectangular_scan_area_length / distance_between_adjacent_frames);
 
+    ss << "Number of frames per long leg : " << number_of_frames_per_long_leg;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
     // Calculate total number of frames
     double total_number_of_frames = number_of_frames_per_long_leg * num_of_long_legs;
+
+    ss << "Total number of frames : " << total_number_of_frames;
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+
+    // Waypoints calculations --------------------
+
+    vector<GeoCoord> waypoints;
+
+    // Calculate geo coordinates of the third waypoint (wp3)
+    GeoCoord wp = Earth_Distance::FindGeoCoordAtDistanceFrom(coord[1], short_leg_bearing, short_leg_length);
+
+    waypoints.push_back(coord[0]);
+    waypoints.push_back(coord[1]);
+    waypoints.push_back(wp);
+
+    for (int ii = 0; ii < (num_of_long_legs * 2) - 3; ii++)
+    {
+        if ((ii % 2) == 0)
+        {
+            wp = Earth_Distance::FindGeoCoordAtDistanceFrom(wp, opposite_long_leg_bearing, long_leg_length);
+        }
+        else
+        {
+            wp = Earth_Distance::FindGeoCoordAtDistanceFrom(wp, short_leg_bearing, short_leg_length);
+        }
+
+        waypoints.push_back(wp);
+    }
+
+    ss << "Waypoints: ";
+    m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+
+    for (int ii = 0; ii < waypoints.size(); ii++)
+    {
+        ss << std::setprecision(7) << fixed << showpoint << "WP" << (ii+1) <<
+            ":\t (" << waypoints[ii].lat << ", " << waypoints[ii].lon << ")";
+        m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
+    }
 }
+
+// setw(x) - sets the field width to be used on output operations.
+// setprecision(x) - sets the decimal precision to be used to format floating-point values on output operations.
+// showpoint: forces the decimal portions of a floating-point variable to be displayed, even if it is not explicitly set.
+// fixed: enforces that all floating-point numbers are output the same way. If precision is set to 4 places, 6.2, and 6.20 will both be output as 6.2000

@@ -1,9 +1,11 @@
+// AUTHOR:		Mikhail Jacques
+// PROJECT:		WorldPerception
+// DOCUMENT:	Drone Scan Route Specifications (22-06-21)
+// DESCRIPTION: This module declares mathematical functions for calculating comb flight path algorithm
+
 #pragma once
 
-#include <vector>
 #include <iostream>
-#include <algorithm>
-#include "geo_point.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -14,11 +16,11 @@
 #define DEG2miniRAD     17.45
 #define EPSILON 1E-10
 
-//#define EARTH_RADIUS_KM 6371
-//#define EARTH_RADIUS_M  6371000
-
-#define EARTH_RADIUS_KM 6378.137
 #define EARTH_RADIUS_M  6378137
+#define EARTH_RADIUS_KM 6378.137
+
+//#define EARTH_RADIUS_M  6371000
+//#define EARTH_RADIUS_KM 6371
 
 using namespace std;
 

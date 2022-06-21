@@ -27,12 +27,21 @@
     <ClCompile Include="earth_distance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="geo_point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="earth_distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
