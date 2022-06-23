@@ -1,5 +1,5 @@
 // AUTHOR:	    Mikhail Jacques
-// PROJECT:		World Perception
+// PROJECT:		WorldPerception
 // DOCUMENT:	None
 // DESCRIPTION: This file declares logger that writes data to a text file
 
@@ -38,7 +38,6 @@ public:
     void Start(const std::string& file_name, const std::string& msg);
     void Print(const std::string& msg);
     void Close(const std::string& msg);
-    void Print_Location(const std::string& msg);
 
     // Gets a precise timestamp as a string
     std::string Get_Timestamp_File()

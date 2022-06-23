@@ -1,0 +1,47 @@
+$(SolutionDir)$(Configuration)\
+$(SolutionDir)bin\$(Platform)\$(Configuration)\
+$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\
+$(SolutionDir)$(ProjectName)\$(Platform)\$(Configuration)\
+
+C:\Program Files\rti_connext_dds-6.1.0\include
+C:\Program Files\rti_connext_dds-6.1.0\include\ndds
+C:\Program Files\rti_connext_dds-6.1.0\include\ndds\hpp
+
+Output directory:
+$(ProjectDir)bin\$(Platform)\$(Configuration)\
+
+Intermediate Directory
+$(ProjectDir)obj\$(Platform)\$(Configuration)\
+
+$(SolutionDir)$(ProjectName)\$(Platform)\$(Configuration)\
+
+D:\Sandbox\DDSComm\inc
+$(SolutionDir)..\DDSComm\inc
+
+
+WorldPerception - dds_msgs
+WorldPerceptionPlugin - dds_msgsPlugin
+
+WorldPerception
+Geo_Comp_Manager
+
+
+$(SolutionDir)
+
+$(SolutionDir)$(Configuration)\
+$(SolutionDir)bin\$(Platform)\$(Configuration)\
+$(SolutionDir)obj\$(Platform)\$(Configuration)\
+$(SolutionDir)$(ProjectName)\$(Platform)\$(Configuration)\
+$(SolutionDir)..\DDSComm\$(Platform)\$(Configuration)
+
+D:\Sandbox\DDSComm\inc
+$(SolutionDir)..\DDSComm\inc
+
+
+
+
+C:\Progra~1\rti_connext_dds-6.1.0\include
+C:\Progra~1\rti_connext_dds-6.1.0\include\ndds
+C:\Progra~1\rti_connext_dds-6.1.0\include\ndds\hpp
+D:\WorldPerception\FlightPlan\inc
+D:\WorldPerception\DDS\inc

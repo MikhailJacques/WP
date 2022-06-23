@@ -9,19 +9,38 @@
 // at a certain predefined distance from the original geo coordinate.
 // Input: Start geo coordinate (decimal degrees), earth bearing (decimal degrees), distance (meters)
 // Output: Destination geo coordinate location (decimal degrees)
-GeoCoord Earth_Distance::FindGeoCoordAtDistanceFrom(GeoCoord start_coord, double bearing, double distance_m)
+GeoCoord Earth_Distance::FindGeoCoordAtDistanceFrom_1(GeoCoord start_coord, double bearing, double distance_m)
 {
-    double distance_ratio_sin = sin(distance_m / EARTH_RADIUS_M);
-    double distance_ratio_cos = cos(distance_m / EARTH_RADIUS_M);
-
+    // Convert degrees to radians
     double bearing_rad = DEG2RAD(bearing);
     double start_lat_cos = cos(DEG2RAD(start_coord.lat));
-    double start_lat_sin = sin(DEG2RAD(start_coord.lon));
+    double start_lat_sin = sin(DEG2RAD(start_coord.lat));
+
+    double distance_ratio_sin = sin(distance_m / EARTH_RADIUS_M);
+    double distance_ratio_cos = cos(distance_m / EARTH_RADIUS_M);
 
     double end_lat_rad = asin((start_lat_sin * distance_ratio_cos) + (start_lat_cos * distance_ratio_sin * cos(bearing_rad)));
 
     double end_lon_rad = DEG2RAD(start_coord.lon) +
         atan2((sin(bearing_rad) * distance_ratio_sin * start_lat_cos), (distance_ratio_cos - start_lat_sin * sin(end_lat_rad)));
+
+    GeoCoord end_coord = { RAD2DEG(end_lat_rad), RAD2DEG(end_lon_rad) };
+
+    return end_coord;
+}
+
+GeoCoord Earth_Distance::FindGeoCoordAtDistanceFrom_2(GeoCoord start_coord, double bearing, double distance_m)
+{
+    // Convert degrees to radians
+    double bearing_rad = DEG2RAD(bearing);
+    double start_lat_rad = DEG2RAD(start_coord.lat);
+    double start_lon_rad = DEG2RAD(start_coord.lon);
+    
+    double end_lat_rad = asin(sin(start_lat_rad) * cos(distance_m / EARTH_RADIUS_M) + cos(start_lat_rad) * 
+        sin(distance_m / EARTH_RADIUS_M) * cos(bearing_rad));
+
+    double end_lon_rad = start_lon_rad + atan2(sin(bearing_rad) * sin(distance_m / EARTH_RADIUS_M) * 
+        cos(start_lat_rad), cos(distance_m / EARTH_RADIUS_M) - sin(start_lat_rad) * sin(end_lat_rad));
 
     GeoCoord end_coord = { RAD2DEG(end_lat_rad), RAD2DEG(end_lon_rad) };
 

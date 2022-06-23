@@ -1,7 +1,7 @@
-// AUTHOR:		
-// PROJECT:		Fun
+// AUTHOR:		Unknown
+// PROJECT:		WorldPerception
 // DOCUMENT:	None
-// DESCRIPTION: This file defines queue
+// DESCRIPTION: This file defines basic queue with notifications
 
 #ifndef _QUEUE_H
 #define _QUEUE_H 

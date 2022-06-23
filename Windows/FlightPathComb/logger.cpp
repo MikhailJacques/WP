@@ -1,5 +1,5 @@
 // AUTHOR:	    Mikhail Jacques
-// PROJECT:		Fun
+// PROJECT:		World Perception
 // DOCUMENT:	None
 // DESCRIPTION: This file defines logger that writes data to a text file
 
@@ -35,7 +35,8 @@ void Logger::Start(const std::string& file_name, const std::string& msg)
 void Logger::Print(const std::string& msg)
 {
     std::stringstream ss;
-    ss << Get_Timestamp_Millisec() << ": " << msg << endl;
+    ss << msg << endl;
+    // ss << Get_Timestamp() << ": " << msg << endl;
     m_outfile << ss.str();
     LOG(ss.str());
     m_outfile.flush();
@@ -49,12 +50,4 @@ void Logger::Close(const std::string& msg)
     m_outfile.flush();
     LOG(ss.str());
     m_outfile.close();
-}
-
-void Logger::Print_Location(const std::string& msg)
-{
-    std::stringstream ss;
-    ss << Get_Timestamp() << ": " << msg << endl;
-    m_outfile << ss.str();
-    m_outfile.flush();
 }

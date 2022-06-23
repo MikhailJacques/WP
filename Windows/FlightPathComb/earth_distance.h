@@ -13,10 +13,10 @@
 #define RAD2DEG(r) ((r) * (180.0 / M_PI)) // Radians to Degrees
 #define DEG2RAD(d) ((d) * (M_PI / 180.0)) // Degrees to Radians   ((d) * (std::acos(-1) / 180))
 
-#define DEG2miniRAD     17.45
+#define DEG2miniRAD 17.45
 #define EPSILON 1E-10
 
-#define EARTH_RADIUS_M  6378137
+#define EARTH_RADIUS_M 6378137
 #define EARTH_RADIUS_KM 6378.137
 
 //#define EARTH_RADIUS_M  6371000
@@ -170,7 +170,8 @@ public:
     Earth_Distance(void) {};
     ~Earth_Distance(void) {};
 
-    static GeoCoord FindGeoCoordAtDistanceFrom(GeoCoord start_point, double bearing_deg, double distance_km);
+    static GeoCoord FindGeoCoordAtDistanceFrom_1(GeoCoord start_point, double bearing_deg, double distance_km);
+    static GeoCoord FindGeoCoordAtDistanceFrom_2(GeoCoord start_point, double bearing_deg, double distance_km);
 
     static double EarthBearingBetweenTwoGeoCoord_1(GeoCoord coord[2]);
     static double EarthBearingBetweenTwoGeoCoord_2(GeoCoord coord[2]);

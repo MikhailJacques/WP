@@ -19,16 +19,19 @@
 #include "logger.h"
 #include "earth_distance.h"
 
-// Algorithm: Given 3 points
-// Calculate great circle geo distance between the first two points (RSAL/LLL)
-// Calculate bearing of the great circle geo line between the first two points
-// Calculate perpendicular geo distance from the geo line between the first two points and the third point
-// Perform intermediary calculations
+// Algorithm: 
+// Given 3 points
+// Calculate the length of the first long leg (great circle geo distance between the first two points (RSAL/LLL))
+// Calculate bearing of the first long leg (great circle geo line between the first two waypoints)
+// Calculate bearing of the first short leg
+// Calculate bearing of the opposite long leg
+// Calculate perpendicular geo distance from the geo line between the first two points and the third point (minimum width of the RSA)
+// Perform intermediary calculations based on configuration and user-defined data
 // Calculate the first short leg
 // Calculate the second long leg
 // Calculate the second short leg
 // Calculate the third long leg
-// Calculate the third shorg leg
+// Calculate the third short leg
 // Continue in this fashion until the end
 
 int main()
@@ -44,66 +47,30 @@ int main()
     unsigned short drone_turning_time = 3;          // (DTT) Seconds [0, 30], default 3
 
     // User input parameters 
-    //GeoCoord coord[3];                              // (RSA) Decimal degrees, meters [-90.0, 90.0], [-180.0, 180.0], [-432, 1,500]
+    //GeoCoord coord[3];                            // (RSA) Decimal degrees, meters [-90.0, 90.0], [-180.0, 180.0], [-432, 1,500]
     unsigned short ground_avg_alt_level = 100;      // (GAAL) Meters, [-432, 1,500], default 100
     unsigned short flight_alt_above_ground_avg_level = 150; // (FAAGAL) Meters, [5, 1,500], default 150
     unsigned short take_off_alt_above_sea_level = 100;      // (TAASL) Meters, [-432, 1,500], default 100
     unsigned short flight_speed = 10;               // (FS) Meters per second, [0, 150], default 10
     unsigned short local_square_dimension = 300;    // (LSD) Meters, [50, 2,000], default 300
 
-    //coord[0].lat = 22.560206299999997;
-    //coord[0].lon = 88.41253929999999;
-    //coord[1].lat = 22.620867969497795;
-    //coord[1].lon = 88.36928063300775;
-    //coord[2].lat = 22.71558662052875;
-    //coord[2].lon = 88.29580956367181;
+    // Omer's set 1
+    // GeoCoord coord[3] = { {32.2912458, 34.8764098}, {32.2912458, 34.8748112}, {32.2933091, 34.8759162} };
 
-    //coord[0].lat = 53.32055555555556;
-    //coord[0].lon = -1.7297222222222221;
-    //coord[1].lat = 53.31861111111111;
-    //coord[1].lon = -1.6997222222222223;
-
-    //coord[0].lat = 3.227511;
-    //coord[0].lon = 101.724318;
-    //coord[1].lat = 3.222895;
-    //coord[1].lon = 101.719751;
-    //coord[2].lat = 3.224972;
-    //coord[2].lon = 101.722932;
-
-    //// Omer's set 1
-    //coord[0].lat = 32.2912458;
-    //coord[0].lon = 34.8764098;
-    //coord[1].lat = 32.2912458;
-    //coord[1].lon = 34.8748112;
-    //coord[2].lat = 32.2933091;
-    //coord[2].lon = 34.8759162;
-
-    //// Omer's set 2
-    //coord[0].lat = 32.2912322;
-    //coord[0].lon = 34.8749989;
-    //coord[1].lat = 32.2911641;
-    //coord[1].lon = 34.8776811;
-    //coord[2].lat = 32.2926515;
-    //coord[2].lon = 34.8776919;
-
-    //// Omer's set 3
-    GeoCoord coord[3] = { {32.2931005, 34.8761684}, {32.2916992, 34.8775470}, {32.2910009, 34.8763937} };
-    //coord[0].lat = 32.2931005;
-    //coord[0].lon = 34.8761684;
-    //coord[1].lat = 32.2916992;
-    //coord[1].lon = 34.8775470;
-    //coord[2].lat = 32.2910009;
-    //coord[2].lon = 34.8763937;
+    // Omer's set 2
+    // GeoCoord coord[3] = { {32.2912322, 34.8749989}, {32.2911641, 34.8776811}, {32.2926515, 34.8776919} };
 
     // Omer's set 3
-    // The distance between [32.2931005, 34.8761684] and [32.2916992, 34.8775470] is: 0.2025 km or 0.1258 mile
-    //GeoCoord 
-    //    wp1 = { DEG2RAD(32.2931005), DEG2RAD(34.8761684) },
-    //    wp2 = { DEG2RAD(32.2916992), DEG2RAD(34.8775470) },
-    //    point3 = { DEG2RAD(32.2910009), DEG2RAD(34.8763937) };
+    // GeoCoord coord[3] = { {32.2931005, 34.8761684}, {32.2916992, 34.8775470}, {32.2910009, 34.8763937} };
+
+    // Michael's set 4
+    // GeoCoord coord[3] = { {22.560206299999997, 88.41253929999999}, {22.620867969497795, 88.36928063300775}, {22.71558662052875, 88.29580956367181} };
+
+    // Michael's set 5
+    GeoCoord coord[3] = { {3.227511, 101.724318}, {3.222895, 101.719751}, {3.224972, 101.722932} };
 
      // Create new logger file for logging all events	
-    Logger m_event_logger;					// Logger object that writes event occurences to a text log file
+    Logger m_event_logger;	// Logger object that writes event occurences to a text log file
     stringstream log_path;
     log_path << SolutionDir << "logs\\event_log_" + m_event_logger.Get_Timestamp_File() + ".txt";
     m_event_logger.Start(log_path.str(), "Event logger is started");
@@ -136,14 +103,14 @@ int main()
 
     double integral_part, fractional_part, short_leg_bearing, opposite_long_leg_bearing;
 
-    // Calculate bearing of the first short leg
+    // Calculate bearing of the first short leg (degrees)
     fractional_part = modf(long_leg_bearing + 90.0, &integral_part);
     short_leg_bearing = ((int)integral_part + 360) % 360 + fractional_part;
 
     ss << "Bearing of the first short leg (degrees) : " << short_leg_bearing;
     m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
 
-    // Calculate bearing of the opposite long leg
+    // Calculate bearing of the opposite long leg (degrees)
     fractional_part = modf(long_leg_bearing + 180.0, &integral_part);
     opposite_long_leg_bearing = ((int)integral_part + 360) % 360 + fractional_part;
 
@@ -274,22 +241,36 @@ int main()
 
     vector<GeoCoord> waypoints;
 
-    // Calculate geo coordinates of the third waypoint (wp3)
-    GeoCoord wp = Earth_Distance::FindGeoCoordAtDistanceFrom(coord[1], short_leg_bearing, short_leg_length);
-
     waypoints.push_back(coord[0]);
     waypoints.push_back(coord[1]);
+
+    // Calculate geo coordinates of the third waypoint (wp3)
+    GeoCoord wp = Earth_Distance::FindGeoCoordAtDistanceFrom_2(coord[1], short_leg_bearing, short_leg_length);
+
     waypoints.push_back(wp);
 
-    for (int ii = 0; ii < (num_of_long_legs * 2) - 3; ii++)
+    int long_leg_cnt = 1, short_leg_cnt = 1;
+
+    for (int ii = 3; ii < (num_of_long_legs * 2); ii++)
     {
         if ((ii % 2) == 0)
         {
-            wp = Earth_Distance::FindGeoCoordAtDistanceFrom(wp, opposite_long_leg_bearing, long_leg_length);
+            short_leg_cnt++;
+
+            wp = Earth_Distance::FindGeoCoordAtDistanceFrom_2(wp, short_leg_bearing, short_leg_length);
         }
         else
         {
-            wp = Earth_Distance::FindGeoCoordAtDistanceFrom(wp, short_leg_bearing, short_leg_length);
+            long_leg_cnt++;
+
+            if ((long_leg_cnt % 2) == 0)
+            {
+                wp = Earth_Distance::FindGeoCoordAtDistanceFrom_2(wp, opposite_long_leg_bearing, long_leg_length);
+            }
+            else
+            {
+                wp = Earth_Distance::FindGeoCoordAtDistanceFrom_2(wp, long_leg_bearing, long_leg_length);
+            }
         }
 
         waypoints.push_back(wp);
@@ -300,13 +281,15 @@ int main()
 
     for (int ii = 0; ii < waypoints.size(); ii++)
     {
-        ss << std::setprecision(7) << fixed << showpoint << "WP" << (ii+1) <<
-            ":\t (" << waypoints[ii].lat << ", " << waypoints[ii].lon << ")";
+        //ss << std::setprecision(7) << fixed << showpoint << "WP" << (ii+1) <<
+        //    ":\t (" << waypoints[ii].lat << ", " << waypoints[ii].lon << ")";
+
+        //ss << std::setprecision(7) << fixed << showpoint << "WP" << (ii + 1) <<
+        //    ", " << waypoints[ii].lat << ", " << waypoints[ii].lon;
+
+        ss << std::setprecision(7) << fixed << showpoint << "WP" << (ii + 1) <<
+            "\t" << waypoints[ii].lat << "\t" << waypoints[ii].lon;
+
         m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
     }
 }
-
-// setw(x) - sets the field width to be used on output operations.
-// setprecision(x) - sets the decimal precision to be used to format floating-point values on output operations.
-// showpoint: forces the decimal portions of a floating-point variable to be displayed, even if it is not explicitly set.
-// fixed: enforces that all floating-point numbers are output the same way. If precision is set to 4 places, 6.2, and 6.20 will both be output as 6.2000

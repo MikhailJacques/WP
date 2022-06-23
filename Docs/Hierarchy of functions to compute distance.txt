@@ -1,0 +1,17 @@
+EarthDistanceStraight			v
+	Geo2Vector3D			v
+		Geo2Cart		v
+		Cart2Vector3D		v
+	Vector3DCrossProduct		v
+	EarthArc			v
+	CommonAngle			v
+		IsZeroVector3D		v
+			IsZero		v
+		Mod2PI			v
+			Mod		v
+		Acos			v
+			BandPassMax	v
+		Vector3DDotProduct	v
+		AbsVector3D		v
+			Abs3D		v
+				Sqrt	v

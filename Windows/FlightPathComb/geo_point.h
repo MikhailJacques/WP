@@ -1,11 +1,9 @@
 ﻿//// AUTHOR:		Mikhail Jacques
-//// PROJECT:		Fun
+//// PROJECT:		WorldPerception
 //// DOCUMENT:	None
 //// DESCRIPTION: This file defines and geo coordinates object
 //
 //#pragma once
-//
-//
 //
 //class GeoCoord
 //{
@@ -13,8 +11,8 @@
 //
 //	void Reset(void)
 //	{
-//		Lat = 0.0;
-//		Lon = 0.0;
+//		m_lat = 0.0;
+//		m_lon = 0.0;
 //	}
 //
 //public:
@@ -25,14 +23,14 @@
 //	}
 //
 //	// Constructor
-//	GeoCoord(double latitude, double longitude) :
-//		Lat(latitude),
-//		Lon(longitude) { }
+//	GeoCoord(double lat, double lon) :
+//		m_lat(lat),
+//		m_lon(lon) { }
 //
 //	// Copy constructor
 //	GeoCoord(const GeoCoord& geo_point) :
-//		Lat(geo_point.lat),
-//		Lon(geo_point.lon) { }
+//		m_lat(geo_point.m_lat),
+//		m_lon(geo_point.m_lon) { }
 //
 //	// Overloaded assignment operator
 //	GeoCoord& operator=(const GeoCoord& rhs)
@@ -40,15 +38,14 @@
 //		if (this == &rhs)
 //			return *this;
 //
-//		Lat = rhs.lat;
-//		Lat = rhs.lat;
+//		m_lat = rhs.m_lat;
+//		m_lon = rhs.m_lon;
 //
 //		return *this;
 //	}
 //
 //	~GeoCoord() {}
 //
-//	double Lat;		// Range  [(-π/2), π/2] (Radians), default 0, [0.0, 90.0] degrees
-//	double Lon;		// Range [0, 2π] (Radians), default 0, [0.0, 180.0] degrees
+//	double m_lat;	// Range  [(-π/2), π/2] (Radians), default 0, [0.0, 90.0] degrees
+//	double m_lon;	// Range [0, 2π] (Radians), default 0, [0.0, 180.0] degrees
 //};
-//

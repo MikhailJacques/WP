@@ -1,0 +1,64 @@
+%NDDSHOME%\bin\rtiddsgen hello_world.idl
+
+> rtiddsgen -language c++11 -platform <architecture> -create makefiles -create typefiles -d c++11 -ppDisable hello_world.idl
+
+C:\Program Files\rti_connext_dds-6.1.0\lib\x64Win64VS2017
+C:\Program Files\rti_connext_dds-6.1.0\resource\schema\rti_dds_qos_profiles.xsd
+
+> "C:\Program Files\rti_connext_dds-6.1.0\resource\scripts\rtisetenv_x64Win64VS2017.bat"
+> C:\PROGRA~1\rti_connext_dds-6.1.0\bin\..\resource\scripts\rtisetenv_x64Win64VS2017.bat
+> C:\PROGRA~1\rti_connext_dds-6.1.0\bin\..\resource\scripts\rtisetenv_x64Win64VS2019.bat
+
+> rtiddsgen -language c++11 -platform x64Win64VS2019 -create makefiles -create typefiles -d c++11 -ppDisable hello_world.idl
+> rtiddsgen -language c++11 -platform x64Win64VS2019 -create makefiles -create typefiles -d c++11 -ppDisable chocolate_factory.idl
+
+> objs\x64Win64VS2019\hello_world_publisher.exe -d <domain_id> -s <sample_count>
+> objs\x64Win64VS2019\hello_world_subscriber.exe -d <domain_id> -s <sample_count>
+
+> objs\x64Win64VS2019\hello_world_publisher.exe
+> objs\x64Win64VS2019\hello_world_subscriber.exe
+
+D:\rti_workspace\examples\getting_started\2_hello_world\c++11
+D:\rti_workspace\examples\getting_started\2_hello_world\c++11\objs\x64Win64VS2019
+
+D:\rti_workspace\examples\getting_started\3_streaming_data\c++11
+D:\rti_workspace\examples\getting_started\3_streaming_data\c++11\objs\x64Win64VS2019
+
+> objs\x64Win64VS2019\chocolate_factory_publisher.exe -i sensor1
+> objs\x64Win64VS2019\chocolate_factory_subscriber.exe
+
+"c:\program files\CMake\bin\cmake" -G "Visual Studio 16 2019" -D CONNEXTDDS_ARCH=x64Win64VS2017 -A x64 ..
+
+D:\rti_workspace\examples\getting_started\4_keys_instances\c++11\Build
+D:\rti_workspace\examples\getting_started\4_keys_instances\c++11\objs\x64Win64VS2019
+
+Debug\tempering_application.exe -i 1
+Debug\tempering_application.exe -i 2
+Debug\monitoring_ctrl_application.exe
+
+D:\rti_workspace\examples\getting_started\5_basic_qos\c++11
+D:\rti_workspace\examples\getting_started\5_basic_qos\c++11\build
+D:\rti_workspace\examples\getting_started\5_basic_qos\c++11\build\Debug
+"c:\program files\CMake\bin\cmake" -G "Visual Studio 16 2019" -D CONNEXTDDS_ARCH=x64Win64VS2017 -A x64 ..
+
+Debug\monitoring_ctrl_application.exe
+Debug\tempering_application.exe -i 9
+
+D:\rti_workspace\examples\getting_started\6_content_filters\c++11
+D:\rti_workspace\examples\getting_started\6_content_filters\c++11\build
+"c:\program files\CMake\bin\cmake" -G "Visual Studio 16 2019" -D CONNEXTDDS_ARCH=x64Win64VS2017 -A x64 ..
+
+D:\rti_workspace\examples\getting_started\6_content_filters\c++11\build\start_all.bat
+Debug\ingredient_application.exe -k MILK_CONTROLLER
+
+> rtiddsgen -language c++11 -platform x64Win64VS2019 -create makefiles -create typefiles -d c++11 -ppDisable WorldPerception.idl
+
+C:\Program Files\rti_connext_dds-6.1.0\include
+C:\Program Files\rti_connext_dds-6.1.0\include\ndds
+C:\Program Files\rti_connext_dds-6.1.0\include\ndds\hpp
+
+
+
+
+
+
