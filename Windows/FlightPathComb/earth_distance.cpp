@@ -9,10 +9,10 @@
 // at a certain predefined distance from the original geo coordinate.
 // Input: Start geo coordinate (decimal degrees), earth bearing (decimal degrees), distance (meters)
 // Output: Destination geo coordinate location (decimal degrees)
-GeoCoord Earth_Distance::FindGeoCoordAtDistanceFrom_1(GeoCoord start_coord, double bearing, double distance_m)
+GeoCoord Earth_Distance::FindGeoCoordAtDistanceFrom_1(GeoCoord start_coord, double bearing_deg, double distance_m)
 {
     // Convert degrees to radians
-    double bearing_rad = DEG2RAD(bearing);
+    double bearing_rad = DEG2RAD(bearing_deg);
     double start_lat_cos = cos(DEG2RAD(start_coord.lat));
     double start_lat_sin = sin(DEG2RAD(start_coord.lat));
 
@@ -29,10 +29,14 @@ GeoCoord Earth_Distance::FindGeoCoordAtDistanceFrom_1(GeoCoord start_coord, doub
     return end_coord;
 }
 
-GeoCoord Earth_Distance::FindGeoCoordAtDistanceFrom_2(GeoCoord start_coord, double bearing, double distance_m)
+// This function calculates a location of a geo coordinate located in a certain predefined direction and 
+// at a certain predefined distance from the original geo coordinate.
+// Input: Start geo coordinate (decimal degrees), earth bearing (decimal degrees), distance (meters)
+// Output: Destination geo coordinate location (decimal degrees)
+GeoCoord Earth_Distance::FindGeoCoordAtDistanceFrom_2(GeoCoord start_coord, double bearing_deg, double distance_m)
 {
     // Convert degrees to radians
-    double bearing_rad = DEG2RAD(bearing);
+    double bearing_rad = DEG2RAD(bearing_deg);
     double start_lat_rad = DEG2RAD(start_coord.lat);
     double start_lon_rad = DEG2RAD(start_coord.lon);
     

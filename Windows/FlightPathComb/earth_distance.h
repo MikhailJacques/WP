@@ -167,11 +167,10 @@ private:
 
 public:
 
-    Earth_Distance(void) {};
-    ~Earth_Distance(void) {};
+    Earth_Distance() = delete;
 
-    static GeoCoord FindGeoCoordAtDistanceFrom_1(GeoCoord start_point, double bearing_deg, double distance_km);
-    static GeoCoord FindGeoCoordAtDistanceFrom_2(GeoCoord start_point, double bearing_deg, double distance_km);
+    static GeoCoord FindGeoCoordAtDistanceFrom_1(GeoCoord start_point, double bearing_deg, double distance_m);
+    static GeoCoord FindGeoCoordAtDistanceFrom_2(GeoCoord start_point, double bearing_deg, double distance_m);
 
     static double EarthBearingBetweenTwoGeoCoord_1(GeoCoord coord[2]);
     static double EarthBearingBetweenTwoGeoCoord_2(GeoCoord coord[2]);

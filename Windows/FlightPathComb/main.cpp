@@ -292,4 +292,6 @@ int main()
 
         m_event_logger.Print(ss.str()); ss.str(""); ss.clear();
     }
+
+    return 0;
 }
