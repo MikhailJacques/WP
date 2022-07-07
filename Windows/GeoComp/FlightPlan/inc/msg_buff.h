@@ -1,5 +1,5 @@
 // AUTHOR:		Mikhail Jacques
-// PROJECT:		Fun
+// PROJECT:		World Perception
 // DOCUMENT:	None
 // DESCRIPTION: This file defines message buffer that stores all incoming messages in raw data format
 

@@ -1,27 +1,27 @@
-//// AUTHOR:
+//// AUTHOR:		https://www.codeproject.com/Articles/1087619/State-Machine-Design-in-Cplusplus-2
 //// PROJECT:		WorldPerception
 //// DOCUMENT:	None
 //// DESCRIPTION: This file defines memory allocator that allocates/deallocates blocks of memory
 ////              from a pre-allocated static memory pool for state machine events
-
+//
 //#include <iostream>
 //#include "fault.h"
 //#include "xallocator.h"
 //#include "allocator.h"
-
+//
 //using namespace std;
-
+//
 //#ifndef CHAR_BIT
 //#define CHAR_BIT	8
 //#endif
-
+//
 //#if WIN32
 ///// @TODO Create a lock for non-Windows platforms when using an operating system
 //static CRITICAL_SECTION _criticalSection;
 //#endif
-
+//
 //static bool _xallocInitialized = false;
-
+//
 ///// Define STATIC_POOLS to switch from heap blocks mode to static pools mode
 /////#define STATIC_POOLS
 //#ifdef STATIC_POOLS
@@ -29,7 +29,7 @@
 //	/// See also xalloc_init() and xalloc_destroy() for additional updates required.
 //	#define MAX_ALLOCATORS	12
 //	#define MAX_BLOCKS		32
-
+//
 //	/// Create static storage for each static allocator instance
 //	char* _allocator8 [sizeof(AllocatorPool<char[8], MAX_BLOCKS>)];
 //	char* _allocator16 [sizeof(AllocatorPool<char[16], MAX_BLOCKS>)];
@@ -43,15 +43,15 @@
 //	char* _allocator1024 [sizeof(AllocatorPool<char[1024], MAX_BLOCKS>)];
 //	char* _allocator2048 [sizeof(AllocatorPool<char[2048], MAX_BLOCKS>)];
 //	char* _allocator4096 [sizeof(AllocatorPool<char[4096], MAX_BLOCKS>)];
-
+//
 //	/// Array of pointers to all allocator instances
 //	static Allocator* _allocators[MAX_ALLOCATORS];
-
+//
 //#else
 //	#define MAX_ALLOCATORS  15
 //	static Allocator* _allocators[MAX_ALLOCATORS];
 //#endif	/// STATIC_POOLS
-
+//
 ///// For C++ applications, must define AUTOMATIC_XALLOCATOR_INIT_DESTROY to
 ///// correctly ensure allocators are initialized before any static user C++
 ///// construtor/destructor executes which might call into the xallocator API.
@@ -73,7 +73,7 @@
 //	if (refCount++ == 0)
 //		xalloc_init();
 //}
-
+//
 //XallocInitDestroy::~XallocInitDestroy()
 //{
 //	/// Last static instance to have destructor called?
@@ -81,7 +81,7 @@
 //		xalloc_destroy();
 //}
 //#endif	/// AUTOMATIC_XALLOCATOR_INIT_DESTROY
-
+//
 ///// Returns the next higher powers of two. For instance, pass in 12 and
 ///// the value returned would be 16.
 ///// @param[in] k - numeric value to compute the next higher power of two.
@@ -94,7 +94,7 @@
 //        k |= (k >> i);
 //    return k+1;
 //}
-
+//
 ///// Create the xallocator lock. Call only one time at startup.
 //static void lock_init()
 //{
@@ -104,7 +104,7 @@
 //#endif
 //	_xallocInitialized = true;
 //}
-
+//
 ///// Destroy the xallocator lock.
 //static void lock_destroy()
 //{
@@ -113,29 +113,29 @@
 //#endif
 //	_xallocInitialized = false;
 //}
-
+//
 ///// Lock the shared resource.
 //static inline void lock_get()
 //{
 //	if (_xallocInitialized == false)
 //		return;
-
+//
 //#if WIN32
 //	EnterCriticalSection(&_criticalSection);
 //#endif
 //}
-
+//
 ///// Unlock the shared resource.
 //static inline void lock_release()
 //{
 //	if (_xallocInitialized == false)
 //		return;
-
+//
 //#if WIN32
 //	LeaveCriticalSection(&_criticalSection);
 //#endif
 //}
-
+//
 ///// Stored a pointer to the allocator instance within the block region.
 /////	a pointer to the client's area within the block.
 ///// @param[in] block - a pointer to the raw memory block.
@@ -145,15 +145,15 @@
 //{
 //	/// Cast the raw block memory to a Allocator pointer
 //	Allocator** pAllocatorInBlock = static_cast<Allocator**>(block);
-
+//
 //	/// Write the size into the memory block
 //	*pAllocatorInBlock = allocator;
-
+//
 //	/// Advance the pointer past the Allocator* block size and return a pointer to
 //	/// the client's memory region
 //	return ++pAllocatorInBlock;
 //}
-
+//
 ///// Gets the size of the memory block stored within the block.
 ///// @param[in] block - a pointer to the client's memory block.
 ///// @return	The original allocator instance stored in the memory block.
@@ -161,14 +161,14 @@
 //{
 //	/// Cast the client memory to a Allocator pointer
 //	Allocator** pAllocatorInBlock = static_cast<Allocator**>(block);
-
+//
 //	/// Back up one Allocator* position to get the stored allocator instance
 //	pAllocatorInBlock--;
-
+//
 //	/// Return the allocator instance stored within the memory block
 //	return *pAllocatorInBlock;
 //}
-
+//
 ///// Returns the raw memory block pointer given a client memory pointer.
 ///// @param[in] block - a pointer to the client memory block.
 ///// @return	A pointer to the original raw memory block address.
@@ -176,11 +176,11 @@
 //{
 //	/// Cast the client memory to a Allocator* pointer
 //	Allocator** pAllocatorInBlock = static_cast<Allocator**>(block);
-
+//
 //	/// Back up one Allocator* position and return the original raw memory block pointer
 //	return --pAllocatorInBlock;
 //}
-
+//
 ///// Returns an allocator instance matching the size provided
 ///// @param[in] size - allocator block size
 ///// @return Allocator instance handling requested block size or NULL
@@ -191,14 +191,14 @@
 //	{
 //		if (_allocators[i] == 0)
 //			break;
-		
+//		
 //		if (_allocators[i]->GetBlockSize() == size)
 //			return _allocators[i];
 //	}
-	
+//	
 //	return NULL;
 //}
-
+//
 ///// Insert an allocator instance into the array
 ///// @param[in] allocator - An allocator instance
 //static inline void insert_allocator(Allocator* allocator)
@@ -211,16 +211,16 @@
 //			return;
 //		}
 //	}
-	
+//	
 //	ASSERT();
 //}
-
+//
 ///// This function must be called exactly one time *before* any other xallocator
 ///// API is called. XallocInitDestroy constructor calls this function automatically.
 //extern "C" void xalloc_init()
 //{
 //	lock_init();
-
+//
 //#ifdef STATIC_POOLS
 //	/// For STATIC_POOLS mode, the allocators must be initialized before any other
 //	/// static user class constructor is run. Therefore, use placement new to initialize
@@ -237,7 +237,7 @@
 //	new (&_allocator1024) AllocatorPool<char[1024], MAX_BLOCKS>();
 //	new (&_allocator2048) AllocatorPool<char[2048], MAX_BLOCKS>();
 //	new (&_allocator4096) AllocatorPool<char[4096], MAX_BLOCKS>();
-
+//
 //	/// Populate allocator array with all instances
 //	_allocators[0] = (Allocator*)&_allocator8;
 //	_allocators[1] = (Allocator*)&_allocator16;
@@ -253,13 +253,13 @@
 //	_allocators[11] = (Allocator*)&_allocator4096;
 //#endif
 //}
-
+//
 ///// Called one time when the application exits to cleanup any allocated memory.
 ///// ~XallocInitDestroy destructor calls this function automatically.
 //extern "C" void xalloc_destroy()
 //{
 //	lock_get();
-
+//
 //#ifdef STATIC_POOLS
 //	for (int i=0; i<MAX_ALLOCATORS; i++)
 //	{
@@ -275,12 +275,12 @@
 //		_allocators[i] = 0;
 //	}
 //#endif
-
+//
 //	lock_release();
-
+//
 //	lock_destroy();
 //}
-
+//
 ///// Get an Allocator instance based upon the client's requested block size.
 ///// If a Allocator instance is not currently available to handle the size,
 /////	then a new Allocator instance is create.
@@ -301,9 +301,9 @@
 //		blockSize = 768;
 //	else
 //		blockSize = nexthigher<size_t>(blockSize);
-
+//
 //	Allocator* allocator = find_allocator(blockSize);
-
+//
 //#ifdef STATIC_POOLS
 //	ASSERT_TRUE(allocator != NULL);
 //#else
@@ -312,15 +312,15 @@
 //	{
 //		/// Create a new allocator to handle blocks of the size required
 //		allocator = new Allocator(blockSize, 0, 0, "xallocator");
-
+//
 //		/// Insert allocator into array
 //		insert_allocator(allocator);
 //	}
 //#endif
-	
+//	
 //	return allocator;
 //}
-
+//
 ///// Allocates a memory block of the requested size. The blocks are created from
 /////	the fixed block allocators.
 /////	@param[in] size - the client requested size of the block.
@@ -328,18 +328,18 @@
 //extern "C" void *xmalloc(size_t size)
 //{
 //	lock_get();
-
+//
 //	/// Allocate a raw memory block
 //	Allocator* allocator = xallocator_get_allocator(size);
 //	void* blockMemoryPtr = allocator->Allocate(sizeof(Allocator*) + size);
-
+//
 //	lock_release();
-
+//
 //	/// Set the block Allocator* within the raw memory block region
 //	void* clientsMemoryPtr = set_block_allocator(blockMemoryPtr, allocator);
 //	return clientsMemoryPtr;
 //}
-
+//
 ///// Frees a memory block previously allocated with xalloc. The blocks are returned
 /////	to the fixed block allocator that originally created it.
 /////	@param[in] ptr - a pointer to a block created with xalloc.
@@ -347,21 +347,21 @@
 //{
 //	if (ptr == 0)
 //		return;
-
+//
 //	/// Extract the original allocator instance from the caller's block pointer
 //	Allocator* allocator = get_block_allocator(ptr);
-
+//
 //	/// Convert the client pointer into the original raw block pointer
 //	void* blockPtr = get_block_ptr(ptr);
-
+//
 //	lock_get();
-
+//
 //	/// Deallocate the block
 //	allocator->Deallocate(blockPtr);
-
+//
 //	lock_release();
 //}
-
+//
 ///// Reallocates a memory block previously allocated with xalloc.
 /////	@param[in] ptr - a pointer to a block created with xalloc.
 /////	@param[in] size - the client requested block size to create.
@@ -369,7 +369,7 @@
 //{
 //	if (oldMem == 0)
 //		return xmalloc(size);
-
+//
 //	if (size == 0)
 //	{
 //		xfree(oldMem);
@@ -384,30 +384,30 @@
 //			/// Get the original allocator instance from the old memory block
 //			Allocator* oldAllocator = get_block_allocator(oldMem);
 //			size_t oldSize = oldAllocator->GetBlockSize() - sizeof(Allocator*);
-
+//
 //			/// Copy the bytes from the old memory block into the new (as much as will fit)
 //			memcpy(newMem, oldMem, (oldSize < size) ? oldSize : size);
-
+//
 //			/// Free the old memory block
 //			xfree(oldMem);
-
+//
 //			/// Return the client pointer to the new memory block
 //			return newMem;
 //		}
 //		return 0;
 //	}
 //}
-
+//
 ///// Output xallocator usage statistics
 //extern "C" void xalloc_stats()
 //{
 //	lock_get();
-
+//
 //	for (int i=0; i<MAX_ALLOCATORS; i++)
 //	{
 //		if (_allocators[i] == 0)
 //			break;
-
+//
 //		if (_allocators[i]->GetName() != NULL)
 //			cout << _allocators[i]->GetName();
 //		cout << " Block Size: " << _allocators[i]->GetBlockSize();
@@ -415,6 +415,6 @@
 //		cout << " Blocks In Use: " << _allocators[i]->GetBlocksInUse();
 //		cout << endl;
 //	}
-
+//
 //	lock_release();
 //}

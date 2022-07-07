@@ -1,5 +1,5 @@
-// AUTHOR:		
-// PROJECT:		Fun
+// AUTHOR:		Unknown
+// PROJECT:		World Perception
 // DOCUMENT:	None
 // DESCRIPTION: This file defines queue
 

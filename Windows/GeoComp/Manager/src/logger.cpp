@@ -1,5 +1,5 @@
 // AUTHOR:	    Mikhail Jacques
-// PROJECT:		Fun
+// PROJECT:		World Perception
 // DOCUMENT:	None
 // DESCRIPTION: This file defines logger that writes data to a text file
 

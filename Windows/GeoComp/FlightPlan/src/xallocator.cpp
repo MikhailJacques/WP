@@ -1,4 +1,4 @@
-//// AUTHOR:		
+//// AUTHOR:		https://www.codeproject.com/Articles/1087619/State-Machine-Design-in-Cplusplus-2
 //// PROJECT:		WorldPerception
 //// DOCUMENT:	None
 //// DESCRIPTION: This file defines memory allocator that allocates/deallocates blocks of memory

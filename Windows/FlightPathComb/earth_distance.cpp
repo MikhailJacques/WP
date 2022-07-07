@@ -1,6 +1,6 @@
 // AUTHOR:		Mikhail Jacques
 // PROJECT:		WorldPerception
-// DOCUMENT:	Drone Scan Route Specifications (22-06-21)
+// DOCUMENT:	Drone Scan Route Specifications (21-06-22)
 // DESCRIPTION: This module defines mathematical functions for calculating comb flight path algorithm
 
 #include "earth_distance.h"
